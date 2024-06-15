@@ -1,6 +1,6 @@
 package com.example.kafkalistener;
 
-import com.example.kafkalistener.kafkaclient.KafkaClientService;
+import com.example.kafkalistener.kafkalistenerclient.KafkaListenerClientService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +17,7 @@ public class KafkaListenerApplication {
     }
 
     @Autowired
-    KafkaClientService kafkaClient;
+    KafkaListenerClientService kafkaClient;
 
     @PostConstruct
     public void init() {

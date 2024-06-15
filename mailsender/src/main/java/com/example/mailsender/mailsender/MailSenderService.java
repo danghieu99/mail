@@ -27,7 +27,7 @@ public class MailSenderService {
     @Autowired
     MinioFileClient minioFileClient;
 
-    public String sendMailWithAttachment(MultipartFile file, String sender, List<String> recipients,
+    public String sendMailWithAttachmentFile(MultipartFile file, String sender, List<String> recipients,
                                          String subject, String content) {
 
         String fileName = UUID.randomUUID() + file.getOriginalFilename();
@@ -64,7 +64,7 @@ public class MailSenderService {
         return "mail with attachment sent successfully";
     }
 
-    private String sendMailWithAttachment(String attachmentUrl, String sender, List<String> recipients,
+    private String sendMailWithAttachmentUrl(String attachmentUrl, String sender, List<String> recipients,
                                           String subject, String content) {
 
         String fileName = UUID.randomUUID() + "attachment";
@@ -102,14 +102,14 @@ public class MailSenderService {
 
             mailSender.send(message);
 
-            return "mail sent successfully.";
+            return "mail sent successfully!";
         } catch (Exception e) {
             e.printStackTrace();
             return "Error occurred: " + e.getMessage();
         }
     }
 
-    public String sendMail(String mailJson) {
+    public String sendMailJson(String mailJson) {
 
         try {
             MailData mailData = toMailData(mailJson);
@@ -123,8 +123,8 @@ public class MailSenderService {
                 return sendMail(sender, recipients, subject, content);
             } else {
                 String attachmentUrl = minioFileClient.fetchFileUrl(mailData.getAttachmentUrl());
-                System.out.println("Sending mail with attachment!");
-                return sendMailWithAttachment(attachmentUrl, sender, recipients, subject, content);
+                System.out.println("Sending mail with attachment url!");
+                return sendMailWithAttachmentUrl(attachmentUrl, sender, recipients, subject, content);
             }
 
         } catch (Exception e) {

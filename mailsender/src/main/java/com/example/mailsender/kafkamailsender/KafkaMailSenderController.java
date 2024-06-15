@@ -36,6 +36,6 @@ public class KafkaMailSenderController {
                                          @RequestParam("content") String content,
                                          @RequestParam("file") MultipartFile file) {
 
-        return kafkaMailSenderService.sendMailWithAttachment(sender, recipients, subject, content, file);
+        return kafkaMailSenderService.sendMailWithAttachmentFile(sender, recipients, subject, content, file);
     }
 }

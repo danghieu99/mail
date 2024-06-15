@@ -1,4 +1,4 @@
-package com.example.kafkalistener.kafkaclient;
+package com.example.kafkalistener.kafkalistenerclient;
 
 import com.example.kafkalistener.mailsenderclient.MailSenderClientService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.List;
 
 @Service
-public class KafkaClientService {
+public class KafkaListenerClientService {
 
     @Autowired
     private KafkaConsumer<String, String> kafkaConsumer;

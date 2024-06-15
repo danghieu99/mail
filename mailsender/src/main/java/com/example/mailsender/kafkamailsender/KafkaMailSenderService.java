@@ -50,7 +50,7 @@ public class KafkaMailSenderService {
         return "mail sent";
     }
 
-    public String sendMailWithAttachment(String sender, List<String> recipients, String subject, String body, MultipartFile file) {
+    public String sendMailWithAttachmentFile(String sender, List<String> recipients, String subject, String body, MultipartFile file) {
         String fileName = UUID.randomUUID() + file.getOriginalFilename();
 
         try {
@@ -66,9 +66,10 @@ public class KafkaMailSenderService {
 
         String jsonMessage = MailDataToJson.toJson(mailWIthAttachmentMinioUrl);
         String topic = "mailtest";
-        String key = String.valueOf(UUID.randomUUID());
+        String key = UUID.randomUUID().toString();
 
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
+
         kafkaProducer.send(record, (metadata, exception) -> {
             if (exception != null) {
                 exception.printStackTrace();

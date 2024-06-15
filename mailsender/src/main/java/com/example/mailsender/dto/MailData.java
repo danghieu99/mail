@@ -12,10 +12,6 @@ public class MailData {
     private String attachmentUrl;
 
     public MailData() {
-        this.recipients = new ArrayList<String>();
-        this.sender = "";
-        this.subject = "";
-        this.content = "";
     }
 
     public MailData(String sender, List<String> recipients, String subject, String content, String attachmentUrl) {

@@ -14,13 +14,22 @@ public class MailSenderController {
     @Autowired
     private MailSenderService mailSenderService;
 
-    @PostMapping("/sendmailwithattachment")
-    public String sendMailWithAttachment(@RequestParam("file") MultipartFile file,
-                                         @RequestParam("sender") String sender,
-                                         @RequestParam List<String> recipients,
-                                         @RequestParam("subject") String subject,
-                                         @RequestParam("content") String content) {
-        return mailSenderService.sendMailWithAttachment(file, sender, recipients, subject, content);
+    @PostMapping("/sendmailwithattachmentfile")
+    public String sendMailWithAttachmentFile(@RequestParam("file") MultipartFile file,
+                                             @RequestParam("sender") String sender,
+                                             @RequestParam List<String> recipients,
+                                             @RequestParam("subject") String subject,
+                                             @RequestParam("content") String content) {
+        return mailSenderService.sendMailWithAttachmentFile(file, sender, recipients, subject, content);
+    }
+
+    @PostMapping("/sendmailwithattachmenturl")
+    public String sendMailWithAttachmentUrl(@RequestParam("file") MultipartFile file,
+                                            @RequestParam("sender") String sender,
+                                            @RequestParam List<String> recipients,
+                                            @RequestParam("subject") String subject,
+                                            @RequestParam("content") String content) {
+        return mailSenderService.sendMailWithAttachmentFile(file, sender, recipients, subject, content);
     }
 
     @PostMapping("/sendmail")
@@ -32,7 +41,7 @@ public class MailSenderController {
     }
 
     @PostMapping("/sendmailjson")
-    public String sendMail(@RequestParam("mailjson") String mailJson) {
-        return mailSenderService.sendMail(mailJson);
+    public String sendMailJson(@RequestParam("mailjson") String mailJson) {
+        return mailSenderService.sendMailJson(mailJson);
     }
 }
