@@ -1,0 +1,25 @@
+services:
+  fileupload:
+    pull_policy: never
+    container_name: minio-api
+    build: /minio-api/
+    image: minio-api:latest
+    ports:
+      - "8080:8080"
+
+  mailsender:
+    pull_policy: never
+    container_name: mailsender-api
+    build: /mailsender/
+    image: mailsender:latest
+    ports:
+      - "8081:8081"
+
+  maildispatcher:
+    pull_policy: never
+    container_name: kafka-listener
+    build: /kafka-listener/
+    image: kafka-listener:latest
+    ports:
+      - "8082:8082"
+

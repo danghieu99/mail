@@ -1,0 +1,80 @@
+package com.example.mailsender.kafkamailsender;
+
+import com.example.mailsender.client.MinioFileClient;
+import com.example.mailsender.dto.MailData;
+import com.example.mailsender.util.MailDataToJson;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class KafkaMailSenderService {
+
+    @Autowired
+    private KafkaProducer<String, String> kafkaProducer;
+
+    @Autowired
+    MinioFileClient minioFileClient;
+
+    public String sendMessage(String message) {
+        String topic = "mailtest";
+        String key = String.valueOf(UUID.randomUUID());
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, message);
+        kafkaProducer.send(record, (metadata, exception) -> {
+            if (exception != null) {
+                exception.printStackTrace();
+                throw new RuntimeException(exception);
+            }
+        });
+        return "message sent";
+    }
+
+    public String sendMail(String sender, List<String> recipients, String subject, String content) {
+        MailData mail = new MailData(sender, recipients, subject, content);
+        String topic = "mailtest";
+        String jsonMessage = MailDataToJson.toJson(mail);
+        String key = String.valueOf(UUID.randomUUID());
+
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
+        kafkaProducer.send(record, (metadata, exception) -> {
+            if (exception != null) {
+                exception.printStackTrace();
+                throw new RuntimeException(exception);
+            }
+        });
+        return "mail sent";
+    }
+
+    public String sendMailWithAttachment(String sender, List<String> recipients, String subject, String body, MultipartFile file) {
+        String fileName = UUID.randomUUID() + file.getOriginalFilename();
+
+        try {
+            minioFileClient.uploadFile(file, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+
+        String attachmentUrl = minioFileClient.fetchFileUrl(fileName);
+
+        MailData mailWIthAttachmentMinioUrl = new MailData(sender, recipients, subject, body, attachmentUrl);
+
+        String jsonMessage = MailDataToJson.toJson(mailWIthAttachmentMinioUrl);
+        String topic = "mailtest";
+        String key = String.valueOf(UUID.randomUUID());
+
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
+        kafkaProducer.send(record, (metadata, exception) -> {
+            if (exception != null) {
+                exception.printStackTrace();
+                throw new RuntimeException(exception);
+            }
+        });
+        return "mail sent";
+    }
+}
