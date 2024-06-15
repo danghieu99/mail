@@ -22,4 +22,3 @@ services:
     image: kafka-listener:latest
     ports:
       - "8082:8082"
-

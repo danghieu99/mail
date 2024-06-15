@@ -12,7 +12,7 @@ public class MinioFileController {
     private MinioClientServices minioClientServices;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
         return minioClientServices.uploadFile(file);
     }
 

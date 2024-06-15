@@ -10,15 +10,17 @@ public class MailData {
     private String subject;
     private String content;
     private String attachmentUrl;
+    private String fileName;
 
     public MailData() {
     }
 
-    public MailData(String sender, List<String> recipients, String subject, String content, String attachmentUrl) {
+    public MailData(String sender, List<String> recipients, String subject, String content, String attachmentUrl, String fileName) {
         this.sender = sender;
         this.subject = subject;
         this.content = content;
         this.attachmentUrl = attachmentUrl;
+        this.fileName = fileName;
         this.recipients = recipients;
     }
 
@@ -48,4 +50,6 @@ public class MailData {
     public String getAttachmentUrl() {
         return attachmentUrl;
     }
+
+    public String getFileName() {return fileName;}
 }

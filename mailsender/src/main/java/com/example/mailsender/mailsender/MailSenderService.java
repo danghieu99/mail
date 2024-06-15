@@ -28,7 +28,7 @@ public class MailSenderService {
     MinioFileClient minioFileClient;
 
     public String sendMailWithAttachmentFile(MultipartFile file, String sender, List<String> recipients,
-                                         String subject, String content) {
+                                             String subject, String content) {
 
         String fileName = UUID.randomUUID() + file.getOriginalFilename();
 
@@ -64,15 +64,10 @@ public class MailSenderService {
         return "mail with attachment sent successfully";
     }
 
-    private String sendMailWithAttachmentUrl(String attachmentUrl, String sender, List<String> recipients,
-                                          String subject, String content) {
-
-        String fileName = UUID.randomUUID() + "attachment";
+    private String sendMailWithAttachmentUrl(String attachmentUrl, String fileName, String sender, List<String> recipients,
+                                             String subject, String content) {
 
         try (InputStream fileStream = new URL(attachmentUrl).openStream()) {
-
-            byte[] attachmentBytes = fileStream.readAllBytes();
-
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(sender);
@@ -80,10 +75,12 @@ public class MailSenderService {
             helper.setText(content);
             helper.setSubject(subject);
 
+            byte[] attachmentBytes = fileStream.readAllBytes();
             ByteArrayResource attachmentSource = new ByteArrayResource(attachmentBytes);
             helper.addAttachment(fileName, attachmentSource);
 
             mailSender.send(message);
+
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
@@ -122,11 +119,11 @@ public class MailSenderService {
                 System.out.println("Sending mail with no attachment!");
                 return sendMail(sender, recipients, subject, content);
             } else {
-                String attachmentUrl = minioFileClient.fetchFileUrl(mailData.getAttachmentUrl());
+                String attachmentUrl = mailData.getAttachmentUrl();
+                String fileName = mailData.getFileName();
                 System.out.println("Sending mail with attachment url!");
-                return sendMailWithAttachmentUrl(attachmentUrl, sender, recipients, subject, content);
+                return sendMailWithAttachmentUrl(attachmentUrl, fileName, sender, recipients, subject, content);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();

@@ -50,7 +50,8 @@ public class KafkaMailSenderService {
         return "mail sent";
     }
 
-    public String sendMailWithAttachmentFile(String sender, List<String> recipients, String subject, String body, MultipartFile file) {
+    public String sendMailWithAttachmentFile(String sender, List<String> recipients, String subject, String content, MultipartFile file) {
+
         String fileName = UUID.randomUUID() + file.getOriginalFilename();
 
         try {
@@ -62,7 +63,7 @@ public class KafkaMailSenderService {
 
         String attachmentUrl = minioFileClient.fetchFileUrl(fileName);
 
-        MailData mailWIthAttachmentMinioUrl = new MailData(sender, recipients, subject, body, attachmentUrl);
+        MailData mailWIthAttachmentMinioUrl = new MailData(sender, recipients, subject, content, attachmentUrl, fileName);
 
         String jsonMessage = MailDataToJson.toJson(mailWIthAttachmentMinioUrl);
         String topic = "mailtest";

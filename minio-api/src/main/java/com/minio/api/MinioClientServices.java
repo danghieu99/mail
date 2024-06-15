@@ -17,7 +17,7 @@ public class MinioClientServices {
     @Autowired
     MinioClient minioClient;
 
-    public ResponseEntity<String> uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file) {
         try {
             String bucketName = "newbucket";
             String objectName = file.getOriginalFilename();
@@ -32,10 +32,10 @@ public class MinioClientServices {
                                 .build()
                 );
             }
-            return ResponseEntity.ok("File uploaded successfully as " + objectName);
+            return objectName;
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error occurred: " + e.getMessage());
+            return e.getMessage();
         }
     }
 
