@@ -1,12 +1,18 @@
-FROM eclipse-temurin:17-jdk-jammy
+FROM gradle:8.8.0-jdk17 as builder
 
-USER root
+COPY /build.gradle /
+
+COPY /settings.gradle /
+
+RUN gradle bootJar
+
+FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /
 
-COPY . /
+COPY ./build/libs/ /build/libs/
 
 EXPOSE 8082
 
-CMD ["java", "-jar", "./build/libs/"]
+CMD ["java", "-jar", "./build/libs/kafka-listener-0.0.1-SNAPSHOT.jar"]
 
