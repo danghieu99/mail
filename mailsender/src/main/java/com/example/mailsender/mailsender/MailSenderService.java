@@ -115,7 +115,7 @@ public class MailSenderService {
             String subject = mailData.getSubject();
             String content = mailData.getContent();
 
-            if (mailData.getAttachmentUrl() == null) {
+            if (mailData.getAttachmentUrl() == null && mailData.getFileName() == null) {
                 System.out.println("Sending mail with no attachment!");
                 return sendMail(sender, recipients, subject, content);
             } else {
