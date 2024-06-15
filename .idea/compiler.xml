@@ -7,7 +7,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.3.0/2a1542cac159dae637ca984bf95ddef0b0fb2627/spring-boot-configuration-processor-3.3.0.jar" />
         </processorPath>
-        <module name="kafka-listener.main" />
+        <module name="minio-api.main" />
       </profile>
     </annotationProcessing>
   </component>
