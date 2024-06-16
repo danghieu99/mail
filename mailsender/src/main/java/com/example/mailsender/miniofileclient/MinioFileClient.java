@@ -1,4 +1,4 @@
-package com.example.mailsender.client;
+package com.example.mailsender.miniofileclient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

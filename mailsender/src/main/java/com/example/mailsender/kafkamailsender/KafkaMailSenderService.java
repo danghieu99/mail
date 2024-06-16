@@ -1,6 +1,6 @@
 package com.example.mailsender.kafkamailsender;
 
-import com.example.mailsender.client.MinioFileClient;
+import com.example.mailsender.miniofileclient.MinioFileClient;
 import com.example.mailsender.dto.MailData;
 import com.example.mailsender.util.MailDataToJson;
 import org.apache.kafka.clients.producer.ProducerRecord;

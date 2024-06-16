@@ -1,6 +1,6 @@
 package com.example.mailsender.mailsender;
 
-import com.example.mailsender.client.MinioFileClient;
+import com.example.mailsender.miniofileclient.MinioFileClient;
 import com.example.mailsender.dto.MailData;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

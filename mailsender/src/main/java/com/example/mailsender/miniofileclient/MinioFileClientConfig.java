@@ -1,4 +1,4 @@
-package com.example.mailsender.client;
+package com.example.mailsender.miniofileclient;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
