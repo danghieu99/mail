@@ -14,11 +14,11 @@ import java.util.List;
 public class KafkaMailSenderController {
 
     @Autowired
-    KafkaMailSenderService kafkaMailSenderService;
+    KafkaMailSender kafkaMailSender;
 
     @PostMapping("/sendmessage")
     public String sendMessage(@RequestParam("message") String message) {
-        return kafkaMailSenderService.sendMessage(message);
+        return kafkaMailSender.sendMessage(message);
     }
 
     @PostMapping("/sendmail")
@@ -26,7 +26,7 @@ public class KafkaMailSenderController {
                            @RequestParam("sender") String sender,
                            @RequestParam("subject") String subject,
                            @RequestParam("content") String content) {
-        return kafkaMailSenderService.sendMail(sender, recipients, subject, content);
+        return kafkaMailSender.sendMail(sender, recipients, subject, content);
     }
 
     @PostMapping("/sendmailwithattachment")
@@ -36,6 +36,6 @@ public class KafkaMailSenderController {
                                          @RequestParam("content") String content,
                                          @RequestParam("file") MultipartFile file) {
 
-        return kafkaMailSenderService.sendMailWithAttachmentFile(sender, recipients, subject, content, file);
+        return kafkaMailSender.sendMailWithAttachmentFile(sender, recipients, subject, content, file);
     }
 }

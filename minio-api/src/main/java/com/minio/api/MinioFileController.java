@@ -9,33 +9,33 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/file")
 public class MinioFileController {
     @Autowired
-    private MinioClientServices minioClientServices;
+    private MinioClient minioClient;
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
-        return minioClientServices.uploadFile(file);
+        return minioClient.uploadFile(file);
     }
 
     @GetMapping("/geturl")
     public ResponseEntity<String> getUrl(@RequestParam("bucketname") String bucketName,
                                          @RequestParam("filename") String fileName) {
 
-        return minioClientServices.getFileUrl(bucketName, fileName);
+        return minioClient.getFileUrl(bucketName, fileName);
     }
 
     @GetMapping("/download")
     public ResponseEntity<String> downloadFile(@RequestParam("filename") String fileName,
                                                @RequestParam("bucketname") String bucketName) {
-        return minioClientServices.downloadFile(fileName, bucketName);
+        return minioClient.downloadFile(fileName, bucketName);
     }
 
     @GetMapping("/list")
     public ResponseEntity<String> listFiles(@RequestParam("bucketname") String bucketName) {
-        return minioClientServices.listFiles(bucketName);
+        return minioClient.listFiles(bucketName);
     }
 
     @PostMapping("/delete")
     public ResponseEntity<String> deleteFiles(@RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
-        return minioClientServices.deleteFile(fileName, bucketName);
+        return minioClient.deleteFile(fileName, bucketName);
     }
 }

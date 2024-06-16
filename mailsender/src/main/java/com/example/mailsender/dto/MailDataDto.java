@@ -1,9 +1,8 @@
 package com.example.mailsender.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MailData {
+public class MailDataDto {
 
     private List<String> recipients;
     private String sender;
@@ -12,10 +11,10 @@ public class MailData {
     private String attachmentUrl;
     private String fileName;
 
-    public MailData() {
+    public MailDataDto() {
     }
 
-    public MailData(String sender, List<String> recipients, String subject, String content, String attachmentUrl, String fileName) {
+    public MailDataDto(String sender, List<String> recipients, String subject, String content, String attachmentUrl, String fileName) {
         this.sender = sender;
         this.subject = subject;
         this.content = content;
@@ -24,7 +23,7 @@ public class MailData {
         this.recipients = recipients;
     }
 
-    public MailData(String sender, List<String> recipients, String subject, String content) {
+    public MailDataDto(String sender, List<String> recipients, String subject, String content) {
         this.sender = sender;
         this.subject = subject;
         this.content = content;

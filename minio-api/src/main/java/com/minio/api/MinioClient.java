@@ -5,17 +5,18 @@ import io.minio.http.Method;
 import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Iterator;
 
-@Service
-public class MinioClientServices {
+@Component
+public class MinioClient {
 
     @Autowired
-    MinioClient minioClient;
+    io.minio.MinioClient minioClient;
 
     public String uploadFile(MultipartFile file) {
         try {

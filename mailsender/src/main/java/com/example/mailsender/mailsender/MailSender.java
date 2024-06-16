@@ -1,14 +1,14 @@
 package com.example.mailsender.mailsender;
 
 import com.example.mailsender.miniofileclient.MinioFileClient;
-import com.example.mailsender.dto.MailData;
+import com.example.mailsender.dto.MailDataDto;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -18,8 +18,8 @@ import java.util.UUID;
 
 import static com.example.mailsender.util.JsonToMailData.toMailData;
 
-@Service
-public class MailSenderService {
+@Component
+public class MailSender {
 
     @Autowired
     private JavaMailSender mailSender;
@@ -109,18 +109,18 @@ public class MailSenderService {
     public String sendMailJson(String mailJson) {
 
         try {
-            MailData mailData = toMailData(mailJson);
-            List<String> recipients = mailData.getRecipients();
-            String sender = mailData.getSender();
-            String subject = mailData.getSubject();
-            String content = mailData.getContent();
+            MailDataDto mailDataDto = toMailData(mailJson);
+            List<String> recipients = mailDataDto.getRecipients();
+            String sender = mailDataDto.getSender();
+            String subject = mailDataDto.getSubject();
+            String content = mailDataDto.getContent();
 
-            if (mailData.getAttachmentUrl() == null && mailData.getFileName() == null) {
+            if (mailDataDto.getAttachmentUrl() == null && mailDataDto.getFileName() == null) {
                 System.out.println("Sending mail with no attachment!");
                 return sendMail(sender, recipients, subject, content);
             } else {
-                String attachmentUrl = mailData.getAttachmentUrl();
-                String fileName = mailData.getFileName();
+                String attachmentUrl = mailDataDto.getAttachmentUrl();
+                String fileName = mailDataDto.getFileName();
                 System.out.println("Sending mail with attachment url!");
                 return sendMailWithAttachmentUrl(attachmentUrl, fileName, sender, recipients, subject, content);
             }

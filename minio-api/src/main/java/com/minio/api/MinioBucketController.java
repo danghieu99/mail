@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class MinioBucketController {
 
     @Autowired
-    private MinioClientServices minioClientServices;
+    private MinioClient minioClient;
 
     @GetMapping("/create")
     public ResponseEntity<String> createBucket(@RequestParam final String bucketName) {
-        return minioClientServices.createBucket(bucketName);
+        return minioClient.createBucket(bucketName);
     }
 
     @GetMapping("/delete")
     public ResponseEntity<String> deleteBucket(@RequestParam final String bucketName) {
-        return minioClientServices.deleteBucket(bucketName);
+        return minioClient.deleteBucket(bucketName);
     }
 
 }

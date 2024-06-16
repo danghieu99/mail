@@ -1,23 +1,23 @@
-package com.example.kafkalistener.kafkalistenerclient;
+package com.example.kafkalistener.kafkalistener;
 
-import com.example.kafkalistener.mailsenderclient.MailSenderClientService;
+import com.example.kafkalistener.mailsenderclient.MailSenderClient;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.List;
 
-@Service
-public class KafkaListenerClientService {
+@Component
+public class KafkaListener {
 
     @Autowired
     private KafkaConsumer<String, String> kafkaConsumer;
 
     @Autowired
-    private MailSenderClientService mailSenderClientService;
+    private MailSenderClient mailSenderClient;
 
     public void listen() {
         try {
@@ -26,7 +26,7 @@ public class KafkaListenerClientService {
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
                     String mailJson = record.value();
-                    mailSenderClientService.sendJsonMail(mailJson);
+                    mailSenderClient.sendJsonMail(mailJson);
                 }
             }
         } catch (Exception e) {

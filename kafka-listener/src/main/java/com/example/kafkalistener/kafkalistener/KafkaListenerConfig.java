@@ -1,4 +1,4 @@
-package com.example.kafkalistener.kafkalistenerclient;
+package com.example.kafkalistener.kafkalistener;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Properties;
 
 @Configuration
-public class KafkaClientConfig {
+public class KafkaListenerConfig {
 
     @Bean
     public KafkaConsumer<String, String> kafkaConsumer() {

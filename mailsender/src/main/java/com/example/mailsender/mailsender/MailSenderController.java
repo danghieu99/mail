@@ -12,7 +12,7 @@ import java.util.List;
 public class MailSenderController {
 
     @Autowired
-    private MailSenderService mailSenderService;
+    private MailSender mailSender;
 
     @PostMapping("/sendmailwithattachmentfile")
     public String sendMailWithAttachmentFile(@RequestParam("file") MultipartFile file,
@@ -20,7 +20,7 @@ public class MailSenderController {
                                              @RequestParam List<String> recipients,
                                              @RequestParam("subject") String subject,
                                              @RequestParam("content") String content) {
-        return mailSenderService.sendMailWithAttachmentFile(file, sender, recipients, subject, content);
+        return mailSender.sendMailWithAttachmentFile(file, sender, recipients, subject, content);
     }
 
     @PostMapping("/sendmailwithattachmenturl")
@@ -29,7 +29,7 @@ public class MailSenderController {
                                             @RequestParam List<String> recipients,
                                             @RequestParam("subject") String subject,
                                             @RequestParam("content") String content) {
-        return mailSenderService.sendMailWithAttachmentFile(file, sender, recipients, subject, content);
+        return mailSender.sendMailWithAttachmentFile(file, sender, recipients, subject, content);
     }
 
     @PostMapping("/sendmail")
@@ -37,11 +37,11 @@ public class MailSenderController {
                            @RequestParam("sender") String sender,
                            @RequestParam("subject") String subject,
                            @RequestParam("body") String body) {
-        return mailSenderService.sendMail(sender, recipients, subject, body);
+        return mailSender.sendMail(sender, recipients, subject, body);
     }
 
     @PostMapping("/sendmailjson")
     public String sendMailJson(@RequestParam("mailjson") String mailJson) {
-        return mailSenderService.sendMailJson(mailJson);
+        return mailSender.sendMailJson(mailJson);
     }
 }

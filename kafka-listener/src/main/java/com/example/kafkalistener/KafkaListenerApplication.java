@@ -1,6 +1,6 @@
 package com.example.kafkalistener;
 
-import com.example.kafkalistener.kafkalistenerclient.KafkaListenerClientService;
+import com.example.kafkalistener.kafkalistener.KafkaListener;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,17 +17,17 @@ public class KafkaListenerApplication {
     }
 
     @Autowired
-    KafkaListenerClientService kafkaClient;
+    KafkaListener kafkaListener;
 
     @PostConstruct
     public void init() {
 
         List<String> topics = new ArrayList<>();
         topics.add("mailtest");
-        kafkaClient.subscribe(topics);
+        kafkaListener.subscribe(topics);
 
         while (true) {
-            kafkaClient.listen();
+            kafkaListener.listen();
         }
     }
 }
