@@ -1,5 +1,5 @@
 services:
-  fileupload:
+  minio-api:
     pull_policy: build
     container_name: minio-api
     build: /minio-api/
