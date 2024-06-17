@@ -7,6 +7,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Component
 public class MailSenderClient {
@@ -17,7 +20,7 @@ public class MailSenderClient {
     @Autowired
     private RestClient restClient;
 
-    public String sendJsonMail(String jsonMail) {
+    public String restTemplateSendJsonMail(String jsonMail) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -33,10 +36,23 @@ public class MailSenderClient {
 
 
     public String restClientSendJsonMail(String jsonMail) {
-        RestClient jsonMailClient = RestClient.builder()
-                .baseUrl("http://host.docker.internal")
-                .
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmailjson")
+                .build()
+                .toUri();
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("mailjson", jsonMail);
+
+        ResponseEntity<String> response = restClient.post()
+                .uri(uri)
+                .body(body)
+                .retrieve()
+                .toEntity(String.class);
+
+        return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
     }
-
-
 }

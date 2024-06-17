@@ -26,7 +26,8 @@ public class KafkaListener {
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
                     String mailJson = record.value();
-                    mailSenderClient.sendJsonMail(mailJson);
+                    //mailSenderClient.restTemplateSendJsonMail(mailJson);
+                    mailSenderClient.restClientSendJsonMail(mailJson);
                 }
             }
         } catch (Exception e) {
