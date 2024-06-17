@@ -41,7 +41,7 @@ public class MailSenderController {
         return mailSender.sendMail(sender, recipients, subject, body);
     }
 
-    @PostMapping("/sendmailfromdata")
+    @PostMapping("/sendmaildata")
     public String sendMailFormData(@RequestParam("mail") String mailFormData) {
         return mailSender.sendMailFormData(mailFormData);
     }

@@ -29,14 +29,14 @@ public class MailSenderClient {
         map.add("mail", jsonMail);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
-        String url = "http://host.docker.internal:8081/api/mail/sendmailformdata";
+        String url = "http://host.docker.internal:8081/api/mail/sendmaildata";
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
         return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
     }
 
     public String restClientSendFormDataMail(String jsonMail) {
 
-        URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmailformdata")
+        URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmaildata")
                 .build()
                 .toUri();
 
