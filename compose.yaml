@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:8080"
 
-  mailsender:
+  mail-sender:
     pull_policy: build
     container_name: mailsender-api
     build: /mailsender/
