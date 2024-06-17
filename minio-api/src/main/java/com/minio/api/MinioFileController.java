@@ -26,7 +26,7 @@ public class MinioFileController {
     @GetMapping("/download")
     public ResponseEntity<String> downloadFile(@RequestParam("filename") String fileName,
                                                @RequestParam("bucketname") String bucketName) {
-        return minioFileClient.downloadFile(fileName, bucketName);
+        return minioFileClient.downloadFile(bucketName, fileName);
     }
 
     @GetMapping("/list")
@@ -36,6 +36,6 @@ public class MinioFileController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteFiles(@RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
-        return minioFileClient.deleteFile(fileName, bucketName);
+        return minioFileClient.deleteFile(bucketName, fileName);
     }
 }

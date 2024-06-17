@@ -54,7 +54,7 @@ public class MinioFileClient {
         }
     }
 
-    public ResponseEntity<String> downloadFile(String objectName, String bucketName) {
+    public ResponseEntity<String> downloadFile(String bucketName, String objectName) {
         try {
             minioClient.downloadObject(
                     DownloadObjectArgs.builder()
