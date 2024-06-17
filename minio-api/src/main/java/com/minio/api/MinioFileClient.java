@@ -93,5 +93,4 @@ public class MinioFileClient {
         }
         return ResponseEntity.ok("File deleted successfully");
     }
-
 }

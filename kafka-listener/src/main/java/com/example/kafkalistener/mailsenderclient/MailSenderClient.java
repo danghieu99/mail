@@ -20,7 +20,7 @@ public class MailSenderClient {
     @Autowired
     private RestClient restClient;
 
-    public String restTemplateSendFormDataMail(String jsonMail) {
+    public String restTemplateSendMailData(String jsonMail) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -34,7 +34,7 @@ public class MailSenderClient {
         return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
     }
 
-    public String restClientSendFormDataMail(String jsonMail) {
+    public String restClientSendMailData(String jsonMail) {
 
         URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmaildata")
                 .build()

@@ -15,13 +15,13 @@ public class MinioBucketController {
     @Autowired
     private MinioBucketClient minioBucketClient;
 
-    @PutMapping("/create")
-    public ResponseEntity<String> createBucket(@RequestParam final String bucketName) {
+    @PostMapping("/create")
+    public ResponseEntity<String> createBucket(@RequestParam("bucketname") final String bucketName) {
         return minioBucketClient.createBucket(bucketName);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteBucket(@RequestParam final String bucketName) {
+    public ResponseEntity<String> deleteBucket(@RequestParam("bucketname") final String bucketName) {
         return minioBucketClient.deleteBucket(bucketName);
     }
 
