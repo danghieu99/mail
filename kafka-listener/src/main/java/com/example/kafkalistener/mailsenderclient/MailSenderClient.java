@@ -34,13 +34,12 @@ public class MailSenderClient {
         return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
     }
 
-    /*
+
     public String restClientSendJsonMail(String jsonMail) {
-        RestClient jsonMailClient =RestClient.builder()
+        RestClient jsonMailClient = RestClient.builder()
                 .baseUrl("http://host.docker.internal")
                 .
     }
 
-     */
 
 }
