@@ -1,5 +1,5 @@
 services:
-  minioapi:
+  minio-api:
     pull_policy: build
     container_name: minio-api
     build: /minio-api/
@@ -15,7 +15,7 @@ services:
     ports:
       - "8081:8081"
 
-  minio-api:
+  kafka-listener:
     pull_policy: build
     container_name: kafka-listener
     build: /kafka-listener/
