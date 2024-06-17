@@ -36,7 +36,11 @@ public class MailSenderClient {
 
     public String restClientSendMailData(String jsonMail) {
 
-        URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmaildata")
+        URI uri = UriComponentsBuilder.newInstance()
+                .host("host.docker.internal")
+                .scheme("http")
+                .port(8081)
+                .path("/api/mail/sendmaildata")
                 .build()
                 .toUri();
 
