@@ -34,7 +34,7 @@ public class MinioFileController {
         return minioFileClient.listFiles(bucketName);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<String> deleteFiles(@RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
         return minioFileClient.deleteFile(fileName, bucketName);
     }
