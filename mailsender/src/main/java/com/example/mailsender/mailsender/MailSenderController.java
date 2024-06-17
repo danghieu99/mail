@@ -42,7 +42,7 @@ public class MailSenderController {
     }
 
     @PostMapping("/sendmaildata")
-    public String sendMailFormData(@RequestParam("mail") String mailFormData) {
-        return mailSender.sendMailFormData(mailFormData);
+    public String sendMailFormData(@RequestParam("mail") String mailJson) {
+        return mailSender.sendMailData(mailJson);
     }
 }

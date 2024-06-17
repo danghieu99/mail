@@ -45,6 +45,7 @@ public class MailSenderClient {
 
         ResponseEntity<String> response = restClient.post()
                 .uri(uri)
+                .accept(MediaType.MULTIPART_FORM_DATA)
                 .body(body)
                 .retrieve()
                 .toEntity(String.class);

@@ -106,7 +106,7 @@ public class MailSender {
         }
     }
 
-    public String sendMailFormData(String mailJson) {
+    public String sendMailData(String mailJson) {
 
         try {
             MailDataDto mailDataDto = toMailData(mailJson);
