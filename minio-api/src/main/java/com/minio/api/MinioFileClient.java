@@ -60,7 +60,7 @@ public class MinioFileClient {
                     DownloadObjectArgs.builder()
                             .bucket(bucketName)
                             .object(objectName)
-                            .filename("c:/users/hieudtt/Downloads/" + objectName)
+                            .filename("C:\\Users\\hieudtt\\Downloads\\" + objectName)
                             .build());
             return ResponseEntity.ok("File downloaded successfully");
         } catch (Exception e) {
