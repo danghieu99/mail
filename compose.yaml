@@ -15,7 +15,7 @@ services:
     ports:
       - "8081:8081"
 
-  maildispatcher:
+  minio-api:
     pull_policy: build
     container_name: kafka-listener
     build: /kafka-listener/
