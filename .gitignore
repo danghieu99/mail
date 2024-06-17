@@ -1,0 +1,4 @@
+/minio-api/.gradle/
+/minio-api/build/
+/minio-api/gradlew
+/minio-api/gradlew.bat
