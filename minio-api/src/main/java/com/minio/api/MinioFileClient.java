@@ -6,14 +6,13 @@ import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Iterator;
 
 @Component
-public class MinioClient {
+public class MinioFileClient {
 
     @Autowired
     io.minio.MinioClient minioClient;
@@ -95,23 +94,4 @@ public class MinioClient {
         return ResponseEntity.ok("File deleted successfully");
     }
 
-    public ResponseEntity<String> createBucket(String bucketName) {
-        try {
-            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error occurred: " + e.getMessage());
-        }
-        return ResponseEntity.ok("Bucket created successfully");
-    }
-
-    public ResponseEntity<String> deleteBucket(String bucketName) {
-        try {
-            minioClient.removeBucket(RemoveBucketArgs.builder().bucket(bucketName).build());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error occurred: " + e.getMessage());
-        }
-        return ResponseEntity.ok("Bucket deleted successfully");
-    }
 }

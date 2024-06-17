@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -15,6 +16,9 @@ public class MailSenderClient {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private RestClient restClient;
 
     public String sendJsonMail(String jsonMail) {
 
@@ -29,4 +33,14 @@ public class MailSenderClient {
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
         return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
     }
+
+    /*
+    public String restClientSendJsonMail(String jsonMail) {
+        RestClient jsonMailClient =RestClient.builder()
+                .baseUrl("http://host.docker.internal")
+                .
+    }
+
+     */
+
 }
