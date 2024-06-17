@@ -20,32 +20,28 @@ public class MailSenderClient {
     @Autowired
     private RestClient restClient;
 
-    public String restTemplateSendJsonMail(String jsonMail) {
+    public String restTemplateSendFormDataMail(String jsonMail) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("mailjson", jsonMail);
+        map.add("mail", jsonMail);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
-        String url = "http://host.docker.internal:8081/api/mail/sendmailjson";
+        String url = "http://host.docker.internal:8081/api/mail/sendmailformdata";
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
         return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
     }
 
+    public String restClientSendFormDataMail(String jsonMail) {
 
-    public String restClientSendJsonMail(String jsonMail) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmailjson")
+        URI uri = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8081/api/mail/sendmailformdata")
                 .build()
                 .toUri();
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("mailjson", jsonMail);
+        body.add("mail", jsonMail);
 
         ResponseEntity<String> response = restClient.post()
                 .uri(uri)

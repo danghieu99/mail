@@ -106,7 +106,7 @@ public class MailSender {
         }
     }
 
-    public String sendMailJson(String mailJson) {
+    public String sendMailFormData(String mailJson) {
 
         try {
             MailDataDto mailDataDto = toMailData(mailJson);
@@ -128,5 +128,28 @@ public class MailSender {
             e.printStackTrace();
             return e.getMessage();
         }
+    }
+
+    public String sendMailJson(MailDataDto mailDataDto) {
+        try {
+            List<String> recipients = mailDataDto.getRecipients();
+            String sender = mailDataDto.getSender();
+            String subject = mailDataDto.getSubject();
+            String content = mailDataDto.getContent();
+
+            if (mailDataDto.getAttachmentUrl() == null && mailDataDto.getFileName() == null) {
+                System.out.println("Sending mail with no attachment!");
+                return sendMail(sender, recipients, subject, content);
+            } else {
+                String attachmentUrl = mailDataDto.getAttachmentUrl();
+                String fileName = mailDataDto.getFileName();
+                System.out.println("Sending mail with attachment url!");
+                return sendMailWithAttachmentUrl(attachmentUrl, fileName, sender, recipients, subject, content);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+
     }
 }

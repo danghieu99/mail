@@ -22,12 +22,12 @@ public class KafkaListener {
     public void listen() {
         try {
             while (true) {
-                ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(1000));
+                ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-                    String mailJson = record.value();
-                    //mailSenderClient.restTemplateSendJsonMail(mailJson);
-                    mailSenderClient.restClientSendJsonMail(mailJson);
+                    String mailRecord = record.value();
+                    //mailSenderClient.restTemplateSendFormDataMail(mailRecord);
+                    mailSenderClient.restClientSendFormDataMail(mailRecord);
                 }
             }
         } catch (Exception e) {

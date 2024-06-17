@@ -1,5 +1,6 @@
 package com.example.mailsender.mailsender;
 
+import com.example.mailsender.dto.MailDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,8 +41,8 @@ public class MailSenderController {
         return mailSender.sendMail(sender, recipients, subject, body);
     }
 
-    @PostMapping("/sendmailjson")
-    public String sendMailJson(@RequestParam("mailjson") String mailJson) {
-        return mailSender.sendMailJson(mailJson);
+    @PostMapping("/sendmailfromdata")
+    public String sendMailFormData(@RequestParam("mail") String mailFormData) {
+        return mailSender.sendMailFormData(mailFormData);
     }
 }

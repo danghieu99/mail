@@ -1,5 +1,6 @@
 package com.example.kafkalistener.kafkalistener;
 
+import com.example.kafkalistener.mailsenderclient.MailSenderClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +22,10 @@ public class KafkaListenerConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "mailtest-subscribergroup");
 
         return new KafkaConsumer<>(props);
+    }
+
+    @Bean
+    public MailSenderClient getMailSenderClient() {
+        return new MailSenderClient();
     }
 }
