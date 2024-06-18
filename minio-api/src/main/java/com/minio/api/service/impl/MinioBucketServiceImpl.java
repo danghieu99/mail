@@ -1,5 +1,6 @@
 package com.minio.api.service.impl;
 
+import com.minio.api.service.MinioBucketService;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.RemoveBucketArgs;
@@ -8,29 +9,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MinioBucketServiceImpl {
+public class MinioBucketServiceImpl implements MinioBucketService {
 
     @Autowired
     MinioClient minioClient;
 
 
-    public ResponseEntity<String> createBucket(String bucketName) {
+    public String createBucket(String bucketName) {
         try {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error occurred: " + e.getMessage());
+            return "Error occurred: " + e.getMessage();
         }
-        return ResponseEntity.ok("Bucket created successfully");
+        return "Bucket created successfully";
     }
 
-    public ResponseEntity<String> deleteBucket(String bucketName) {
+    public String deleteBucket(String bucketName) {
         try {
             minioClient.removeBucket(RemoveBucketArgs.builder().bucket(bucketName).build());
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error occurred: " + e.getMessage());
+            return "Error occurred: " + e.getMessage();
         }
-        return ResponseEntity.ok("Bucket deleted successfully");
+        return "Bucket deleted successfully";
     }
 }

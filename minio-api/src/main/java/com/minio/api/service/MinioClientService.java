@@ -1,14 +1,11 @@
 package com.minio.api.service;
 
-import io.minio.MinioClient;
-import org.springframework.beans.factory.annotation.Autowired;
-
 public interface MinioClientService {
 
-    public String createClient(String endPoint, String accessKey, String secretKey);
+    String createClient(String endPoint, String accessKey, String secretKey);
 
-    public String deleteClientById(Long id);
+    String deleteClientById(Long id);
 
-    public String listClients();
+    String listClients();
 
 }

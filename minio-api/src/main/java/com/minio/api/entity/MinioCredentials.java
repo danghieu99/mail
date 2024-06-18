@@ -20,6 +20,12 @@ public class MinioCredentials {
     public MinioCredentials() {
     }
 
+    public MinioCredentials(String endPoint, String accessKey, String secretKey) {
+        this.endPoint = endPoint;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+    }
+
     public Long getId() {
         return id;
     }
