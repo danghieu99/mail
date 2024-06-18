@@ -1,5 +1,6 @@
 package com.minio.api.controller;
 
+import com.minio.api.entities.MinioClientCredentials;
 import com.minio.api.service.MinioClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

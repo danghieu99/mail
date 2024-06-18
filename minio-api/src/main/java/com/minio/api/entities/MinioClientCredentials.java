@@ -3,20 +3,22 @@ package com.minio.api.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "credentials")
 public class MinioClientCredentials {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "endpoint", nullable = false)
+    @Column(nullable = false)
     private String endPoint;
-    @Column(name = "accesskey", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String accessKey;
-    @Column(name = "secretkey", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String secretKey;
 
-    public MinioClientCredentials() {}
+    public MinioClientCredentials() {
+    }
 
     public Long getId() {
         return id;
