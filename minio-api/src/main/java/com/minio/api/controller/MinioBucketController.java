@@ -13,9 +13,6 @@ public class MinioBucketController {
     @Autowired
     private MinioBucketService minioBucketService;
 
-    @Autowired
-    private MinioClientFactory minioClientFactory;
-
     @PostMapping("/create")
     public String createBucket(@RequestParam("bucketname") final String bucketName) {
         return minioBucketService.createBucket(bucketName);
