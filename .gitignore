@@ -13,3 +13,8 @@
 /mailsender/gradlew
 /mailsender/gradlew.bat
 /mailsender/build
+/oauth2/build
+/oauth2/gradle
+/oauth2/gradlew
+/oauth2/gradlew.bat
+/oauth2/.gradle
