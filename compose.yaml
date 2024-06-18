@@ -20,3 +20,9 @@ services:
     container_name: kafka-listener
     build: /kafka-listener/
     image: kafka-listener:latest
+
+  google-oauth2:
+    pull_policy: build
+    container_name: google-oauth2
+    build: /google-oauth2/
+    image: google-oauth2:latest
