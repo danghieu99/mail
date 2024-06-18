@@ -1,4 +1,4 @@
-package com.example.kafkamailsender;
+package com.example.kafkamailsender.kafkamailsender;
 
 import com.example.kafkamailsender.dto.MailData;
 import com.example.kafkamailsender.miniofileclient.MinioFileClient;

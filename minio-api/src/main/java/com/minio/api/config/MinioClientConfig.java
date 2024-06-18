@@ -1,6 +1,6 @@
 package com.minio.api.config;
 
-import com.minio.api.service.MinioClientFactory;
+import com.minio.api.service.impl.MinioClientFactory;
 import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

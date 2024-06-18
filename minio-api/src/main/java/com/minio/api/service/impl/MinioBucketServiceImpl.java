@@ -1,4 +1,4 @@
-package com.minio.api.service;
+package com.minio.api.service.impl;
 
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MinioBucketService {
+public class MinioBucketServiceImpl {
 
     @Autowired
     MinioClient minioClient;

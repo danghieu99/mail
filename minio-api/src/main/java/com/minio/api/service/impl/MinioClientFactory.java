@@ -1,4 +1,4 @@
-package com.minio.api.service;
+package com.minio.api.service.impl;
 
 import io.minio.MinioClient;
 import org.springframework.stereotype.Component;

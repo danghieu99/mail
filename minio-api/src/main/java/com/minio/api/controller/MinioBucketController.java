@@ -1,8 +1,8 @@
 package com.minio.api.controller;
 
 
-import com.minio.api.service.MinioBucketService;
-import com.minio.api.service.MinioClientFactory;
+import com.minio.api.service.impl.MinioBucketServiceImpl;
+import com.minio.api.service.impl.MinioClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class MinioBucketController {
 
     @Autowired
-    private MinioBucketService minioBucketService;
+    private MinioBucketServiceImpl minioBucketService;
 
     @Autowired
     private MinioClientFactory minioClientFactory;

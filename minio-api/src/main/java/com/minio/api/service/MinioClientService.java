@@ -2,16 +2,14 @@ package com.minio.api.service;
 
 import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class MinioClientService {
+public interface MinioClientService {
 
-    @Autowired
-    private MinioClientFactory minioClientFactory;
+    public String createClient(String endPoint, String accessKey, String secretKey);
 
-    public MinioClient createClient(String endPoint, String accessKey, String secretKey) {
-        return minioClientFactory.newMinioClient(endPoint, accessKey, secretKey);
-    }
+    public String deleteClientById(Long id);
 
+    public String listClients();
+
+    public String
 }

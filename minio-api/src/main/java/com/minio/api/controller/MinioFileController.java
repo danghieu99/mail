@@ -19,25 +19,26 @@ public class MinioFileController {
     }
 
     @GetMapping("/geturl")
-    public ResponseEntity<String> getUrl(@RequestParam("bucketname") String bucketName,
-                                         @RequestParam("filename") String fileName) {
+    public String getUrl(@RequestParam("bucketname") String bucketName,
+                         @RequestParam("filename") String fileName) {
 
         return minioFileService.getFileUrl(bucketName, fileName);
     }
 
     @GetMapping("/download")
-    public ResponseEntity<String> downloadFile(@RequestParam("filename") String fileName,
-                                               @RequestParam("bucketname") String bucketName) {
-        return minioFileService.downloadFile(bucketName, fileName);
+    public String downloadFile(@RequestParam("filename") String fileName,
+                               @RequestParam("bucketname") String bucketName,
+                               @RequestParam("path") String path) {
+        return minioFileService.downloadFile(bucketName, fileName, path);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<String> listFiles(@RequestParam("bucketname") String bucketName) {
+    public String listFiles(@RequestParam("bucketname") String bucketName) {
         return minioFileService.listFiles(bucketName);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteFiles(@RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
+    public String deleteFiles(@RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
         return minioFileService.deleteFile(bucketName, fileName);
     }
 }

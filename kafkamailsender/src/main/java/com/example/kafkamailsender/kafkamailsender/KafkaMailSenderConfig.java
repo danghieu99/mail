@@ -1,4 +1,4 @@
-package com.example.kafkamailsender;
+package com.example.kafkamailsender.kafkamailsender;
 
 import com.example.kafkamailsender.miniofileclient.MinioFileClient;
 import org.apache.kafka.clients.producer.KafkaProducer;
