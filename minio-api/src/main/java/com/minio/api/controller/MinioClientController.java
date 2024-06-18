@@ -27,6 +27,4 @@ public class MinioClientController {
     public String deleteClient(Long id) {
         return minioClientService.deleteClientById(id);
     }
-
-
 }

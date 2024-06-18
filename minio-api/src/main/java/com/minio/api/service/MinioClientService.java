@@ -11,5 +11,4 @@ public interface MinioClientService {
 
     public String listClients();
 
-    public String
 }

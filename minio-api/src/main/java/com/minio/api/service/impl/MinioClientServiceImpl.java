@@ -9,6 +9,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MinioClientServiceImpl implements MinioClientService {
+    @Override
+    public String deleteClientById(Long id) {
+
+
+        return "";
+    }
+
+    @Override
+    public String listClients() {
+
+
+        return "";
+    }
 
     @Autowired
     private MinioClientFactory minioClientFactory;
@@ -17,12 +30,8 @@ public class MinioClientServiceImpl implements MinioClientService {
     private MinioCredentialsRepository minioCredentialsRepository;
 
     public String createClient(String endPoint, String accessKey, String secretKey) {
-        try {
-            MinioClient client = minioClientFactory.newMinioClient(endPoint, accessKey, secretKey);
-            minioCredentialsRepository.save(client);
-        } catch (MinioException e) {
-            return e.getMessage();
-        }
+        MinioClient client = minioClientFactory.newMinioClient(endPoint, accessKey, secretKey);
+        minioCredentialsRepository.save(client);
         return "client created";
     }
 }

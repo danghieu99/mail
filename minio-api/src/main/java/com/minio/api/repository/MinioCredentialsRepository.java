@@ -15,4 +15,6 @@ public interface MinioCredentialsRepository extends CrudRepository<MinioCredenti
 
     Iterable<MinioCredentials> findAll();
 
+    void deleteById(Long id);
+
 }
