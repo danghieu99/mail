@@ -16,4 +16,4 @@ COPY --from=builder /build/libs/ /build/libs/
 
 EXPOSE 8082
 
-CMD ["java", "-jar", "/build/libs/minio-api-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/build/libs/kafkamailsender-0.0.1-SNAPSHOT.jar"]
