@@ -23,3 +23,8 @@
 /gmail-api/gradlew
 /gmail-api/build
 /gmail-api/.gradle
+/kafkamailsender/build
+/kafkamailsender/.gradle
+/kafkamailsender/gradlew
+/kafkamailsender/gradle
+kafkamailsender/gradlew.bat

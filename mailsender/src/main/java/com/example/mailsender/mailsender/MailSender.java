@@ -1,7 +1,7 @@
 package com.example.mailsender.mailsender;
 
 import com.example.mailsender.miniofileclient.MinioFileClient;
-import com.example.mailsender.dto.MailDataDto;
+import com.example.mailsender.dto.MailData;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -109,18 +109,18 @@ public class MailSender {
     public String sendMailData(String mailJson) {
 
         try {
-            MailDataDto mailDataDto = toMailData(mailJson);
-            List<String> recipients = mailDataDto.getRecipients();
-            String sender = mailDataDto.getSender();
-            String subject = mailDataDto.getSubject();
-            String content = mailDataDto.getContent();
+            MailData mailData = toMailData(mailJson);
+            List<String> recipients = mailData.getRecipients();
+            String sender = mailData.getSender();
+            String subject = mailData.getSubject();
+            String content = mailData.getContent();
 
-            if (mailDataDto.getAttachmentUrl() == null && mailDataDto.getFileName() == null) {
+            if (mailData.getAttachmentUrl() == null && mailData.getFileName() == null) {
                 System.out.println("Sending mail with no attachment!");
                 return sendMail(sender, recipients, subject, content);
             } else {
-                String attachmentUrl = mailDataDto.getAttachmentUrl();
-                String fileName = mailDataDto.getFileName();
+                String attachmentUrl = mailData.getAttachmentUrl();
+                String fileName = mailData.getFileName();
                 System.out.println("Sending mail with attachment url!");
                 return sendMailWithAttachmentUrl(attachmentUrl, fileName, sender, recipients, subject, content);
             }

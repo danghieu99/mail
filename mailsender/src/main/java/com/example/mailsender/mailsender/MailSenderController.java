@@ -1,6 +1,5 @@
 package com.example.mailsender.mailsender;
 
-import com.example.mailsender.dto.MailDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

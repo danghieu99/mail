@@ -1,5 +1,6 @@
-package com.example.mailsender.kafkamailsender;
+package com.example.kafkamailsender;
 
+import com.example.kafkamailsender.miniofileclient.MinioFileClient;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +11,6 @@ import java.util.Properties;
 @Configuration
 public class KafkaMailSenderConfig {
 
-
     @Bean
     public KafkaProducer<String, String> kafkaProducer() {
         Properties props = new Properties();
@@ -20,5 +20,10 @@ public class KafkaMailSenderConfig {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
 
         return new KafkaProducer<>(props);
+    }
+
+    @Bean
+    public MinioFileClient getMinioFileClient() {
+        return new MinioFileClient();
     }
 }

@@ -1,8 +1,8 @@
-package com.example.mailsender.dto;
+package com.example.kafkamailsender.dto;
 
 import java.util.List;
 
-public class MailDataDto {
+public class MailData {
 
     private List<String> recipients;
     private String sender;
@@ -11,10 +11,10 @@ public class MailDataDto {
     private String attachmentUrl;
     private String fileName;
 
-    public MailDataDto() {
+    public MailData() {
     }
 
-    public MailDataDto(String sender, List<String> recipients, String subject, String content, String attachmentUrl, String fileName) {
+    public MailData(String sender, List<String> recipients, String subject, String content, String attachmentUrl, String fileName) {
         this.sender = sender;
         this.subject = subject;
         this.content = content;
@@ -23,7 +23,7 @@ public class MailDataDto {
         this.recipients = recipients;
     }
 
-    public MailDataDto(String sender, List<String> recipients, String subject, String content) {
+    public MailData(String sender, List<String> recipients, String subject, String content) {
         this.sender = sender;
         this.subject = subject;
         this.content = content;

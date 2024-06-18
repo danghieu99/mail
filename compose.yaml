@@ -15,19 +15,28 @@ services:
     ports:
       - "8081:8081"
 
+  kafkamailsender:
+    pull_policy: build
+    container_name: kafkamailsender-api
+    build: /kafkamailsender
+    image: kafkamailsender:latest
+    ports:
+      - "8082:8082"
+
   kafka-listener:
     pull_policy: build
     container_name: kafka-listener
     build: /kafka-listener/
     image: kafka-listener:latest
+
 #
-#    google-oauth2:
+#  google-oauth2:
 #      pull_policy: build
 #      container_name: google-oauth2
 #      build: /google-oauth2/
 #      image: google-oauth2:latest
 #      ports:
-#        - "8082:8082"
+#        - "8083:8083"
 
 #  gmail-api:
 #    pull_policy: build
@@ -35,4 +44,4 @@ services:
 #    build: /gmail-api/
 #    image: gmail-api:latest
 #    ports:
-#      - "8083:8083"
+#      - "8084:8084"

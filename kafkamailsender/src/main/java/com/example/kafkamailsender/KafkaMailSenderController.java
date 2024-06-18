@@ -1,4 +1,4 @@
-package com.example.mailsender.kafkamailsender;
+package com.example.kafkamailsender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +14,11 @@ import java.util.List;
 public class KafkaMailSenderController {
 
     @Autowired
-    KafkaMailSender kafkaMailSender;
+    KafkaMailSenderService kafkaMailSenderService;
 
     @PostMapping("/sendmessage")
     public String sendMessage(@RequestParam("message") String message) {
-        return kafkaMailSender.sendMessage(message);
+        return kafkaMailSenderService.sendMessage(message);
     }
 
     @PostMapping("/sendmail")
@@ -26,7 +26,7 @@ public class KafkaMailSenderController {
                            @RequestParam("sender") String sender,
                            @RequestParam("subject") String subject,
                            @RequestParam("content") String content) {
-        return kafkaMailSender.sendMail(sender, recipients, subject, content);
+        return kafkaMailSenderService.sendMail(sender, recipients, subject, content);
     }
 
     @PostMapping("/sendmailwithattachment")
@@ -36,6 +36,6 @@ public class KafkaMailSenderController {
                                          @RequestParam("content") String content,
                                          @RequestParam("file") MultipartFile file) {
 
-        return kafkaMailSender.sendMailWithAttachmentFile(sender, recipients, subject, content, file);
+        return kafkaMailSenderService.sendMailWithAttachmentFile(sender, recipients, subject, content, file);
     }
 }

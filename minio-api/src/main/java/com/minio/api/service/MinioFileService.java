@@ -1,18 +1,18 @@
-package com.minio.api;
+package com.minio.api.service;
 
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Iterator;
 
-@Component
-public class MinioFileClient {
+@Service
+public class MinioFileService {
 
     @Autowired
     io.minio.MinioClient minioClient;

@@ -1,7 +1,7 @@
-package com.example.mailsender.util;
+package com.example.kafkamailsender.util;
 
 
-import com.example.mailsender.dto.MailData;
+import com.example.kafkamailsender.dto.MailData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 

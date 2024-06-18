@@ -1,14 +1,14 @@
-package com.minio.api;
+package com.minio.api.service;
 
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.RemoveBucketArgs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class MinioBucketClient {
+@Service
+public class MinioBucketService {
 
     @Autowired
     MinioClient minioClient;
