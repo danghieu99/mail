@@ -26,3 +26,5 @@ services:
     container_name: google-oauth2
     build: /google-oauth2/
     image: google-oauth2:latest
+    ports:
+      - "8082:8082"
