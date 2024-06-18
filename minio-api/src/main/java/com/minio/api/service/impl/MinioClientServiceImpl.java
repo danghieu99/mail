@@ -6,10 +6,19 @@ import com.minio.api.service.MinioClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-
 @Service
 public class MinioClientServiceImpl implements MinioClientService {
+
+    @Override
+    public String listClients() {
+        Iterable<MinioCredentials> credentials = minioCredentialsRepository.findAll();
+        StringBuilder clientList = new StringBuilder();
+        while (credentials.iterator().hasNext()) {
+            clientList.append(credentials.iterator().next()).append("\n");
+        }
+        return clientList.toString();
+    }
+
     @Override
     public String deleteClientById(Long id) {
         try {
@@ -18,17 +27,6 @@ public class MinioClientServiceImpl implements MinioClientService {
             return e.getMessage();
         }
         return "delete successful";
-    }
-
-    @Override
-    public String listClients() {
-        Iterable<MinioCredentials> credentials = minioCredentialsRepository.findAll();
-        Iterator iterator = credentials.iterator();
-        StringBuilder clientList = new StringBuilder();
-        while (iterator.hasNext()) {
-            clientList.append((String) iterator.next());
-        }
-        return clientList.toString();
     }
 
     @Autowired

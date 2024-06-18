@@ -5,7 +5,6 @@ import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,13 +69,13 @@ public class MinioFileServiceImpl implements MinioFileService {
     }
 
     public String listFiles(String bucketName) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         try {
             Iterable<Result<Item>> results = minioClient.listObjects(ListObjectsArgs.builder().bucket(bucketName).recursive(true).build());
             Iterator<Result<Item>> iterator = results.iterator();
 
             while (iterator.hasNext()) {
-                result += iterator.next().get().objectName() + "\n";
+                result.append(iterator.next().get().objectName()).append("\n");
             }
             return "Files listed successfully:\n" + result;
         } catch (Exception e) {

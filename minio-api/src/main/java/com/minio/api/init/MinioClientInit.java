@@ -1,5 +1,6 @@
 package com.minio.api.init;
 
+import com.minio.api.repository.MinioCredentialsRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -11,11 +12,10 @@ public class MinioClientInit implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        initMinioClient();
+        initMinioCredentials();
     }
 
-    @PostConstruct
-    public void initMinioClient() {
+    public void initMinioCredentials() {
 
     }
 
