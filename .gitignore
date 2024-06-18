@@ -18,3 +18,8 @@
 /oauth2/gradlew
 /oauth2/gradlew.bat
 /oauth2/.gradle
+/gmail-api/gradle
+/gmail-api/gradlew.bat
+/gmail-api/gradlew
+/gmail-api/build
+/gmail-api/.gradle
