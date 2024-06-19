@@ -1,7 +1,6 @@
 package com.minio.api.controller;
 
-import com.minio.api.service.MinioClientService;
-import io.minio.MinioClient;
+import com.minio.api.services.minioconfig.MinioConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,22 +9,22 @@ import org.springframework.web.bind.annotation.*;
 public class MinioClientController {
 
     @Autowired
-    MinioClientService minioClientService;
+    MinioConfigService minioConfigService;
 
     @PostMapping("/create")
-    public String createClient(@RequestParam("endpoint") String endPoint,
+    public String addClient(@RequestParam("endpoint") String endPoint,
                                @RequestParam("accessKey") String accessKey,
                                @RequestParam("secretKey") String secretKey) {
-        return minioClientService.addClient(endPoint, accessKey, secretKey);
+        return minioConfigService.addConfig(endPoint, accessKey, secretKey);
     }
 
     @GetMapping("/list")
     public String listClient() {
-        return minioClientService.listClients();
+        return minioConfigService.listConfigs();
     }
 
     @DeleteMapping("/delete")
     public String deleteClient(Long id) {
-        return minioClientService.deleteClientById(id);
+        return minioConfigService.deleteConfigById(id);
     }
 }

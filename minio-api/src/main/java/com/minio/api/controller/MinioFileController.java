@@ -1,8 +1,7 @@
 package com.minio.api.controller;
 
-import com.minio.api.service.MinioClientService;
-import com.minio.api.service.MinioFileService;
-import io.minio.MinioClient;
+import com.minio.api.services.file.MinioFileService;
+import com.minio.api.services.file.MinioFileServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,34 +12,42 @@ import org.springframework.web.multipart.MultipartFile;
 public class MinioFileController {
 
     @Autowired
-    private MinioFileService minioFileService;
+    MinioFileServiceFactory minioFileServiceFactory;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) {
+    public String uploadFile(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+        MinioFileService minioFileService = minioFileServiceFactory.getMinioFileService(id);
         return minioFileService.uploadFile(file);
     }
 
     @GetMapping("/geturl")
-    public String getUrl(@RequestParam("bucketname") String bucketName,
+    public String getUrl(@PathVariable String id,
+                         @RequestParam("bucketname") String bucketName,
                          @RequestParam("filename") String fileName) {
-
+        MinioFileService minioFileService = minioFileServiceFactory.getMinioFileService(id);
         return minioFileService.getFileUrl(bucketName, fileName);
     }
 
     @GetMapping("/download")
-    public String downloadFile(@RequestParam("filename") String fileName,
+    public String downloadFile(@PathVariable String id,
+                               @RequestParam("filename") String fileName,
                                @RequestParam("bucketname") String bucketName,
                                @RequestParam("path") String path) {
+        MinioFileService minioFileService = minioFileServiceFactory.getMinioFileService(id);
         return minioFileService.downloadFile(bucketName, fileName, path);
     }
 
     @GetMapping("/list")
-    public String listFiles(@RequestParam("bucketname") String bucketName) {
+    public String listFiles(@PathVariable String id,
+                            @RequestParam("bucketname") String bucketName) {
+        MinioFileService minioFileService = minioFileServiceFactory.getMinioFileService(id);
         return minioFileService.listFiles(bucketName);
     }
 
     @DeleteMapping("/delete")
-    public String deleteFiles(@RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
+    public String deleteFiles(@PathVariable String id,
+                              @RequestParam("bucketname") String bucketName, @RequestParam("filename") String fileName) {
+        MinioFileService minioFileService = minioFileServiceFactory.getMinioFileService(id);
         return minioFileService.deleteFile(bucketName, fileName);
     }
 }

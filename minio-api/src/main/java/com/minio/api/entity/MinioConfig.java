@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "credentials")
-public class MinioCredentials {
+public class MinioConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class MinioCredentials {
     @Column(name = "secretkey", nullable = false, unique = true)
     private String secretKey;
 
-    public MinioCredentials() {
+    public MinioConfig() {
     }
 
-    public MinioCredentials(String endPoint, String accessKey, String secretKey) {
+    public MinioConfig(String endPoint, String accessKey, String secretKey) {
         this.endPoint = endPoint;
         this.accessKey = accessKey;
         this.secretKey = secretKey;

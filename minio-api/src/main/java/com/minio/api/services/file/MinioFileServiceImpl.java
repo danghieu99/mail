@@ -1,21 +1,23 @@
-package com.minio.api.service.impl;
+package com.minio.api.services.file;
 
-import com.minio.api.service.MinioFileService;
+import com.minio.api.services.client.MinioClientFactory;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Iterator;
 
-@Service
+
 public class MinioFileServiceImpl implements MinioFileService {
 
-    @Autowired
+    private MinioClientFactory minioClientFactory;
     private MinioClient minioClient;
+
+    public MinioFileServiceImpl(String id) {
+        this.minioClient = minioClientFactory.newMinioClient(id);
+    }
 
     public String uploadFile(MultipartFile file) {
         try {

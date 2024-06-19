@@ -1,4 +1,4 @@
-package com.minio.api.service;
+package com.minio.api.services.bucket;
 
 import org.springframework.web.context.annotation.RequestScope;
 

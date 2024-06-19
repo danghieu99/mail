@@ -1,20 +1,16 @@
 package com.minio.api.init;
 
-import com.minio.api.entity.MinioCredentials;
-import com.minio.api.repository.MinioCredentialsRepository;
-import com.minio.api.service.MinioClientService;
-import jakarta.annotation.PostConstruct;
+import com.minio.api.services.minioconfig.MinioConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Component
-public class MinioClientInit implements ApplicationListener<ContextRefreshedEvent> {
+public class MinioConfigsInit implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    MinioClientService minioClientService;
+    MinioConfigService minioConfigService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -26,6 +22,6 @@ public class MinioClientInit implements ApplicationListener<ContextRefreshedEven
         String accessKey = "ERnGCPDwwkhCObagKdiA";
         String secretKey = "zf1yGIuCP2JVw6ssVubn7b6ZtUkMRHtENWtkgvl1";
 
-        minioClientService.addClient(endPoint, accessKey, secretKey);
+        minioConfigService.addConfig(endPoint, accessKey, secretKey);
     }
 }
