@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class MinioClientConfig {
 
     @Bean
-    public MinioClient minioClient() {
+    public MinioClient defaultMinioClient() {
 
         String endPoint = "http://118.71.99.251:9095/";
         String accessKey = "ERnGCPDwwkhCObagKdiA";
@@ -18,6 +18,5 @@ public class MinioClientConfig {
                 .endpoint(endPoint)
                 .credentials(accessKey, secretKey)
                 .build();
-
     }
 }
