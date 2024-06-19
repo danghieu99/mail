@@ -23,15 +23,15 @@ services:
     ports:
       - "8082:8082"
 
-    mysql-server:
-      pull_policy: build
-      container_name: mysql-server
-      build:
-        context:
-        dockerfile: mysqlDockerfile
-      image: mysql-server:latest
-      ports:
-        - "8083:8083"
+#    mysql-server:
+#      pull_policy: build
+#      container_name: mysql-server
+#      build:
+#        context: /
+#        dockerfile: mysqlDockerfile
+#      image: mysql-server:latest
+#      ports:
+#        - "8083:8083"
 
 #  google-oauth2:
 #      pull_policy: build
