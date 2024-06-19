@@ -1,12 +1,13 @@
 package com.minio.api.service.impl;
 
 import com.minio.api.entity.MinioCredentials;
+import com.minio.api.service.MinioClientFactory;
 import io.minio.MinioClient;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class MinioClientFactory {
+@Service
+public class MinioClientFactoryImpl implements MinioClientFactory {
 
     public MinioClient newMinioClient(@NotNull MinioCredentials credentials) {
         return MinioClient.builder()

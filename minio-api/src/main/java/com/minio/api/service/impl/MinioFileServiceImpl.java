@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class MinioFileServiceImpl implements MinioFileService {
 
     @Autowired
-    io.minio.MinioClient minioClient;
+    private MinioClient minioClient;
 
     public String uploadFile(MultipartFile file) {
         try {

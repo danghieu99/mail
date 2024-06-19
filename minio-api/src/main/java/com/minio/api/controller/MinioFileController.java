@@ -1,12 +1,15 @@
 package com.minio.api.controller;
 
+import com.minio.api.service.MinioClientService;
 import com.minio.api.service.MinioFileService;
+import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/api/file/{id}")
+
 public class MinioFileController {
 
     @Autowired

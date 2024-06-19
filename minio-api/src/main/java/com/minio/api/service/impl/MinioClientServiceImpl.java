@@ -2,12 +2,22 @@ package com.minio.api.service.impl;
 
 import com.minio.api.entity.MinioCredentials;
 import com.minio.api.repository.MinioCredentialsRepository;
+import com.minio.api.service.MinioClientFactory;
 import com.minio.api.service.MinioClientService;
+import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MinioClientServiceImpl implements MinioClientService {
+
+    @Autowired
+    private MinioCredentialsRepository minioCredentialsRepository;
+
+    @Autowired
+    private MinioClientFactory minioClientFactory;
 
     @Override
     public String listClients() {
@@ -29,11 +39,17 @@ public class MinioClientServiceImpl implements MinioClientService {
         return "delete successful";
     }
 
-    @Autowired
-    private MinioCredentialsRepository minioCredentialsRepository;
-
-    public String createClient(String endPoint, String accessKey, String secretKey) {
+    public String addClient(String endPoint, String accessKey, String secretKey) {
         minioCredentialsRepository.save(new MinioCredentials(endPoint, accessKey, secretKey));
         return "client created";
+    }
+
+    @Override
+    public MinioClient getClient(String id) {
+        Optional<MinioCredentials> credentials = minioCredentialsRepository.findById(Long.valueOf(id));
+        if (credentials.isPresent()) {
+            return minioClientFactory.newMinioClient(credentials.get());
+        }
+        return null;
     }
 }
