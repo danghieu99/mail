@@ -40,11 +40,3 @@ services:
 #      image: google-oauth2:latest
 #      ports:
 #        - "8084:8084"
-
-#  gmail-api:
-#    pull_policy: build
-#    container_name: gmail-api
-#    build: /gmail-api/
-#    image: gmail-api:latest
-#    ports:
-#      - "8085:8085"
