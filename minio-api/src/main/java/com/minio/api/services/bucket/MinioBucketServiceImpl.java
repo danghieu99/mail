@@ -1,18 +1,17 @@
 package com.minio.api.services.bucket;
 
-import com.minio.api.services.client.MinioClientFactory;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.RemoveBucketArgs;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MinioBucketServiceImpl implements MinioBucketService {
-
-    MinioClientFactory minioClientFactory;
 
     private MinioClient minioClient;
 
-    public MinioBucketServiceImpl(String id) {
-        this.minioClient = minioClientFactory.newMinioClient(id);
+    public MinioBucketServiceImpl(MinioClient minioClient) {
+        this.minioClient = minioClient;
     }
 
     public String createBucket(String bucketName) {
