@@ -15,21 +15,23 @@ services:
     ports:
       - "8081:8081"
 
-  kafkamailsender:
-    pull_policy: build
-    container_name: kafkamailsender-api
-    build: /kafkamailsender
-    image: kafkamailsender:latest
-    ports:
-      - "8082:8082"
-
   kafka-listener:
     pull_policy: build
     container_name: kafka-listener
     build: /kafka-listener/
     image: kafka-listener:latest
     ports:
-      - "8083:8083"
+      - "8082:8082"
+
+    mysql-server:
+      pull_policy: build
+      container_name: mysql-server
+      build:
+        context:
+        dockerfile: mysqlDockerfile
+      image: mysql-server:latest
+      ports:
+        - "8083:8083"
 
 #  google-oauth2:
 #      pull_policy: build
