@@ -12,6 +12,7 @@ import java.util.Collections;
 @Configuration
 public class AuthConfig {
 
+    /*
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("mail")
@@ -29,3 +30,5 @@ public class AuthConfig {
                 .build();
 
     }
+
+     */
