@@ -1,10 +1,11 @@
-package com.example.kafkalistener.kafkalistener;
+package com.example.kafkalistener.config;
 
-import com.example.kafkalistener.mailsenderclient.MailSenderClient;
+import com.example.kafkalistener.service.MailSenderClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestClient;
 
 import java.util.Properties;
 
@@ -28,4 +29,10 @@ public class KafkaListenerConfig {
     public MailSenderClient getMailSenderClient() {
         return new MailSenderClient();
     }
+
+    @Bean
+    public RestClient getRestClient() {
+        return RestClient.create();
+    }
+
 }

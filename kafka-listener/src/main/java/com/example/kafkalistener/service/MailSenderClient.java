@@ -1,4 +1,4 @@
-package com.example.kafkalistener.mailsenderclient;
+package com.example.kafkalistener.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;

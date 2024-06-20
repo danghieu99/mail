@@ -23,6 +23,14 @@ services:
     ports:
       - "8082:8082"
 
+  google-oauth2:
+    pull_policy: build
+    container_name: google-oauth2
+    build: /google-oauth2/
+    image: google-oauth2:latest
+    ports:
+      - "8083:8083"
+
 #    mysql-server:
 #      pull_policy: build
 #      container_name: mysql-server
@@ -31,12 +39,6 @@ services:
 #        dockerfile: Dockerfile.mysqlserver
 #      image: mysql-server:latest
 #      ports:
-#        - "8083:8083"
-
-#  google-oauth2:
-#      pull_policy: build
-#      container_name: google-oauth2
-#      build: /google-oauth2/
-#      image: google-oauth2:latest
-#      ports:
 #        - "8084:8084"
+
+
