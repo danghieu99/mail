@@ -31,6 +31,10 @@ public class PersonalMailSender {
 
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content, Collection<MultipartFile> files) {
 
+        if (files.isEmpty()) {
+            throw new RuntimeException("files is empty");
+        }
+
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
         return sendMailWithAttachments(from, to, subject, content, attachments);

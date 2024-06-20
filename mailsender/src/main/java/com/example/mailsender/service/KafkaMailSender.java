@@ -50,6 +50,10 @@ public class KafkaMailSender {
 
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
 
+        if (files.isEmpty()) {
+            throw new RuntimeException("files is empty");
+        }
+
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
         MailData mailWIthAttachmentMinioUrl = new MailData(from, to, subject, body, attachments);
