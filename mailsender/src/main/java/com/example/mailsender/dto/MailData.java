@@ -1,9 +1,7 @@
 package com.example.mailsender.dto;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class MailData {
 
@@ -35,12 +33,14 @@ public class MailData {
         this.to = to;
     }
 
-    public MailData(String from, List<String> to, String subject, String body, String replyTo) {
+    public MailData(String from, List<String> to, String subject, String body, String replyTo, String cc, String bcc) {
         this.from = from;
         this.to = to;
         this.subject = subject;
         this.body = body;
         this.replyTo = replyTo;
+        this.cc = cc;
+        this.bcc = bcc;
     }
 
     public List<String> getTo() {
@@ -61,18 +61,6 @@ public class MailData {
 
     public HashMap<String, String> getAttachments() {
         return attachments;
-    }
-
-    public Set<String> getUrls() {
-        return attachments.keySet();
-    }
-
-    public Collection<String> getFileNames() {
-        return attachments.values();
-    }
-
-    public String getFileName(String url) {
-        return attachments.get(url);
     }
 
     public String getCc() {
