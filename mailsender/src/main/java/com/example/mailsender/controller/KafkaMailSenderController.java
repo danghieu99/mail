@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kafka")
+@RequestMapping("/api/mail/kafka")
 public class KafkaMailSenderController {
 
     @Autowired
@@ -23,20 +24,20 @@ public class KafkaMailSenderController {
     }
 
     @PostMapping("/sendmail")
-    public String sendMail(@RequestParam List<String> recipients,
-                           @RequestParam("sender") String sender,
+    public String sendMail(@RequestParam List<String> to,
+                           @RequestParam("from") String from,
                            @RequestParam("subject") String subject,
-                           @RequestParam("content") String content) {
-        return kafkaMailSender.sendMail(sender, recipients, subject, content);
+                           @RequestParam("body") String body) {
+        return kafkaMailSender.sendMail(from, to, subject, body);
     }
 
-    @PostMapping("/sendmailwithattachment")
-    public String sendMailWithAttachment(@RequestParam("sender") String sender,
-                                         @RequestParam List<String> recipients,
+    @PostMapping("/sendmailwithattachments")
+    public String sendMailWithAttachment(@RequestParam("from") String from,
+                                         @RequestParam List<String> to,
                                          @RequestParam("subject") String subject,
-                                         @RequestParam("content") String content,
-                                         @RequestParam("file") MultipartFile file) {
+                                         @RequestParam("body") String body,
+                                         @RequestParam("files") Collection<MultipartFile> files) {
 
-        return kafkaMailSender.sendMailWithAttachmentFile(sender, recipients, subject, content, file);
+        return kafkaMailSender.sendMailWithAttachments(from, to, subject, body, files);
     }
 }

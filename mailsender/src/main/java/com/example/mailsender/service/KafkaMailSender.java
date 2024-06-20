@@ -4,14 +4,13 @@ import com.example.mailsender.dto.MailData;
 import com.example.mailsender.util.MailDataToJson;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-@Component
+@Service
 public class KafkaMailSender {
 
     @Autowired
@@ -33,8 +32,8 @@ public class KafkaMailSender {
         return "message sent";
     }
 
-    public String sendMail(String sender, List<String> recipients, String subject, String content) {
-        MailData mail = new MailData(sender, recipients, subject, content);
+    public String sendMail(String from, List<String> to, String subject, String body) {
+        MailData mail = new MailData(from, to, subject, body);
         String topic = "mailtest";
         String jsonMessage = MailDataToJson.toJson(mail);
         String key = String.valueOf(UUID.randomUUID());
@@ -49,20 +48,11 @@ public class KafkaMailSender {
         return "mail sent";
     }
 
-    public String sendMailWithAttachmentFile(String sender, List<String> recipients, String subject, String content, MultipartFile file) {
+    public String sendMailWithAttachments(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
 
-        String fileName = UUID.randomUUID() + file.getOriginalFilename();
+        HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
-        try {
-            minioFileClient.uploadFile(file, fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return e.getMessage();
-        }
-
-        String attachmentUrl = minioFileClient.fetchFileUrl(fileName);
-
-        MailData mailWIthAttachmentMinioUrl = new MailData(sender, recipients, subject, content, attachmentUrl, fileName);
+        MailData mailWIthAttachmentMinioUrl = new MailData(from, to, subject, body, attachments);
 
         String jsonMessage = MailDataToJson.toJson(mailWIthAttachmentMinioUrl);
         String topic = "mailtest";
