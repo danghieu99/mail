@@ -23,7 +23,7 @@ public class AuthService {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> tokenRequest = new HashMap<>();
         tokenRequest.put("grant_type", "password");
-        tokenRequest.put("scope", "https://mail.google.com/")
+        tokenRequest.put("scope", "https://mail.google.com/");
         tokenRequest.put("client_id", client_id);
         tokenRequest.put("client_secret", client_secret);
         tokenRequest.put("username", username);
