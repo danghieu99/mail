@@ -28,7 +28,7 @@ services:
 #      container_name: mysql-server
 #      build:
 #        context: /
-#        dockerfile: mysqlDockerfile
+#        dockerfile: Dockerfile.mysqlserver
 #      image: mysql-server:latest
 #      ports:
 #        - "8083:8083"

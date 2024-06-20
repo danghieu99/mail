@@ -22,9 +22,6 @@ public class MinioFileClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
-    MinioFileClient minioFileClient;
-
     public String uploadFile(MultipartFile file, String fileName) throws IOException {
 
         String url = "http://host.docker.internal:8080/api/file/upload";
@@ -60,7 +57,7 @@ public class MinioFileClient {
         try {
             uploadFiles.forEach((fileName, file) -> {
                 try {
-                    minioFileClient.uploadFile(file, fileName);
+                    uploadFile(file, fileName);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -71,7 +68,7 @@ public class MinioFileClient {
 
         HashMap<String, String> urlAttachments = new HashMap<>();
         for (String fileName : fileNames) {
-            String attachmentUrl = minioFileClient.fetchFileUrl(fileName);
+            String attachmentUrl =fetchFileUrl(fileName);
             urlAttachments.put(attachmentUrl, fileName);
         }
 

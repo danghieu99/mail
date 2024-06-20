@@ -38,6 +38,6 @@ public class KafkaMailSenderController {
                                          @RequestParam("body") String body,
                                          @RequestParam("files") Collection<MultipartFile> files) {
 
-        return kafkaMailSender.sendMailWithAttachments(from, to, subject, body, files);
+        return kafkaMailSender.sendMailWithAttachmentFiles(from, to, subject, body, files);
     }
 }

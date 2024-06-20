@@ -33,11 +33,11 @@ public class PersonalMailSender {
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
-        return sendMailWithAttachmentsUrl(from, to, subject, content, attachments);
+        return sendMailWithAttachments(from, to, subject, content, attachments);
     }
 
-    private String sendMailWithAttachmentsUrl(String from, List<String> to,
-                                              String subject, String content, HashMap<String, String> attachments) {
+    private String sendMailWithAttachments(String from, List<String> to,
+                                           String subject, String content, HashMap<String, String> attachments) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -100,7 +100,7 @@ public class PersonalMailSender {
             } else {
                 HashMap<String, String> attachments = mailData.getAttachments();
                 System.out.println("Sending mail with attachments!");
-                return sendMailWithAttachmentsUrl(from, to, subject, body, attachments);
+                return sendMailWithAttachments(from, to, subject, body, attachments);
             }
         } catch (Exception e) {
             e.printStackTrace();

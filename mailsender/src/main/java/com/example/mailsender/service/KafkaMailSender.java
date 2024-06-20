@@ -48,7 +48,7 @@ public class KafkaMailSender {
         return "mail sent";
     }
 
-    public String sendMailWithAttachments(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
+    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
@@ -66,6 +66,6 @@ public class KafkaMailSender {
                 throw new RuntimeException(exception);
             }
         });
-        return "mail with attachment sent";
+        return "mail with attachments sent";
     }
 }
