@@ -18,8 +18,7 @@ public class MinioBucketController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteBucket(@PathVariable String id, @RequestParam("bucketname") final String bucketName) {
+    public String deleteBucket(@RequestParam("bucketname") final String bucketName) {
         return minioBucketService.deleteBucket(bucketName);
     }
-
 }

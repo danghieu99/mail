@@ -2,6 +2,7 @@ package com.google.oauth2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,22 +13,27 @@ import java.util.Map;
 @Service
 public class AuthService {
 
-    @Autowired
     ClientRegistrationRepository clientRegistrationRepository;
 
-    private String client_id = clientRegistrationRepository.findByRegistrationId("mail").getClientId();
-    private String client_secret = clientRegistrationRepository.findByRegistrationId("mail").getClientSecret();
+    @Autowired
+    public AuthService(ClientRegistrationRepository clientRegistrationRepository) {
+        this.clientRegistrationRepository = clientRegistrationRepository;
+    }
+
+    ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId("mail");
+    private String client_id = clientRegistration.getClientId();
+    private String client_secret = clientRegistration.getClientSecret();
     private String tokenUri = "https://oauth2.googleapis.com/token";
 
-    private String obtainAccessTokenFromGoogle(String username, String password) {
+    public String fetchAccessTokenFromGoogle(HashMap<String, String> credentials) {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> tokenRequest = new HashMap<>();
         tokenRequest.put("grant_type", "password");
-        tokenRequest.put("scope", "https://mail.google.com/");
         tokenRequest.put("client_id", client_id);
         tokenRequest.put("client_secret", client_secret);
-        tokenRequest.put("username", username);
-        tokenRequest.put("password", password);
+        tokenRequest.put("username", credentials.keySet().iterator().next());
+        tokenRequest.put("password", credentials.values().iterator().next());
+        tokenRequest.put("scope", "https://mail.google.com/");
 
         ResponseEntity<Map> response = restTemplate.postForEntity(tokenUri, tokenRequest, Map.class);
 

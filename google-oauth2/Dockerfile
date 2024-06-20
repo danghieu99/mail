@@ -16,6 +16,6 @@ COPY --from=builder /build/libs/ /build/libs/
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/build/libs/minio-api-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/build/libs/oauth2-0.0.1-SNAPSHOT.jar"]
 
 

@@ -16,30 +16,32 @@ import java.util.Collections;
 public class AuthConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-                .oauth2Login(oauth2Login -> oauth2Login
-                        .clientRegistrationRepository(clientRegistrationRepository())
-                );
-        return http.build();
-    }
-
-    @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
+
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("mail")
                 .clientId("993587433485-ikigka0qg4osb33nio2dfmjppccnagpl.apps.googleusercontent.com")
                 .clientSecret("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")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("http://host.docker.internal/mail/{registrationId}")
+                .redirectUri("http://host.docker.internal/mail/gmail/{registrationId}")
                 .scope("https://mail.google.com/")
                 .authorizationUri("https://accounts.google.com/o/oauth2/auth")
                 .tokenUri("https://oauth2.googleapis.com/token")
                 .userInfoUri("https://example.com/userinfo")
                 .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-                .providerConfigurationMetadata(Collections.singletonMap("end_session_endpoint", "https://example.com/logout"))
+                .providerConfigurationMetadata(Collections.singletonMap("end_session_endpoint", "https://host.docker.internal/auth/logout"))
                 .build();
 
         return new InMemoryClientRegistrationRepository(clientRegistration);
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   ClientRegistrationRepository clientRegistrationRepository) throws Exception {
+        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .clientRegistrationRepository(clientRegistrationRepository)
+                );
+        return http.build();
     }
 }
