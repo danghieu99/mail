@@ -33,7 +33,7 @@ public class KafkaMailSender {
     }
 
     public String sendMail(String from, List<String> to, String subject, String body) {
-        MailData mail = new MailData(from, to, subject, body);
+        MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
         String topic = "mailtest";
         String jsonMessage = MailDataToJson.toJson(mail);
         String key = String.valueOf(UUID.randomUUID());
@@ -56,7 +56,7 @@ public class KafkaMailSender {
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
-        MailData mailWIthAttachmentMinioUrl = new MailData(from, to, subject, body, attachments);
+        MailData mailWIthAttachmentMinioUrl = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
 
         String jsonMessage = MailDataToJson.toJson(mailWIthAttachmentMinioUrl);
         String topic = "mailtest";
