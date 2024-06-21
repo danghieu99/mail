@@ -18,14 +18,14 @@ services:
     container_name: kafka-listener
     build: /kafka-listener/
     ports:
-      - "8082:8082"
+      - "8083:8083"
 
   google-oauth2:
     pull_policy: build
     container_name: google-oauth2
     build: /google-oauth2/
     ports:
-      - "8083:8083"
+      - "8084:8084"
 
 #    mysql-server:
 #      pull_policy: build

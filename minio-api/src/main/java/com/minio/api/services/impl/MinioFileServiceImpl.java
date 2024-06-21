@@ -1,5 +1,6 @@
-package com.minio.api.services.file;
+package com.minio.api.services.impl;
 
+import com.minio.api.services.MinioFileService;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;

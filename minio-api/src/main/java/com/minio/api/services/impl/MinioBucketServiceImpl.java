@@ -1,5 +1,6 @@
-package com.minio.api.services.bucket;
+package com.minio.api.services.impl;
 
+import com.minio.api.services.MinioBucketService;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.RemoveBucketArgs;

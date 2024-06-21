@@ -1,7 +1,7 @@
 package com.minio.api.controller;
 
 
-import com.minio.api.services.bucket.MinioBucketService;
+import com.minio.api.services.MinioBucketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

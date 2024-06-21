@@ -1,4 +1,4 @@
-package com.minio.api.services.file;
+package com.minio.api.services;
 
 import org.springframework.web.multipart.MultipartFile;
 
