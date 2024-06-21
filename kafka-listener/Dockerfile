@@ -8,7 +8,7 @@ COPY settings.gradle /
 
 COPY src src
 
-RUN gradle bootJar
+RUN gradle build
 
 FROM eclipse-temurin:17-jdk-jammy
 
