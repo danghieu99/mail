@@ -20,7 +20,7 @@ public class Oauth2ClientConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll())
                 .oauth2Client(Customizer.withDefaults());
 
         return http.build();

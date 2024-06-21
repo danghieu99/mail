@@ -15,8 +15,8 @@ public class Oauth2Controller {
     }
 
     @GetMapping("/callback")
-    public String handleAuthCode(@RequestParam("code") String code) {
-        return code;
+    public void handleAuthCode(@RequestParam("code") String code) {
+        oauth2Client.print(code);
     }
 
     @PostMapping("/login")
