@@ -1,11 +1,13 @@
 package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
+import com.example.mailsender.service.JavaMailSenderFactory;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +25,10 @@ import static com.example.mailsender.util.JsonToMailData.toMailData;
 public class MailSender implements com.example.mailsender.service.MailSender {
 
     @Autowired
-    private org.springframework.mail.javamail.JavaMailSender mailSender;
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private JavaMailSenderFactory mailSenderFactory;
 
     @Autowired
     MinioFileClientImpl minioFileClient;
