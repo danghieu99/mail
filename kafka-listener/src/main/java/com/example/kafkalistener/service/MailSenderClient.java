@@ -22,7 +22,7 @@ public class MailSenderClient {
                 .host("host.docker.internal")
                 .scheme("http")
                 .port(8081)
-                .path("/api/mail/personal/sendmailjson")
+                .path("/api/mail/sendmailjson")
                 .build()
                 .toUri();
 

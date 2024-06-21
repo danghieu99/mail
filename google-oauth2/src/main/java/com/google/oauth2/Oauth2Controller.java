@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/oauth2")
 public class Oauth2Controller {
 
     private Oauth2Client oauth2Client;
@@ -14,7 +14,7 @@ public class Oauth2Controller {
         this.oauth2Client = oauth2Client;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/authenticate")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
         return oauth2Client.fetchAccessTokenFromGoogle(username, password);
     }

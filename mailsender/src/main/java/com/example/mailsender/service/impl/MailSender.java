@@ -1,4 +1,4 @@
-package com.example.mailsender.service;
+package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
 import jakarta.mail.MessagingException;
@@ -6,7 +6,6 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,13 +20,13 @@ import java.util.List;
 import static com.example.mailsender.util.JsonToMailData.toMailData;
 
 @Service
-public class PersonalMailSender {
+public class MailSender implements com.example.mailsender.service.MailSender {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private org.springframework.mail.javamail.JavaMailSender mailSender;
 
     @Autowired
-    MinioFileClient minioFileClient;
+    MinioFileClientImpl minioFileClient;
 
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content, Collection<MultipartFile> files) {
 
@@ -40,8 +39,8 @@ public class PersonalMailSender {
         return sendMailWithAttachments(from, to, subject, content, attachments);
     }
 
-    private String sendMailWithAttachments(String from, List<String> to,
-                                           String subject, String content, HashMap<String, String> attachments) {
+    public String sendMailWithAttachments(String from, List<String> to,
+                                          String subject, String content, HashMap<String, String> attachments) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);

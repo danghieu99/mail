@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class Oauth2ClientConfig {
 
-    //no  securityfilterchain yet
+    //add securityfilterchain later
 
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
@@ -25,7 +25,7 @@ public class Oauth2ClientConfig {
                 .clientSecret("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")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("host.docker.internal:8084/api/auth/callback")
+                .redirectUri("host.docker.internal:8082/api/mail")
                 .scope("https://www.googleapis.com/auth/gmail.send", "https://www.googleapis.com/auth/userinfo.profile")
                 .authorizationUri("https://accounts.google.com/o/oauth2/auth")
                 .tokenUri("https://oauth2.googleapis.com/token")

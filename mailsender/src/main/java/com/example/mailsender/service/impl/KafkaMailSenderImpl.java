@@ -1,6 +1,7 @@
-package com.example.mailsender.service;
+package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
+import com.example.mailsender.service.KafkaMailSender;
 import com.example.mailsender.util.MailDataToJson;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     private KafkaProducer<String, String> kafkaProducer;
 
     @Autowired
-    MinioFileClient minioFileClient;
+    MinioFileClientImpl minioFileClient;
 
     public String sendMessage(String message) {
         String topic = "mailtest";

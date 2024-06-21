@@ -41,7 +41,6 @@ public class Oauth2Client {
         if (response.getStatusCode().is2xxSuccessful()) {
             Map<String, Object> responseBody = response.getBody();
             String access_token = (String) responseBody.get("access_token");
-            System.out.println(access_token);
             return access_token;
         }
 

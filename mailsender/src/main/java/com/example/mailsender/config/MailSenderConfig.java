@@ -46,4 +46,9 @@ public class MailSenderConfig {
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
+
+    @Bean
+    public RestClient getRestClient() {
+        return RestClient.create();
+    }
 }
