@@ -14,11 +14,6 @@ public class Oauth2Controller {
         this.oauth2Client = oauth2Client;
     }
 
-    @GetMapping("/callback")
-    public void handleAuthCode(@RequestParam("code") String code) {
-        oauth2Client.print(code);
-    }
-
     @PostMapping("/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
         return oauth2Client.fetchAccessTokenFromGoogle(username, password);

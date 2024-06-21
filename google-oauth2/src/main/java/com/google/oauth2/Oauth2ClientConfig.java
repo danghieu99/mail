@@ -16,15 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class Oauth2ClientConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll())
-                .oauth2Client(Customizer.withDefaults());
-
-        return http.build();
-    }
+    //no  securityfilterchain yet
 
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
