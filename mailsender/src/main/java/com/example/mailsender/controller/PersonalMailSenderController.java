@@ -16,6 +16,8 @@ public class PersonalMailSenderController {
     @Autowired
     private PersonalMailSender personalMailSender;
 
+    @RequestMapping
+
     @PostMapping("/sendmailwithattachments")
     public String sendMailWithAttachments(@RequestParam("from") String from,
                                           @RequestParam List<String> to,

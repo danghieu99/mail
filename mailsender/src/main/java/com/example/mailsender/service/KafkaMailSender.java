@@ -1,75 +1,15 @@
 package com.example.mailsender.service;
 
-import com.example.mailsender.dto.MailData;
-import com.example.mailsender.util.MailDataToJson;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
-@Service
-public class KafkaMailSender {
+public interface KafkaMailSender {
 
-    @Autowired
-    private KafkaProducer<String, String> kafkaProducer;
+    public String sendMessage(String message);
 
-    @Autowired
-    MinioFileClient minioFileClient;
+    public String sendMail(String from, List<String> to, String subject, String body);
 
-    public String sendMessage(String message) {
-        String topic = "mailtest";
-        String key = String.valueOf(UUID.randomUUID());
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, message);
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-                throw new RuntimeException(exception);
-            }
-        });
-        return "message sent";
-    }
-
-    public String sendMail(String from, List<String> to, String subject, String body) {
-        MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
-        String topic = "mailtest";
-        String jsonMessage = MailDataToJson.toJson(mail);
-        String key = String.valueOf(UUID.randomUUID());
-
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-                throw new RuntimeException(exception);
-            }
-        });
-        return "mail sent";
-    }
-
-    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
-
-        if (files.isEmpty()) {
-            throw new RuntimeException("files is empty");
-        }
-
-        HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
-
-        MailData mailWIthAttachmentMinioUrl = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
-
-        String jsonMessage = MailDataToJson.toJson(mailWIthAttachmentMinioUrl);
-        String topic = "mailtest";
-        String key = UUID.randomUUID().toString();
-
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
-
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-                throw new RuntimeException(exception);
-            }
-        });
-        return "mail with attachments sent";
-    }
+    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files);
 }
