@@ -47,8 +47,4 @@ public class Oauth2Client {
         System.out.println("null token");
         return null;
     }
-
-    public void print(String code) {
-        System.out.println(code);
-    }
 }

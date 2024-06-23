@@ -21,8 +21,10 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     MinioFileClientImpl minioFileClient;
 
     public String sendMessage(String message) {
+
         String topic = "mailtest";
         String key = String.valueOf(UUID.randomUUID());
+
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, message);
         kafkaProducer.send(record, (metadata, exception) -> {
             if (exception != null) {
@@ -34,12 +36,15 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     }
 
     public String sendMail(String from, List<String> to, String subject, String body) {
+
         MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
+
         String topic = "mailtest";
         String jsonMessage = MailDataSerializer.toJson(mail);
         String key = String.valueOf(UUID.randomUUID());
 
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
+
         kafkaProducer.send(record, (metadata, exception) -> {
             if (exception != null) {
                 exception.printStackTrace();
@@ -57,9 +62,9 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
 
-        MailData mailWIthAttachmentMinioUrl = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
+        MailData mailWithAttachmentsData = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
 
-        String jsonMessage = MailDataSerializer.toJson(mailWIthAttachmentMinioUrl);
+        String jsonMessage = MailDataSerializer.toJson(mailWithAttachmentsData);
         String topic = "mailtest";
         String key = UUID.randomUUID().toString();
 

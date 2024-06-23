@@ -22,7 +22,7 @@ import java.util.List;
 import static com.example.mailsender.util.MailDataSerializer.toMailData;
 
 @Service
-public class MailSender implements com.example.mailsender.service.MailSender {
+public class MailSenderImpl implements com.example.mailsender.service.MailSender {
 
     @Autowired
     private JavaMailSender mailSender;
@@ -33,7 +33,8 @@ public class MailSender implements com.example.mailsender.service.MailSender {
     @Autowired
     MinioFileClientImpl minioFileClient;
 
-    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content, Collection<MultipartFile> files) {
+    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
+                                              Collection<MultipartFile> files) {
 
         if (files.isEmpty()) {
             throw new RuntimeException("files is empty");

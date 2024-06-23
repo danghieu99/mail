@@ -15,7 +15,7 @@ public class Oauth2Controller {
     }
 
     @PostMapping("/authenticate")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public String authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
         return oauth2Client.fetchAccessTokenFromGoogle(username, password);
     }
 }

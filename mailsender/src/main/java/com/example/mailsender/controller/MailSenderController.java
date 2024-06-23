@@ -1,7 +1,7 @@
 package com.example.mailsender.controller;
 
-import com.example.mailsender.service.AuthService;
-import com.example.mailsender.service.impl.MailSender;
+import com.example.mailsender.service.GoogleMailAuth;
+import com.example.mailsender.service.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,19 +15,19 @@ import java.util.List;
 public class MailSenderController {
 
     @Autowired
-    private MailSender javaMailSender;
+    private MailSender mailSender;
 
     @Autowired
-    private AuthService authService;
+    private GoogleMailAuth googleMailAuth;
 
     @PostMapping("/authenticate")
-    public String authenticateMailUser(@RequestParam String username, @RequestParam String password) {
-        return authService.requestAccessToken(username, password);
+    public String authenticate(@RequestParam String username, @RequestParam String password) {
+        return googleMailAuth.requestAccessToken(username, password);
     }
 
-    @PostMapping("/awaittoken")
-    private void awaitToken(@RequestParam String token) {
-
+    @PostMapping("/token")
+    private void receiveAccessToken(@RequestParam String token) {
+        System.out.println(token);
     }
 
     @PostMapping("/sendmailwithattachments")
@@ -36,7 +36,7 @@ public class MailSenderController {
                                           @RequestParam("subject") String subject,
                                           @RequestParam("body") String body,
                                           @RequestParam("files") Collection<MultipartFile> files) {
-        return javaMailSender.sendMailWithAttachmentFiles(from, to, subject, body, files);
+        return mailSender.sendMailWithAttachmentFiles(from, to, subject, body, files);
     }
 
     @PostMapping("/sendmail")
@@ -44,11 +44,11 @@ public class MailSenderController {
                            @RequestParam List<String> to,
                            @RequestParam("subject") String subject,
                            @RequestParam("body") String body) {
-        return javaMailSender.sendMail(from, to, subject, body);
+        return mailSender.sendMail(from, to, subject, body);
     }
 
     @PostMapping("/sendmailjson")
     public String sendMailFormData(@RequestParam("mail") String mailJson) {
-        return javaMailSender.SendMailJson(mailJson);
+        return mailSender.SendMailJson(mailJson);
     }
 }

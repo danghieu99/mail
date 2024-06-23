@@ -19,27 +19,17 @@ public class MailSenderConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("danghieu231299@gmail.com");
-        mailSender.setPassword("jpce tgit jvpv pstq");
+        //mailSender.setUsername("danghieu231299@gmail.com");
+        //mailSender.setPassword("jpce tgit jvpv pstq");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
+        props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
 
         return mailSender;
-    }
-
-    @Bean
-    public KafkaProducer<String, String> kafkaProducer() {
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "118.71.99.251:9092");
-        props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-
-        return new KafkaProducer<>(props);
     }
 
     @Bean

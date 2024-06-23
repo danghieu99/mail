@@ -1,6 +1,6 @@
 package com.example.mailsender.service.impl;
 
-import com.example.mailsender.service.AuthService;
+import com.example.mailsender.service.GoogleMailAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +13,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Service
-public class AuthServiceImpl implements AuthService {
+public class GoogleMailAuthImpl implements GoogleMailAuth {
 
     @Autowired
     RestClient restClient;
-
-    @Override
+    
     public String requestAccessToken(String username, String password) {
 
         URI uri = UriComponentsBuilder.newInstance()
