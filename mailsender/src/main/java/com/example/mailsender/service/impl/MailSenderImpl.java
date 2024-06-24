@@ -40,7 +40,7 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
                                               Collection<MultipartFile> files) {
 
         if (files.isEmpty()) {
-            throw new RuntimeException("files is empty");
+            throw new RuntimeException("no files found");
         }
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);

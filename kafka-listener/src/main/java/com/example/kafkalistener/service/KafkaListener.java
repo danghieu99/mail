@@ -7,16 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class KafkaListener {
 
-    @Autowired
-    private KafkaConsumer<String, String> kafkaConsumer;
+    private final KafkaConsumer<String, String> kafkaConsumer;
+    private final MailSenderClient mailSenderClient;
 
     @Autowired
-    private MailSenderClient mailSenderClient;
+    public KafkaListener(KafkaConsumer<String, String> kafkaConsumer,
+                         MailSenderClient mailSenderClient) {
+        this.kafkaConsumer = kafkaConsumer;
+        this.mailSenderClient = mailSenderClient;
+    }
+
+    public void run() throws InterruptedException {
+        List<String> topics = new ArrayList<>();
+        topics.add("mailtest");
+        subscribe(topics);
+        listen();
+    }
 
     public void listen() {
         try {
@@ -39,6 +51,7 @@ public class KafkaListener {
         } catch (Exception e) {
             return e.getMessage();
         }
-        return "Subscribed";
+        return "Subscribed to " + topics.toString();
     }
+
 }

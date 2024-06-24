@@ -24,6 +24,7 @@ public class JavaMailSenderFactoryImpl implements JavaMailSenderFactory {
         props.put("mail.smtp.sasl.enable", "true");
         props.put("mail.debug", "true");
         props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
+
         return javaMailSender;
     }
 

@@ -1,7 +1,5 @@
 package com.example.mailsender.config;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,9 +24,7 @@ public class MailSenderConfig {
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.sasl.enable", "true");
         props.put("mail.debug", "true");
-        props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
 
         return mailSender;
     }

@@ -21,13 +21,10 @@ public class KafkaListenerApplication {
 
     @PostConstruct
     public void init() {
-
-        List<String> topics = new ArrayList<>();
-        topics.add("mailtest");
-        kafkaListener.subscribe(topics);
-
-        while (true) {
-            kafkaListener.listen();
+        try {
+            kafkaListener.run();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
