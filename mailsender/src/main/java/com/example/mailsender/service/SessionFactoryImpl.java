@@ -4,8 +4,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.HashMap;
 
-public interface JavaMailSenderFactory {
+public interface SessionFactoryImpl {
 
-    public JavaMailSender createMailSender(HashMap<String, String> credentials);
+    public JavaMailSender createSession(HashMap<String, String> credentials);
 
 }

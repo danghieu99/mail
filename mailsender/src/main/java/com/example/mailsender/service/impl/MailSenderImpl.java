@@ -1,7 +1,7 @@
 package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
-import com.example.mailsender.service.JavaMailSenderFactory;
+import com.example.mailsender.service.SessionFactoryImpl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
     private JavaMailSender mailSender;
 
     @Autowired
-    private JavaMailSenderFactory mailSenderFactory;
+    private SessionFactoryImpl sessionFactory;
 
     @Autowired
     MinioFileClientImpl minioFileClient;
