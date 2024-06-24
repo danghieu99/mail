@@ -14,18 +14,18 @@ import java.util.Properties;
 @Service
 public class SessionFactoryImplImpl implements SessionFactoryImpl {
 
-    public Session createSession(String token) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.sasl.enable", "true");
-        props.put("mail.smtp.sasl.mechanisms", "XOAUTH2");
-
-        return Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("your-email@gmail.com", token);
-            }
-        }
-    }
+//    public Session createSession(String token) {
+//        Properties props = new Properties();
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.smtp.sasl.enable", "true");
+//        props.put("mail.smtp.sasl.mechanisms", "XOAUTH2");
+//
+//        return Session.getInstance(props, new Authenticator(){
+//            @Override
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication("your-email@gmail.com", token);
+//            }
+//        };
+//    }
 }

@@ -1,11 +1,12 @@
 package com.example.mailsender.service;
 
+import jakarta.mail.Session;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.HashMap;
 
 public interface SessionFactoryImpl {
 
-    public JavaMailSender createSession(HashMap<String, String> credentials);
+    public Session createSession(String token);
 
 }
