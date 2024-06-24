@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class MinioFileServiceImpl implements MinioFileService {
@@ -21,9 +24,8 @@ public class MinioFileServiceImpl implements MinioFileService {
         this.minioClient = minioClient;
     }
 
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(String bucketName, MultipartFile file) {
         try {
-            String bucketName = "newbucket";
             String objectName = file.getOriginalFilename();
 
             try (InputStream inputStream = file.getInputStream()) {
@@ -38,9 +40,18 @@ public class MinioFileServiceImpl implements MinioFileService {
             }
             return objectName;
         } catch (Exception e) {
-            e.printStackTrace();
             return e.getMessage();
         }
+    }
+
+    @Override
+    public String uploadFiles(String bucket, Collection<MultipartFile> files) {
+        Collection<String> objectNames = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            objectNames.add(uploadFile(bucket, file));
+        }
+        return objectNames.toString();
     }
 
     public String getFileUrl(String bucketName, String objectName) {

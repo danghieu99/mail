@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
+
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/minio/file")
 
 public class MinioFileController {
 
@@ -14,8 +16,9 @@ public class MinioFileController {
     MinioFileService minioFileService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) {
-        return minioFileService.uploadFile(file);
+    public String uploadFiles(@RequestParam("bucket") String bucket,
+                              @RequestParam("file") Collection<MultipartFile> files) {
+        return minioFileService.uploadFiles(bucket, files);
     }
 
     @GetMapping("/geturl")

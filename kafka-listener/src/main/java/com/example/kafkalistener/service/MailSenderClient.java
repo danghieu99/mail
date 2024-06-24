@@ -18,11 +18,16 @@ public class MailSenderClient {
 
     public String SendMailData(String jsonMail) {
 
+        String host = System.getenv("MAIL_HOST");
+        int port = Integer.valueOf(System.getenv("MAIL_PORT"));
+        String scheme = System.getenv("MAIL_SCHEME");
+        String path = System.getenv("MAIL_PATH");
+
         URI uri = UriComponentsBuilder.newInstance()
-                .host("host.docker.internal")
-                .scheme("http")
-                .port(8081)
-                .path("/api/mail/sendmailjson")
+                .host(host)
+                .scheme(scheme)
+                .port(port)
+                .path(path)
                 .build()
                 .toUri();
 

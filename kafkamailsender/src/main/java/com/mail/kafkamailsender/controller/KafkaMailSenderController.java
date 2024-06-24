@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mail/kafka")
+@RequestMapping("/kafka")
 public class KafkaMailSenderController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class KafkaMailSenderController {
                                          @RequestParam List<String> to,
                                          @RequestParam("subject") String subject,
                                          @RequestParam("body") String body,
-                                         @RequestParam("files") Collection<MultipartFile> files) {
+                                         @RequestParam("file") Collection<MultipartFile> files) {
 
         return kafkaMailSender.sendMailWithAttachmentFiles(from, to, subject, body, files);
     }

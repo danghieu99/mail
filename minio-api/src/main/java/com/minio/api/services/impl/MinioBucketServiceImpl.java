@@ -23,7 +23,7 @@ public class MinioBucketServiceImpl implements MinioBucketService {
         } catch (Exception e) {
             return "Error occurred: " + e.getMessage();
         }
-        return "Bucket created successfully";
+        return "Bucket " + bucketName + "created successfully";
     }
 
     public String deleteBucket(String bucketName) {

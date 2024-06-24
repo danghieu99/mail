@@ -36,6 +36,10 @@ services:
     environment:
       BOOTSTRAP_SERVERS_CONFIG: "118.71.99.251:9092"
       GROUP_ID_CONFIG=: "mailtest-subscribergroup"
+      MAIL_HOST: "host.docker.internal"
+      MAIL_PORT: "8081"
+      MAIL_SCHEME: "http"
+      MAIL_PATH: "/mail/sendmailjson"
     ports:
       - "8083:8083"
 
@@ -52,14 +56,5 @@ services:
     ports:
       - "8084:8084"
 
-#    mysql-server:
-#      pull_policy: build
-#      container_name: mysql-server
-#      build:
-#        context: /
-#        dockerfile: Dockerfile.mysqlserver
-#      image: mysql-server:latest
-#      ports:
-#        - "8084:8084"
 
 

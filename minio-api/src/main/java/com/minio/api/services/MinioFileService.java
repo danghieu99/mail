@@ -2,8 +2,12 @@ package com.minio.api.services;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
+
 public interface MinioFileService {
-    String uploadFile(MultipartFile file);
+    String uploadFile(String bucket, MultipartFile file);
+
+    String uploadFiles(String bucket, Collection<MultipartFile> files);
 
     String getFileUrl(String bucketName, String objectName);
 
