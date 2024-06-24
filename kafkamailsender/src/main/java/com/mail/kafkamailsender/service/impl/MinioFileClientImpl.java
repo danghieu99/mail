@@ -40,6 +40,7 @@ public class MinioFileClientImpl implements MinioFileClient {
         };
 
         body.add("file", resource);
+        body.add("bucketname", "newbucket");
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         String response = restTemplate.postForObject(url, requestEntity, String.class);
         return response;
@@ -80,8 +81,8 @@ public class MinioFileClientImpl implements MinioFileClient {
     @Override
     public String fetchFileUrl(String fileName) {
 
-        String apiEndpoint = System.getenv("MINIO_API_GETURL_ENDPOINT");
-        
+        String apiEndpoint = System.getenv("MINI0_API_GETURL_ENDPOINT");
+
         String url = UriComponentsBuilder.fromHttpUrl(apiEndpoint)
                 .queryParam("filename", fileName)
                 .queryParam("bucketname", "newbucket")

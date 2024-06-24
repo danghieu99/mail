@@ -1,6 +1,5 @@
 package com.example.kafkalistener.config;
 
-import com.example.kafkalistener.service.MailSenderClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.context.annotation.Bean;

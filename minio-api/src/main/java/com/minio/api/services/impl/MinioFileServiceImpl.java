@@ -24,14 +24,14 @@ public class MinioFileServiceImpl implements MinioFileService {
         this.minioClient = minioClient;
     }
 
-    public String uploadFile(String bucketName, MultipartFile file) {
+    public String uploadFile(MultipartFile file) {
         try {
             String objectName = file.getOriginalFilename();
 
             try (InputStream inputStream = file.getInputStream()) {
                 minioClient.putObject(
                         PutObjectArgs.builder()
-                                .bucket(bucketName)
+                                .bucket("newbucket")
                                 .object(objectName)
                                 .stream(inputStream, file.getSize(), -1)
                                 .contentType("multipart/form-data")
@@ -45,11 +45,11 @@ public class MinioFileServiceImpl implements MinioFileService {
     }
 
     @Override
-    public String uploadFiles(String bucket, Collection<MultipartFile> files) {
+    public String uploadFiles(Collection<MultipartFile> files) {
         Collection<String> objectNames = new ArrayList<>();
 
         for (MultipartFile file : files) {
-            objectNames.add(uploadFile(bucket, file));
+            objectNames.add(uploadFile(file));
         }
         return objectNames.toString();
     }

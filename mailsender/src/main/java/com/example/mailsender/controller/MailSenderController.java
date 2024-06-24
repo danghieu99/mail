@@ -1,6 +1,6 @@
 package com.example.mailsender.controller;
 
-import com.example.mailsender.service.MailSender;
+import com.example.mailsender.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,7 @@ import java.util.List;
 public class MailSenderController {
 
     @Autowired
-    private MailSender mailSender;
+    private MailService mailService;
 
     @PostMapping("/sendmailwithattachments")
     public String sendMailWithAttachments(@RequestParam("from") String from,
@@ -22,7 +22,7 @@ public class MailSenderController {
                                           @RequestParam("subject") String subject,
                                           @RequestParam("body") String body,
                                           @RequestParam("files") Collection<MultipartFile> files) {
-        return mailSender.sendMailWithAttachmentFiles(from, to, subject, body, files);
+        return mailService.sendMailWithAttachmentFiles(from, to, subject, body, files);
     }
 
     @PostMapping("/sendmail")
@@ -30,11 +30,11 @@ public class MailSenderController {
                            @RequestParam List<String> to,
                            @RequestParam("subject") String subject,
                            @RequestParam("body") String body) {
-        return mailSender.sendMail(from, to, subject, body);
+        return mailService.sendMail(from, to, subject, body);
     }
 
     @PostMapping("/sendmailjson")
     public String sendMailJson(@RequestParam("mail") String mailJson) {
-        return mailSender.SendMailJson(mailJson);
+        return mailService.SendMailJson(mailJson);
     }
 }

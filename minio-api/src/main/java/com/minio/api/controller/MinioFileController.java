@@ -16,9 +16,8 @@ public class MinioFileController {
     MinioFileService minioFileService;
 
     @PostMapping("/upload")
-    public String uploadFiles(@RequestParam("bucket") String bucket,
-                              @RequestParam("file") Collection<MultipartFile> files) {
-        return minioFileService.uploadFiles(bucket, files);
+    public String uploadFiles(@RequestParam("file") Collection<MultipartFile> files) {
+        return minioFileService.uploadFiles(files);
     }
 
     @GetMapping("/geturl")

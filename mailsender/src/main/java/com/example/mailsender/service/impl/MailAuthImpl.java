@@ -2,9 +2,12 @@ package com.example.mailsender.service.impl;
 
 import com.example.mailsender.service.MailAuth;
 import com.example.mailsender.service.SessionManager;
+import com.example.mailsender.service.TokenManager;
+import jakarta.mail.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -12,18 +15,24 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Properties;
 
 @Service
 public class MailAuthImpl implements MailAuth {
 
-    @Autowired
-    RestClient restClient;
+    private final RestClient restClient;
+    private final SessionManager sessionManager;
+    private final TokenManager tokenManager;
 
     @Autowired
-    SessionManager sessionManager;
+    public MailAuthImpl(RestClient restClient, SessionManager sessionManager, TokenManager tokenManager) {
+        this.restClient = restClient;
+        this.sessionManager = sessionManager;
+        this.tokenManager = tokenManager;
+    }
 
     @Override
-    public String requestAccessToken(String username, String password) {
+    public String fetchAccessToken(String username, String password) {
 
         URI uri = UriComponentsBuilder.newInstance()
                 .host("host.docker.internal")
@@ -51,13 +60,5 @@ public class MailAuthImpl implements MailAuth {
             return (username + ":" + password);
         }
         return "null token";
-    }
-
-
-    //add completablefuture
-    @Override
-    public String receiveAccessToken(String token) {
-        System.out.println("token received " + token);
-        return token;
     }
 }

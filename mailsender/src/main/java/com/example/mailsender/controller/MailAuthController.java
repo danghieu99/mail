@@ -15,13 +15,8 @@ public class MailAuthController {
     @Autowired
     private MailAuth mailAuth;
 
-    @PostMapping("/requesttoken")
+    @PostMapping("/fetchtoken")
     public String authenticate(@RequestParam String username, @RequestParam String password) {
-        return mailAuth.requestAccessToken(username, password);
-    }
-
-    @PostMapping("/receivetoken")
-    private String receiveAccessToken(@RequestParam String token) {
-        return mailAuth.receiveAccessToken(token);
+        return mailAuth.fetchAccessToken(username, password);
     }
 }

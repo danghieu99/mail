@@ -14,6 +14,9 @@ public class MailData {
     private String bcc;
     private HashMap<String, String> attachments;
 
+    public MailData() {
+    }
+
     private MailData(Builder builder) {
         this.to = builder.to;
         this.from = builder.from;
@@ -25,7 +28,7 @@ public class MailData {
         this.bcc = builder.bcc;
     }
 
-    public static Builder from(String from){
+    public static Builder from(String from) {
         return new Builder(from);
     }
 
@@ -72,7 +75,7 @@ public class MailData {
         private String cc;
         private String bcc;
 
-        private Builder (String from) {
+        private Builder(String from) {
             this.from = from;
         }
 

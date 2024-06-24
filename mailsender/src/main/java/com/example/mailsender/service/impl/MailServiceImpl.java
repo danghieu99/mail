@@ -1,14 +1,15 @@
 package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
-import com.example.mailsender.service.JavaMailSenderFactory;
-import com.example.mailsender.service.SessionManager;
+import com.example.mailsender.service.MailService;
+import com.example.mailsender.service.MinioFileClient;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -20,27 +21,47 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import static com.example.mailsender.util.MailDataSerializer.toMailData;
 
 @Service
-public class MailSenderImpl implements com.example.mailsender.service.MailSender {
+public class MailServiceImpl implements MailService {
+
+    //private final MailAuth mailAuth;
+    private final MinioFileClient minioFileClient;
+    private final JavaMailSender mailSender;
 
     @Autowired
-    private JavaMailSenderFactory javaMailSenderFactory;
+    public MailServiceImpl(MinioFileClient minioFileClient, JavaMailSender mailSender) {
+        this.minioFileClient = minioFileClient;
+        this.mailSender = mailSender;
+    }
 
-    @Autowired
-    private SessionManager sessionManager;
+    @Override
+    public JavaMailSenderImpl createJavaMailSender(Session session) {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        javaMailSender.setHost("smtp.gmail.com");
+        javaMailSender.setPort(587);
+        javaMailSender.setSession(session);
 
-    @Autowired
-    MinioFileClientImpl minioFileClient;
+        Properties props = javaMailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.sasl.enable", "true");
+        props.put("mail.debug", "true");
+        props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
+
+        return javaMailSender;
+    }
 
     @Override
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
                                               Collection<MultipartFile> files) {
 
         if (files.isEmpty()) {
-            throw new RuntimeException("no files found");
+            throw new RuntimeException("files not found");
         }
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
@@ -51,9 +72,6 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
     @Override
     public String sendMailWithAttachments(String from, List<String> to,
                                           String subject, String body, HashMap<String, String> attachments) {
-
-        Session session = sessionManager.retrieveSession(from);
-        JavaMailSenderImpl mailSender = javaMailSenderFactory.createJavaMailSender(session);
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -86,9 +104,6 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
 
     @Override
     public String sendMail(String from, List<String> to, String subject, String body) {
-
-        Session session = sessionManager.retrieveSession(from);
-        JavaMailSenderImpl mailSender = javaMailSenderFactory.createJavaMailSender(session);
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();

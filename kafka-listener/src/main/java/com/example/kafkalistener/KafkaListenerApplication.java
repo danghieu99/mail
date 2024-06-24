@@ -1,13 +1,10 @@
 package com.example.kafkalistener;
 
-import com.example.kafkalistener.service.KafkaListener;
+import com.example.kafkalistener.service.impl.KafkaListenerImpl;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class KafkaListenerApplication {
@@ -17,7 +14,7 @@ public class KafkaListenerApplication {
     }
 
     @Autowired
-    KafkaListener kafkaListener;
+    KafkaListenerImpl kafkaListener;
 
     @PostConstruct
     public void init() {
