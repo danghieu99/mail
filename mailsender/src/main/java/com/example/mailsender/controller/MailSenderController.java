@@ -1,6 +1,5 @@
 package com.example.mailsender.controller;
 
-import com.example.mailsender.service.GoogleMailAuth;
 import com.example.mailsender.service.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,19 +15,6 @@ public class MailSenderController {
 
     @Autowired
     private MailSender mailSender;
-
-    @Autowired
-    private GoogleMailAuth googleMailAuth;
-
-    @PostMapping("/authenticate")
-    public String authenticate(@RequestParam String username, @RequestParam String password) {
-        return googleMailAuth.requestAccessToken(username, password);
-    }
-
-    @PostMapping("/token")
-    private void receiveAccessToken(@RequestParam String token) {
-        System.out.println(token);
-    }
 
     @PostMapping("/sendmailwithattachments")
     public String sendMailWithAttachments(@RequestParam("from") String from,
@@ -48,7 +34,7 @@ public class MailSenderController {
     }
 
     @PostMapping("/sendmailjson")
-    public String sendMailFormData(@RequestParam("mail") String mailJson) {
+    public String sendMailJson(@RequestParam("mail") String mailJson) {
         return mailSender.SendMailJson(mailJson);
     }
 }

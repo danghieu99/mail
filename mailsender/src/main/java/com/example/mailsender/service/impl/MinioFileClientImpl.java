@@ -22,6 +22,7 @@ public class MinioFileClientImpl implements MinioFileClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Override
     public String uploadFile(MultipartFile file, String fileName) throws IOException {
 
         String url = "http://host.docker.internal:8080/api/file/upload";
@@ -44,6 +45,7 @@ public class MinioFileClientImpl implements MinioFileClient {
         return response;
     }
 
+    @Override
     public HashMap<String, String> uploadAttachmentFiles(Collection<MultipartFile> files) {
         List<String> fileNames = new ArrayList<>();
 
@@ -75,6 +77,7 @@ public class MinioFileClientImpl implements MinioFileClient {
         return urlAttachments;
     }
 
+    @Override
     public String fetchFileUrl(String fileName) {
         String url = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8080/api/file/geturl")
                 .queryParam("filename", fileName)

@@ -14,15 +14,11 @@ public class Oauth2Client {
     @Autowired
     private RestClient restClient;
 
-    private String client_id = "993587433485-ikigka0qg4osb33nio2dfmjppccnagpl.apps.googleusercontent.com";
-    private String client_secret = "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";
-    private String tokenUri = "https://oauth2.googleapis.com/token";
+    private String client_id = System.getenv("CLIENT_ID");
+    private String client_secret = System.getenv("CLIENT_SECRET");
+    private String tokenUri = System.getenv("TOKEN_URI");
 
     public String fetchAccessTokenFromGoogle(String username, String password) {
-
-        System.out.println(client_id);
-        System.out.println(client_secret);
-        System.out.println(client_secret);
 
         Map<String, String> tokenRequest = new HashMap<>();
         tokenRequest.put("grant_type", "password");
@@ -40,8 +36,7 @@ public class Oauth2Client {
 
         if (response.getStatusCode().is2xxSuccessful()) {
             Map<String, Object> responseBody = response.getBody();
-            String access_token = (String) responseBody.get("access_token");
-            return access_token;
+            return String.valueOf(responseBody.get("access_token"));
         }
 
         System.out.println("null token");

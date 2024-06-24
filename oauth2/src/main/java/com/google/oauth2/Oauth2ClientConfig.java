@@ -20,15 +20,22 @@ public class Oauth2ClientConfig {
 
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
+
+        String clientSecret = System.getenv("CLIENT_SECRET");
+        String clientId = System.getenv("CLIENT_ID");
+        String redirectUri = System.getenv("REDIRECT_URI");
+        String authorizationUri = System.getenv("AUTHORIZATION_URI");
+        String tokenUri = System.getenv("TOKEN_URI");
+
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("google_auth")
-                .clientId("993587433485-ikigka0qg4osb33nio2dfmjppccnagpl.apps.googleusercontent.com")
-                .clientSecret("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")
+                .clientId(clientId)
+                .clientSecret(clientSecret)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("host.docker.internal:8082/api/mail/token")
-                .scope("https://www.googleapis.com/auth/gmail.send", "https://www.googleapis.com/auth/userinfo.profile")
-                .authorizationUri("https://accounts.google.com/o/oauth2/auth")
-                .tokenUri("https://oauth2.googleapis.com/token")
+                .redirectUri(redirectUri)
+                .scope("https://www.googleapis.com/auth/gmail.send")
+                .authorizationUri(authorizationUri)
+                .tokenUri(tokenUri)
                 .build();
 
         return new InMemoryClientRegistrationRepository(clientRegistration);

@@ -10,9 +10,9 @@ public class MinioClientConfig {
     @Bean
     public MinioClient defaultMinioClient() {
 
-        String endPoint = "http://118.71.99.251:9095/";
-        String accessKey = "ERnGCPDwwkhCObagKdiA";
-        String secretKey = "zf1yGIuCP2JVw6ssVubn7b6ZtUkMRHtENWtkgvl1";
+        String endPoint = System.getenv("MINIO_ENDPOINT");
+        String accessKey = System.getenv("MINIO_ACCESS_KEY");
+        String secretKey = System.getenv("MINIO_SECRET_KEY");
 
         return MinioClient.builder()
                 .endpoint(endPoint)

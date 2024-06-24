@@ -3,6 +3,10 @@ services:
     pull_policy: build
     container_name: minio-api
     build: /minio-api/
+    environment:
+      - MINIO_ENDPOINT=http://118.71.99.251:9095
+      - MINIO_ACCESS_KEY=ERnGCPDwwkhCObagKdiA
+      - MINIO_SECRET_KEY=zf1yGIuCP2JVw6ssVubn7b6ZtUkMRHtENWtkgvl1
     ports:
       - "8080:8080"
 
@@ -17,13 +21,22 @@ services:
     pull_policy: build
     container_name: kafka-listener
     build: /kafka-listener/
+    environment:
+      -BOOTSTRAP_SERVERS_CONFIG=118.71.99.251:9092
+      -GROUP_ID_CONFIG=mailtest-subscribergroup
     ports:
       - "8083:8083"
 
-  google-oauth2:
+  oauth2:
     pull_policy: build
-    container_name: google-oauth2
-    build: /google-oauth2/
+    container_name: oauth2
+    build: /oauth2/
+    environment:
+      - CLIENT_ID=993587433485-ikigka0qg4osb33nio2dfmjppccnagpl.apps.googleusercontent.com
+      - CLIENT_SECRET=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
+      - AUTHORIZATOIN_URI=https://accounts.google.com/o/oauth2/auth
+      - TOKEN_URI=https://oauth2.googleapis.com/token
+      - REDIRECT_URI=host.docker.internal:8082/api/mail/receivetoken
     ports:
       - "8084:8084"
 

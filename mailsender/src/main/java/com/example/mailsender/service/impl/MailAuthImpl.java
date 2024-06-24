@@ -1,6 +1,7 @@
 package com.example.mailsender.service.impl;
 
-import com.example.mailsender.service.GoogleMailAuth;
+import com.example.mailsender.service.MailAuth;
+import com.example.mailsender.service.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +14,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Service
-public class GoogleMailAuthImpl implements GoogleMailAuth {
+public class MailAuthImpl implements MailAuth {
 
     @Autowired
     RestClient restClient;
-    
+
+    @Autowired
+    SessionManager sessionManager;
+
+    @Override
     public String requestAccessToken(String username, String password) {
 
         URI uri = UriComponentsBuilder.newInstance()
                 .host("host.docker.internal")
                 .scheme("http")
                 .port(8084)
-                .path("/api/auth/authenticate")
+                .path("/api/oauth2/authenticate")
                 .build()
                 .toUri();
 
@@ -39,6 +44,20 @@ public class GoogleMailAuthImpl implements GoogleMailAuth {
                 .retrieve()
                 .toEntity(String.class);
 
-        return ("Response Status Code: " + response.getStatusCode() + "Response Body: " + response.getBody());
+        String token = response.getBody();
+
+        if (token != null) {
+            sessionManager.addSession(username, token);
+            return (username + ":" + password);
+        }
+        return "null token";
+    }
+
+
+    //add completablefuture
+    @Override
+    public String receiveAccessToken(String token) {
+        System.out.println("token received " + token);
+        return token;
     }
 }

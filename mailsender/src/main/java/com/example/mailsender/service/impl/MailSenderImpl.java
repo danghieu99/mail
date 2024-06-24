@@ -1,13 +1,15 @@
 package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
-import com.example.mailsender.service.SessionFactoryImpl;
+import com.example.mailsender.service.JavaMailSenderFactory;
+import com.example.mailsender.service.SessionManager;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,14 +27,15 @@ import static com.example.mailsender.util.MailDataSerializer.toMailData;
 public class MailSenderImpl implements com.example.mailsender.service.MailSender {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private JavaMailSenderFactory javaMailSenderFactory;
 
     @Autowired
-    private SessionFactoryImpl sessionFactory;
+    private SessionManager sessionManager;
 
     @Autowired
     MinioFileClientImpl minioFileClient;
 
+    @Override
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
                                               Collection<MultipartFile> files) {
 
@@ -45,14 +48,19 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
         return sendMailWithAttachments(from, to, subject, content, attachments);
     }
 
+    @Override
     public String sendMailWithAttachments(String from, List<String> to,
-                                          String subject, String content, HashMap<String, String> attachments) {
+                                          String subject, String body, HashMap<String, String> attachments) {
+
+        Session session = sessionManager.retrieveSession(from);
+        JavaMailSenderImpl mailSender = javaMailSenderFactory.createJavaMailSender(session);
+
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo(to.toArray(new String[to.size()]));
-            helper.setText(content);
+            helper.setText(body);
             helper.setSubject(subject);
 
             attachments.forEach((url, filename) -> {
@@ -76,14 +84,18 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
         return "mail with attachment sent successfully";
     }
 
-    public String sendMail(String sender, List<String> recipients, String subject, String content) {
+    @Override
+    public String sendMail(String from, List<String> to, String subject, String body) {
+
+        Session session = sessionManager.retrieveSession(from);
+        JavaMailSenderImpl mailSender = javaMailSenderFactory.createJavaMailSender(session);
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(recipients.toArray(new String[recipients.size()]));
-            message.setText(content);
+            message.setTo(to.toArray(new String[to.size()]));
+            message.setText(body);
             message.setSubject(subject);
-            message.setFrom(sender);
+            message.setFrom(from);
 
             mailSender.send(message);
 
@@ -94,6 +106,7 @@ public class MailSenderImpl implements com.example.mailsender.service.MailSender
         }
     }
 
+    @Override
     public String SendMailJson(String mailJson) {
 
         try {

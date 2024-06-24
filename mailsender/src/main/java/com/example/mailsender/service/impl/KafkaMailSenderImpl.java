@@ -20,6 +20,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     @Autowired
     MinioFileClientImpl minioFileClient;
 
+    @Override
     public String sendMessage(String message) {
 
         String topic = "mailtest";
@@ -35,6 +36,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
         return "message sent";
     }
 
+    @Override
     public String sendMail(String from, List<String> to, String subject, String body) {
 
         MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
@@ -54,6 +56,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
         return "mail sent";
     }
 
+    @Override
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
 
         if (files.isEmpty()) {
