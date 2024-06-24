@@ -1,4 +1,4 @@
-package com.example.mailsender.service;
+package com.mail.kafkamailsender.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

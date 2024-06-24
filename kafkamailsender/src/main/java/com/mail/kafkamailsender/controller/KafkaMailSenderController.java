@@ -1,6 +1,6 @@
-package com.example.mailsender.controller;
+package com.mail.kafkamailsender.controller;
 
-import com.example.mailsender.service.KafkaMailSender;
+import com.mail.kafkamailsender.service.KafkaMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
