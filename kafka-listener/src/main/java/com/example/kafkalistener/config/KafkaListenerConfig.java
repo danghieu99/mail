@@ -20,14 +20,9 @@ public class KafkaListenerConfig {
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "45000");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "mailtest-subscribergroup");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, System.getenv("GROUP_ID_CONFIG"));
 
         return new KafkaConsumer<>(props);
-    }
-
-    @Bean
-    public MailSenderClient getMailSenderClient() {
-        return new MailSenderClient();
     }
 
     @Bean

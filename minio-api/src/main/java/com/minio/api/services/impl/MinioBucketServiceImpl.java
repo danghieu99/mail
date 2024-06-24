@@ -4,6 +4,7 @@ import com.minio.api.services.MinioBucketService;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.RemoveBucketArgs;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class MinioBucketServiceImpl implements MinioBucketService {
 
     private MinioClient minioClient;
 
+    @Autowired
     public MinioBucketServiceImpl(MinioClient minioClient) {
         this.minioClient = minioClient;
     }
@@ -19,7 +21,6 @@ public class MinioBucketServiceImpl implements MinioBucketService {
         try {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         } catch (Exception e) {
-            e.printStackTrace();
             return "Error occurred: " + e.getMessage();
         }
         return "Bucket created successfully";

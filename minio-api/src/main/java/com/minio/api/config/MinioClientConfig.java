@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class MinioClientConfig {
 
     @Bean
-    public MinioClient defaultMinioClient() {
+    public MinioClient minioClient() {
 
         String endPoint = System.getenv("MINIO_ENDPOINT");
         String accessKey = System.getenv("MINIO_ACCESS_KEY");

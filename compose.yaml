@@ -14,6 +14,9 @@ services:
     pull_policy: build
     container_name: mailsender
     build: /mailsender/
+    environment:
+      DEFAULT_MAIL_USERNAME: "danghieu231299@gmail.com"
+      DEFAULT_MAIL_PASSWORD: "jpce tgit jvpv pstq"
     ports:
       - "8081:8081"
 
@@ -43,7 +46,7 @@ services:
     environment:
       CLIENT_ID: "993587433485-ikigka0qg4osb33nio2dfmjppccnagpl.apps.googleusercontent.com"
       CLIENT_SECRET: "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"
-      AUTHORIZATOIN_URI: "https://accounts.google.com/o/oauth2/auth"
+      AUTHORIZATION_URI: "https://accounts.google.com/o/oauth2/auth"
       TOKEN_URI: "https://oauth2.googleapis.com/token"
       REDIRECT_URI: "host.docker.internal:8082/api/mail/receivetoken"
     ports:

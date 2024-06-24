@@ -4,6 +4,7 @@ import com.minio.api.services.MinioFileService;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ public class MinioFileServiceImpl implements MinioFileService {
 
     private MinioClient minioClient;
 
+    @Autowired
     public MinioFileServiceImpl(MinioClient minioClient) {
         this.minioClient = minioClient;
     }
