@@ -26,8 +26,8 @@ services:
     build: /kafkamailsender/
     environment:
       BOOTSTRAP_SERVERS_CONFIG: "118.71.99.251:9092"
-      MINIO_API_UPLOAD_ENDPOINT: "http://host.docker.internal:8080/minio/file/upload"
-      MINI0_API_GETURL_ENDPOINT: "http://host.docker.internal:8080/minio/file/geturl"
+      MINIO_API_UPLOAD_ENDPOINT: "http://localhost:8080/minio/file/upload"
+      MINI0_API_GETURL_ENDPOINT: "http://loclahost:8080/minio/file/geturl"
     ports:
       - "8082:8082"
 
