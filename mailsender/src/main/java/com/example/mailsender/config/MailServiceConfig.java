@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Properties;
 
 @Configuration
-public class MailSenderConfig {
+public class MailServiceConfig {
 
     @Bean
     public JavaMailSender getDefaultMailSender() {

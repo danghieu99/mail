@@ -1,19 +1,15 @@
-package com.example.mailsender.service.impl;
+package com.example.mailsender.service.mailauth.impl;
 
-import com.example.mailsender.service.SessionManager;
+import com.example.mailsender.service.mailauth.SessionService;
 import jakarta.mail.Authenticator;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class SessionManagerImpl implements SessionManager {
-
-    private Map<String, Session> sessions = new ConcurrentHashMap<>();
+public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session createSession(String username, String token) {
@@ -29,17 +25,5 @@ public class SessionManagerImpl implements SessionManager {
                 return new PasswordAuthentication(username, token);
             }
         });
-    }
-
-    @Override
-    public String addSession(String username, String token) {
-        Session session = createSession(username, token);
-        sessions.put(username, session);
-        return username;
-    }
-
-    @Override
-    public Session retrieveSession(String username) {
-        return sessions.get(username);
     }
 }

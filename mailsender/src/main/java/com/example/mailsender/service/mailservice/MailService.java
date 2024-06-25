@@ -1,4 +1,4 @@
-package com.example.mailsender.service;
+package com.example.mailsender.service.mailservice;
 
 import jakarta.mail.Session;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

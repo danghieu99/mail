@@ -1,6 +1,6 @@
-package com.example.mailsender.service.impl;
+package com.example.mailsender.service.mailservice.impl;
 
-import com.example.mailsender.service.MinioFileClient;
+import com.example.mailsender.service.mailservice.MinioFileClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;

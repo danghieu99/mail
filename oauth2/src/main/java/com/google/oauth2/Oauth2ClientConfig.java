@@ -23,7 +23,6 @@ public class Oauth2ClientConfig {
 
         String clientSecret = System.getenv("CLIENT_SECRET");
         String clientId = System.getenv("CLIENT_ID");
-        String redirectUri = System.getenv("REDIRECT_URI");
         String authorizationUri = System.getenv("AUTHORIZATION_URI");
         String tokenUri = System.getenv("TOKEN_URI");
 
@@ -32,7 +31,8 @@ public class Oauth2ClientConfig {
                 .clientSecret(clientSecret)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri(redirectUri)
+                .redirectUri("http://host.docker.internal:8081/mailauthentication/receiveauthorizationcode")
+                .redirectUri("http://host.docker.internal:8081/mailauthentication/receiveaccesstoken")
                 .scope("https://www.googleapis.com/auth/gmail.send")
                 .authorizationUri(authorizationUri)
                 .tokenUri(tokenUri)

@@ -1,8 +1,8 @@
-package com.example.mailsender.service.impl;
+package com.example.mailsender.service.mailservice.impl;
 
 import com.example.mailsender.dto.MailData;
-import com.example.mailsender.service.MailService;
-import com.example.mailsender.service.MinioFileClient;
+import com.example.mailsender.service.mailservice.MailService;
+import com.example.mailsender.service.mailservice.MinioFileClient;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
