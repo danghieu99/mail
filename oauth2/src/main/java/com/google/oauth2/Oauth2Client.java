@@ -21,7 +21,7 @@ public class Oauth2Client {
     private String authorizeUri = System.getenv("AUTHORIZE_URI");
     private String authorizationCodeEndpoint = System.getenv("AUTHORIZATION_CODE_ENDPOINT");
 
-    public String getAuthorizationCodeFromGoogle() {
+    public String getAuthorizationUrlFromGoogle() {
 
         URI uri = UriComponentsBuilder.fromHttpUrl(authorizeUri)
                 .queryParam("client_id", System.getenv("CLIENT_ID"))

@@ -16,7 +16,7 @@ public class Oauth2Controller {
 
     @GetMapping("/auth")
     public String grantAuthenticationUrl() {
-        return oauth2Client.getAuthorizationCodeFromGoogle();
+        return oauth2Client.getAuthorizationUrlFromGoogle();
     }
 
     @PostMapping("/token")
