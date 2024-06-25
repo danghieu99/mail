@@ -14,13 +14,13 @@ public class Oauth2Controller {
         this.oauth2Client = oauth2Client;
     }
 
-    @PostMapping("/auth")
-    public String grantAuthorization(String username) {
-        return oauth2Client.requestAuthorizationCodeFromGoogle(username);
+    @GetMapping("/auth")
+    public String grantAuthenticationUrl() {
+        return oauth2Client.getAuthorizationCodeFromGoogle();
     }
 
     @PostMapping("/token")
     public String grantToken(@RequestParam("authorization_code") String authorizationCode) {
-        return oauth2Client.requestAccessTokenFromGoogle(authorizationCode);
+        return oauth2Client.getAccessTokenFromGoogle(authorizationCode);
     }
 }

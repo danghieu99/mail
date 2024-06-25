@@ -49,6 +49,7 @@ services:
       CLIENT_SECRET: "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"
       AUTHORIZATION_URI: "https://accounts.google.com/oauth2/auth"
       TOKEN_URI: "https://oauth2.googleapis.com/token"
+      AUTHORIZATION_CODE_ENDPOINT: "http://localhost:8081/mailauthentication/authorization_code"
     ports:
       - "8084:8084"
 

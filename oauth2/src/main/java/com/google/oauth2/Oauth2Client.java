@@ -19,27 +19,25 @@ public class Oauth2Client {
     private String client_secret = System.getenv("CLIENT_SECRET");
     private String tokenUri = System.getenv("TOKEN_URI");
     private String authorizeUri = System.getenv("AUTHORIZE_URI");
+    private String authorizationCodeEndpoint = System.getenv("AUTHORIZATION_CODE_ENDPOINT");
 
-    public String requestAuthorizationCodeFromGoogle(String username) {
+    public String getAuthorizationCodeFromGoogle() {
 
         URI uri = UriComponentsBuilder.fromHttpUrl(authorizeUri)
                 .queryParam("client_id", System.getenv("CLIENT_ID"))
                 .queryParam("grant_type", "authorization_code")
-                .queryParam("scope", "https://www.googleapis.com/auth/gmail.send")
+                .queryParam("scope", "https://mail.google.com/")
                 .queryParam("response_type", "code")
-                .queryParam("redirect_uri", "http://host.docker.internal:8081/mailauthentication/receiveauthorizationcode")
+                .queryParam("redirect_uri", authorizationCodeEndpoint)
                 .build()
                 .toUri();
 
-        ResponseEntity<String> response = restClient.get()
-                .uri(uri)
-                .retrieve()
-                .toEntity(String.class);
+        System.out.println(uri.toString());
 
-        return username + " authorization code request response:" + response.getBody();
+        return uri.toString();
     }
 
-    public String requestAccessTokenFromGoogle(String authorizationCode) {
+    public String getAccessTokenFromGoogle(String authorizationCode) {
 
         URI uri = UriComponentsBuilder.fromHttpUrl(tokenUri)
                 .build()
@@ -50,7 +48,6 @@ public class Oauth2Client {
         tokenRequestBody.put("client_secret", client_secret);
         tokenRequestBody.put("code", authorizationCode);
         tokenRequestBody.put("grant_type", "authorization_code");
-        tokenRequestBody.put("redirect_uri", "http://host.docker.internal:8081/mailauthentication/receiveaccesstoken");
 
         ResponseEntity<String> response = restClient.post()
                 .uri(uri)

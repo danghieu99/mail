@@ -12,24 +12,18 @@ public class MailAuthController {
     @Autowired
     private MailAuth mailAuth;
 
-    @GetMapping("/requestauthorizationcode")
-    public String requestAuthorizationCode(@RequestParam String username) {
-        return mailAuth.requestAuthorizationCode(username);
+    @GetMapping("/authorization_code")
+    public String receiveAuthorizationCode(@RequestParam("code") String authorizationCode) {
+        return authorizationCode;
     }
 
-    @GetMapping("/requestaccesstoken")
+    @GetMapping("/getgoogleauthenticationurl")
+    public String requestAuthorizationCode() {
+        return mailAuth.fetchGoogleAuthenticationUrl();
+    }
+
+    @PostMapping("/gettaccesstoken")
     public String requestAccessToken(@RequestParam("authorization_code") String authorizationCode) {
-        return mailAuth.requestAccessToken(authorizationCode);
+        return mailAuth.fetchAccessToken(authorizationCode);
     }
-
-    @GetMapping("/receiveauthorizationcode")
-    public String receiveAuthorizationCode(@RequestParam("authorization_code") String authorizationCode) {
-        return mailAuth.receiveAuthorizationCode(authorizationCode);
-    }
-
-    @GetMapping("/receiveaccesstoken")
-    public String receiveAccessToken(@RequestParam("access_token") String accessToken) {
-        return mailAuth.receiveAccessToken(accessToken);
-    }
-
 }

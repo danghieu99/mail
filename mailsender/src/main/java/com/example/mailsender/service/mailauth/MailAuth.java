@@ -4,12 +4,10 @@ import jakarta.mail.Session;
 
 public interface MailAuth {
 
-    public String requestAccessToken(String authorizationCode);
+    public String fetchAccessToken(String authorizationCode);
 
-    public String requestAuthorizationCode(String username);
+    public String fetchGoogleAuthenticationUrl();
 
-    public String receiveAuthorizationCode(String code);
-
-    public String receiveAccessToken(String token);
+    public Session createSession();
 
 }

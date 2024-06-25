@@ -2,8 +2,6 @@ package com.google.oauth2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -25,15 +23,15 @@ public class Oauth2ClientConfig {
         String clientId = System.getenv("CLIENT_ID");
         String authorizationUri = System.getenv("AUTHORIZATION_URI");
         String tokenUri = System.getenv("TOKEN_URI");
+        String authorizationCodeEndpoint = System.getenv("AUTHORIZATION_CODE_ENDPOINT");
 
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("google_auth")
                 .clientId(clientId)
                 .clientSecret(clientSecret)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("http://host.docker.internal:8081/mailauthentication/receiveauthorizationcode")
-                .redirectUri("http://host.docker.internal:8081/mailauthentication/receiveaccesstoken")
-                .scope("https://www.googleapis.com/auth/gmail.send")
+                .redirectUri(authorizationCodeEndpoint)
+                .scope("https://mail.google.com/")
                 .authorizationUri(authorizationUri)
                 .tokenUri(tokenUri)
                 .build();
