@@ -1,8 +1,8 @@
-package com.example.mailsender.service.mailservice.impl;
+package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
-import com.example.mailsender.service.mailservice.MailService;
-import com.example.mailsender.service.mailservice.MinioFileClient;
+import com.example.mailsender.service.MailService;
+import com.example.mailsender.service.MinioFileClient;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
@@ -28,7 +28,6 @@ import static com.example.mailsender.util.MailDataSerializer.toMailData;
 @Service
 public class MailServiceImpl implements MailService {
 
-    //private final MailAuth mailAuth;
     private final MinioFileClient minioFileClient;
     private final JavaMailSender mailSender;
 

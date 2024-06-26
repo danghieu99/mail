@@ -1,4 +1,4 @@
-package com.example.mailsender.service.mailservice;
+package com.example.mailsender.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,5 +1,6 @@
 package com.example.mailsender.controller;
 
+import com.example.mailsender.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +14,7 @@ import java.util.List;
 public class MailServiceController {
 
     @Autowired
-    private com.example.mailsender.service.mailservice.MailService mailService;
+    private MailService mailService;
 
     @PostMapping("/sendmailwithattachments")
     public String sendMailWithAttachments(@RequestParam("from") String from,

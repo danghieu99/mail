@@ -1,6 +1,6 @@
-package com.example.mailsender.service.mailservice.impl;
+package com.example.mailsender.service.impl;
 
-import com.example.mailsender.service.mailservice.MinioFileClient;
+import com.example.mailsender.service.MinioFileClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
@@ -25,7 +25,7 @@ public class MinioFileClientImpl implements MinioFileClient {
     @Override
     public String uploadFile(MultipartFile file, String fileName) throws IOException {
 
-        String url = "http://host.docker.internal:8080/api/file/upload";
+        String url = System.getenv("MINIO_API_UPLOAD_ENDPOINT");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -70,7 +70,7 @@ public class MinioFileClientImpl implements MinioFileClient {
 
         HashMap<String, String> urlAttachments = new HashMap<>();
         for (String fileName : fileNames) {
-            String attachmentUrl =fetchFileUrl(fileName);
+            String attachmentUrl = fetchFileUrl(fileName);
             urlAttachments.put(attachmentUrl, fileName);
         }
 
@@ -79,7 +79,7 @@ public class MinioFileClientImpl implements MinioFileClient {
 
     @Override
     public String fetchFileUrl(String fileName) {
-        String url = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8080/api/file/geturl")
+        String url = UriComponentsBuilder.fromHttpUrl(System.getenv("MINI0_API_GETURL_ENDPOINT"))
                 .queryParam("filename", fileName)
                 .queryParam("bucketname", "newbucket")
                 .build()
