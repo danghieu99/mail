@@ -18,5 +18,4 @@ public interface MailService {
 
     public String SendMailJson(String mailJson);
 
-    public JavaMailSenderImpl createJavaMailSender(Session session);
 }

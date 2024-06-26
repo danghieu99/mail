@@ -38,24 +38,6 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public JavaMailSenderImpl createJavaMailSender(Session session) {
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost("smtp.gmail.com");
-        javaMailSender.setPort(587);
-        javaMailSender.setSession(session);
-
-        Properties props = javaMailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.sasl.enable", "true");
-        props.put("mail.debug", "true");
-        props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
-
-        return javaMailSender;
-    }
-
-    @Override
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
                                               Collection<MultipartFile> files) {
 
@@ -87,9 +69,7 @@ public class MailServiceImpl implements MailService {
                     ByteArrayResource attachmentSource = new ByteArrayResource(attachmentBytes);
                     helper.addAttachment(filename, attachmentSource);
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (MessagingException e) {
+                } catch (IOException | MessagingException e) {
                     throw new RuntimeException(e);
                 }
             });
