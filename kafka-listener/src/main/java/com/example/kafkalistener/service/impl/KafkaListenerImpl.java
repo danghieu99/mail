@@ -5,12 +5,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 @Service
 public class KafkaListenerImpl implements KafkaListener {
@@ -32,7 +34,7 @@ public class KafkaListenerImpl implements KafkaListener {
         listen();
     }
 
-    @Scheduled()
+    @Scheduled(initialDelay = 1000, fixedRate = 1000)
     public void listen() {
         try {
             ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));

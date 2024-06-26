@@ -1,7 +1,8 @@
 package com.example.mailsender.service;
 
-import jakarta.mail.Session;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import com.example.mailsender.dto.MailData;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
@@ -16,6 +17,6 @@ public interface MailService {
 
     public String sendMail(String sender, List<String> recipients, String subject, String content);
 
-    public String SendMailJson(String mailJson);
+    public String sendMailJson(String mailJson);
 
 }

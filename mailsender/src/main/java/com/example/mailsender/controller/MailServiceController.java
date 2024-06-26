@@ -35,6 +35,6 @@ public class MailServiceController {
 
     @PostMapping("/sendmailjson")
     public String sendMailJson(@RequestParam("mail") String mailJson) {
-        return mailService.SendMailJson(mailJson);
+        return mailService.sendMailJson(mailJson);
     }
 }

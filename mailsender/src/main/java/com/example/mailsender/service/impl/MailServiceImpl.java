@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.example.mailsender.util.MailDataSerializer.toMailData;
 
@@ -36,7 +37,6 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    //@Async
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
                                               Collection<MultipartFile> files) {
 
@@ -50,7 +50,6 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    //@Async
     public String sendMailWithAttachments(String from, List<String> to,
                                           String subject, String body, HashMap<String, String> attachments) {
 
@@ -73,6 +72,7 @@ public class MailServiceImpl implements MailService {
                     throw new RuntimeException(e);
                 }
             });
+
             mailSender.send(message);
 
         } catch (MessagingException e) {
@@ -82,7 +82,6 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    //@Async
     public String sendMail(String from, List<String> to, String subject, String body) {
 
         try {
@@ -102,8 +101,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    //@Async
-    public String SendMailJson(String mailJson) {
+    public String sendMailJson(String mailJson) {
 
         try {
             MailData mailData = toMailData(mailJson);
