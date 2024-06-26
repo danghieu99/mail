@@ -4,14 +4,13 @@ import com.example.mailsender.dto.MailData;
 import com.example.mailsender.service.MailService;
 import com.example.mailsender.service.MinioFileClient;
 import jakarta.mail.MessagingException;
-import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +20,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 import static com.example.mailsender.util.MailDataSerializer.toMailData;
 
@@ -38,6 +36,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    //@Async
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
                                               Collection<MultipartFile> files) {
 
@@ -51,6 +50,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    //@Async
     public String sendMailWithAttachments(String from, List<String> to,
                                           String subject, String body, HashMap<String, String> attachments) {
 
@@ -82,6 +82,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    //@Async
     public String sendMail(String from, List<String> to, String subject, String body) {
 
         try {
@@ -101,6 +102,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    //@Async
     public String SendMailJson(String mailJson) {
 
         try {

@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -31,15 +32,14 @@ public class KafkaListenerImpl implements KafkaListener {
         listen();
     }
 
+    @Scheduled()
     public void listen() {
         try {
-            while (true) {
-                ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));
-                for (ConsumerRecord<String, String> record : records) {
-                    System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-                    String mailRecord = record.value();
-                    mailSenderClient.SendMailData(mailRecord);
-                }
+            ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+                String mailRecord = record.value();
+                mailSenderClient.SendMailData(mailRecord);
             }
         } catch (Exception e) {
             e.printStackTrace();
