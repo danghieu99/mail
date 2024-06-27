@@ -18,10 +18,12 @@ public class KafkaListenerApplication {
 
     @PostConstruct
     public void init() {
-        try {
-            kafkaListener.run();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (true) {
+            try {
+                kafkaListener.run();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

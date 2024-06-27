@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Properties;
 
 @Configuration
-@EnableAsync
 public class MailServiceConfig {
 
     @Bean

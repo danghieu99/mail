@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.config.Task;
@@ -14,7 +15,6 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableScheduling
 public class KafkaListenerConfig {
 
     @Bean
@@ -29,12 +29,6 @@ public class KafkaListenerConfig {
 
         return new KafkaConsumer<>(props);
     }
-//
-//    @Bean
-//    public TaskExecutor taskExecutor() {
-//        TaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-//
-//    }
 
     @Bean
     public RestClient getRestClient() {

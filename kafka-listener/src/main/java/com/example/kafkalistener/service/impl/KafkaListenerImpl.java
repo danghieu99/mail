@@ -34,7 +34,6 @@ public class KafkaListenerImpl implements KafkaListener {
         listen();
     }
 
-    @Scheduled(initialDelay = 1000, fixedRate = 1000)
     public void listen() {
         try {
             ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));
