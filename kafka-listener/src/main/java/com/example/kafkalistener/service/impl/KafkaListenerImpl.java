@@ -35,15 +35,17 @@ public class KafkaListenerImpl implements KafkaListener {
     }
 
     public void listen() {
-        try {
-            ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));
-            for (ConsumerRecord<String, String> record : records) {
-                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-                String mailRecord = record.value();
-                mailSenderClient.SendMailData(mailRecord);
+        while (true) {
+            try {
+                ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(1));
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+                    String mailRecord = record.value();
+                    mailSenderClient.SendMailData(mailRecord);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
