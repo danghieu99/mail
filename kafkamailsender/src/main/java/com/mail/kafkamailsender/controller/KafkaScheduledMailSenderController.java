@@ -24,7 +24,7 @@ public class KafkaScheduledMailSenderController {
                                     @RequestParam List<String> to,
                                     @RequestParam("subject") String subject,
                                     @RequestParam("body") String body,
-                                    @RequestParam("file") Collection<MultipartFile> files,
+                                    @RequestParam(value = "file", required = false) Collection<MultipartFile> files,
                                     @RequestParam("start") ZonedDateTime startTime,
                                     @RequestParam("end") ZonedDateTime endTime,
                                     @RequestParam("frequency") String frequency) {

@@ -27,17 +27,8 @@ public class KafkaMailSenderController {
     public String sendMail(@RequestParam List<String> to,
                            @RequestParam("from") String from,
                            @RequestParam("subject") String subject,
-                           @RequestParam("body") String body) {
-        return kafkaMailSender.sendMail(from, to, subject, body);
-    }
-
-    @PostMapping("/mailwithattachments")
-    public String sendMailWithAttachment(@RequestParam("from") String from,
-                                         @RequestParam List<String> to,
-                                         @RequestParam("subject") String subject,
-                                         @RequestParam("body") String body,
-                                         @RequestParam("file") Collection<MultipartFile> files) {
-
+                           @RequestParam("body") String body,
+                           @RequestParam(value = "file", required = false) Collection<MultipartFile> files) {
         return kafkaMailSender.sendMailWithAttachmentFiles(from, to, subject, body, files);
     }
 }

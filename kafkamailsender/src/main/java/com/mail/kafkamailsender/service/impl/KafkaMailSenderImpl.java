@@ -61,8 +61,12 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     @Override
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files) {
 
+        if (files == null) {
+            return sendMail(from, to, subject, body);
+        }
+
         if (files.isEmpty()) {
-            throw new RuntimeException("no files found");
+            return sendMail(from, to, subject, body);
         }
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
@@ -107,9 +111,11 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
         MailSchedule schedule = MailSchedule.startTime(startTime).endTime(endTime).frequency(frequency).build();
 
-        MailData scheduledMail;
+        MailData scheduledMail = new MailData();
 
-        if (files.isEmpty()) {
+        if (files == null) {
+            scheduledMail = MailData.from(from).to(to).subject(subject).body(body).mailSchedule(schedule).build();
+        } else if (files.isEmpty()) {
             scheduledMail = MailData.from(from).to(to).subject(subject).body(body).mailSchedule(schedule).build();
         } else {
             HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
