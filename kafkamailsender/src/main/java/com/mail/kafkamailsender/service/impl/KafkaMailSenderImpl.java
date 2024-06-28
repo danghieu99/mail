@@ -4,7 +4,6 @@ import com.mail.kafkamailsender.dto.MailData;
 import com.mail.kafkamailsender.dto.MailSchedule;
 import com.mail.kafkamailsender.service.KafkaMailSender;
 import com.mail.kafkamailsender.util.MailDataSerializer;
-import com.mail.kafkamailsender.util.MailScheduleSerializer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -45,7 +44,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
         MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
 
         String topic = "mailtest";
-        String jsonMessage = MailDataSerializer.toJson(mail);
+        String jsonMessage = MailDataSerializer.mailToJson(mail);
         String key = String.valueOf(UUID.randomUUID());
 
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
@@ -70,7 +69,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
         MailData mailWithAttachmentsData = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
 
-        String jsonMessage = MailDataSerializer.toJson(mailWithAttachmentsData);
+        String jsonMessage = MailDataSerializer.mailToJson(mailWithAttachmentsData);
         String topic = "mailtest";
         String key = UUID.randomUUID().toString();
 
@@ -106,19 +105,19 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     public String sendScheduledMail(String from, List<String> to, String subject, String body, Collection<MultipartFile> files,
                                     ZonedDateTime startTime, ZonedDateTime endTime, String frequency) {
 
-        MailData mailData;
-
-        if (files.isEmpty()) {
-            mailData = MailData.from(from).to(to).subject(subject).body(body).build();
-        } else {
-            HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
-            mailData = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
-        }
-
         MailSchedule schedule = MailSchedule.startTime(startTime).endTime(endTime).frequency(frequency).build();
 
-        String scheduledMail = MailDataSerializer.toJson(mailData);
+        MailData scheduledMail;
 
-        return sendScheduledMailJson(scheduledMail);
+        if (files.isEmpty()) {
+            scheduledMail = MailData.from(from).to(to).subject(subject).body(body).mailSchedule(schedule).build();
+        } else {
+            HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
+            scheduledMail = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).mailSchedule(schedule).build();
+        }
+
+        String scheduledMailJson = MailDataSerializer.mailToJson(scheduledMail);
+
+        return sendScheduledMailJson(scheduledMailJson);
     }
 }

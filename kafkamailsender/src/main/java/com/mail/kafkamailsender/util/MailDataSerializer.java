@@ -8,7 +8,7 @@ public class MailDataSerializer {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
-    public static String toJson(MailData mailData) {
+    public static String mailToJson(MailData mailData) {
         try {
             return mapper.writeValueAsString(mailData);
         } catch (JsonProcessingException e) {
