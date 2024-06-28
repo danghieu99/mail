@@ -3,7 +3,7 @@ package com.mail.kafkamailsender.service.impl;
 import com.mail.kafkamailsender.dto.MailData;
 import com.mail.kafkamailsender.dto.MailSchedule;
 import com.mail.kafkamailsender.service.KafkaMailSender;
-import com.mail.kafkamailsender.util.MailDataSerializer;
+import com.mail.kafkamailsender.util.JsonUtil;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -44,7 +44,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
         MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
 
         String topic = "mailtest";
-        String jsonMessage = MailDataSerializer.mailToJson(mail);
+        String jsonMessage = JsonUtil.mailDataToJson(mail);
         String key = String.valueOf(UUID.randomUUID());
 
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
@@ -73,7 +73,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
         MailData mailWithAttachmentsData = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
 
-        String jsonMessage = MailDataSerializer.mailToJson(mailWithAttachmentsData);
+        String jsonMessage = JsonUtil.mailDataToJson(mailWithAttachmentsData);
         String topic = "mailtest";
         String key = UUID.randomUUID().toString();
 
@@ -107,9 +107,13 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
     @Override
     public String sendScheduledMail(String from, List<String> to, String subject, String body, Collection<MultipartFile> files,
-                                    ZonedDateTime startTime, ZonedDateTime endTime, String frequency) {
+                                    String startTime, String endTime, String frequency) {
 
-        MailSchedule schedule = MailSchedule.startTime(startTime).endTime(endTime).frequency(frequency).build();
+        ZonedDateTime start = JsonUtil.jsonToZonedDateTime(startTime);
+
+        ZonedDateTime end = JsonUtil.jsonToZonedDateTime(endTime);
+
+        MailSchedule schedule = MailSchedule.startTime(start).endTime(end).frequency(frequency).build();
 
         MailData scheduledMail = new MailData();
 
@@ -122,7 +126,7 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
             scheduledMail = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).mailSchedule(schedule).build();
         }
 
-        String scheduledMailJson = MailDataSerializer.mailToJson(scheduledMail);
+        String scheduledMailJson = JsonUtil.mailDataToJson(scheduledMail);
 
         return sendScheduledMailJson(scheduledMailJson);
     }

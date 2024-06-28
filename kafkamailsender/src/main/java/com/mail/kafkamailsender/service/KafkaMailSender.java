@@ -15,7 +15,7 @@ public interface KafkaMailSender {
 
     String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files);
 
-    String sendScheduledMail(String from, List<String> to, String subject, String body, Collection<MultipartFile> files, ZonedDateTime startTime, ZonedDateTime endTime, String frequency);
+    String sendScheduledMail(String from, List<String> to, String subject, String body, Collection<MultipartFile> files, String startTime, String endTime, String frequency);
 
     String sendScheduledMailJson(String scheduledMail);
 }

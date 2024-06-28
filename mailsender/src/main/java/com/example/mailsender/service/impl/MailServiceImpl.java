@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.mailsender.util.MailDataSerializer.toMailData;
+import static com.example.mailsender.util.JsonUtil.toMailData;
 
 @Service
 public class MailServiceImpl implements MailService {
