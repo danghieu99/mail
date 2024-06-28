@@ -1,6 +1,7 @@
 package com.mail.kafkamailsender.service.impl;
 
 import com.mail.kafkamailsender.dto.MailData;
+import com.mail.kafkamailsender.dto.MailSchedule;
 import com.mail.kafkamailsender.service.KafkaMailSender;
 import com.mail.kafkamailsender.util.MailDataSerializer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -80,5 +81,10 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
             }
         });
         return "mail with attachments sent";
+    }
+
+    @Override
+    public String sendScheduledMail(String mail, String schedule) {
+        return "";
     }
 }

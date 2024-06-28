@@ -12,18 +12,18 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/kafka")
+@RequestMapping("/kafka/send")
 public class KafkaMailSenderController {
 
     @Autowired
     KafkaMailSender kafkaMailSender;
 
-    @PostMapping("/sendmessage")
+    @PostMapping("/message")
     public String sendMessage(@RequestParam("message") String message) {
         return kafkaMailSender.sendMessage(message);
     }
 
-    @PostMapping("/sendmail")
+    @PostMapping("/mail")
     public String sendMail(@RequestParam List<String> to,
                            @RequestParam("from") String from,
                            @RequestParam("subject") String subject,
@@ -31,7 +31,7 @@ public class KafkaMailSenderController {
         return kafkaMailSender.sendMail(from, to, subject, body);
     }
 
-    @PostMapping("/sendmailwithattachments")
+    @PostMapping("/mailwithattachments")
     public String sendMailWithAttachment(@RequestParam("from") String from,
                                          @RequestParam List<String> to,
                                          @RequestParam("subject") String subject,
