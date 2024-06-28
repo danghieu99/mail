@@ -4,12 +4,14 @@ import com.mail.kafkamailsender.dto.MailData;
 import com.mail.kafkamailsender.dto.MailSchedule;
 import com.mail.kafkamailsender.service.KafkaMailSender;
 import com.mail.kafkamailsender.util.MailDataSerializer;
+import com.mail.kafkamailsender.util.MailScheduleSerializer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
@@ -84,7 +86,39 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     }
 
     @Override
-    public String sendScheduledMail(String mail, String schedule) {
-        return "";
+    public String sendScheduledMailJson(String scheduledMail) {
+        String topic = "scheduledmail";
+        String key = UUID.randomUUID().toString();
+
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, scheduledMail);
+
+        kafkaProducer.send(record, (metadata, exception) -> {
+            if (exception != null) {
+                exception.printStackTrace();
+                throw new RuntimeException(exception);
+            }
+        });
+
+        return "scheduled mail sent";
+    }
+
+    @Override
+    public String sendScheduledMail(String from, List<String> to, String subject, String body, Collection<MultipartFile> files,
+                                    ZonedDateTime startTime, ZonedDateTime endTime, String frequency) {
+
+        MailData mailData;
+
+        if (files.isEmpty()) {
+            mailData = MailData.from(from).to(to).subject(subject).body(body).build();
+        } else {
+            HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
+            mailData = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).build();
+        }
+
+        MailSchedule schedule = MailSchedule.startTime(startTime).endTime(endTime).frequency(frequency).build();
+
+        String scheduledMail = MailDataSerializer.toJson(mailData);
+
+        return sendScheduledMailJson(scheduledMail);
     }
 }
