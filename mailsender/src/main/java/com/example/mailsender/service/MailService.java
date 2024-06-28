@@ -1,8 +1,6 @@
 package com.example.mailsender.service;
 
 import com.example.mailsender.dto.MailData;
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
@@ -19,5 +17,7 @@ public interface MailService {
 
     String sendMailJson(String mailJson);
 
-    String sendScheduledMail(String scheduledMailJson);
+    String scheduleMail(String scheduledMailJson);
+
+    String sendMail(MailData mailData);
 }

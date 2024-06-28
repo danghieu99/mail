@@ -5,11 +5,13 @@ import com.example.mailsender.dto.MailSchedule;
 import com.example.mailsender.service.MailService;
 import com.example.mailsender.service.MinioFileClient;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -120,7 +122,7 @@ public class MailServiceImpl implements MailService {
             String body = mailData.getBody();
             String cc = mailData.getCc();
             String bcc = mailData.getBcc();
-            String replyTo = mailData.getReplyTo();
+            Collection<String> replyTo = mailData.getReplyTo();
             MailSchedule mailSchedule = mailData.getMailSchedule();
             HashMap<String, String> attachments = mailData.getAttachments();
 
@@ -133,7 +135,56 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public String sendScheduledMail(String scheduledMailJson) {
+    public String scheduleMail(String scheduledMailJson) {
         return "";
+    }
+
+    @Override
+    public String sendMail(MailData mailData) {
+        List<String> to = mailData.getTo();
+        String from = mailData.getFrom();
+        String subject = mailData.getSubject();
+        String body = mailData.getBody();
+        String cc = mailData.getCc();
+        String bcc = mailData.getBcc();
+        Collection<String> replyTo = mailData.getReplyTo();
+        MailSchedule mailSchedule = mailData.getMailSchedule();
+        HashMap<String, String> attachments = mailData.getAttachments();
+
+        if (attachments == null) {
+            return sendMail(from, to, subject, body);
+        }
+        if (attachments.isEmpty()) {
+            return sendMail(from, to, subject, body);
+        }
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom(from);
+            helper.setTo(to.toArray(new String[to.size()]));
+            helper.setText(body);
+            helper.setSubject(subject);
+            helper.setReplyTo((InternetAddress) replyTo);
+
+
+            attachments.forEach((url, filename) -> {
+                try {
+                    InputStream fileStream = new URL(url).openStream();
+                    byte[] attachmentBytes = fileStream.readAllBytes();
+                    ByteArrayResource attachmentSource = new ByteArrayResource(attachmentBytes);
+                    helper.addAttachment(filename, attachmentSource);
+
+                } catch (IOException | MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            mailSender.send(message);
+
+        } catch (MessagingException e) {
+            return e.getMessage();
+        }
+        return "mail with attachment sent successfully";
     }
 }

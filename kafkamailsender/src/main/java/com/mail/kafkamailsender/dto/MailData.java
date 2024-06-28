@@ -1,5 +1,6 @@
 package com.mail.kafkamailsender.dto;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class MailData {
     private String from;
     private String subject;
     private String body;
-    private String replyTo;
+    private Collection<String> replyTo;
     private String cc;
     private String bcc;
     private HashMap<String, String> attachments;
@@ -54,7 +55,7 @@ public class MailData {
         return attachments;
     }
 
-    public String getReplyTo() {
+    public Collection<String> getReplyTo() {
         return replyTo;
     }
 
@@ -77,7 +78,7 @@ public class MailData {
         private String subject;
         private String body;
         private HashMap<String, String> attachments;
-        private String replyTo;
+        private Collection<String> replyTo;
         private String cc;
         private String bcc;
         private MailSchedule mailSchedule;
@@ -106,7 +107,7 @@ public class MailData {
             return this;
         }
 
-        public Builder replyTo(String replyTo) {
+        public Builder replyTo(Collection<String> replyTo) {
             this.replyTo = replyTo;
             return this;
         }
