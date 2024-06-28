@@ -13,6 +13,7 @@ public class MailData {
     private String cc;
     private String bcc;
     private HashMap<String, String> attachments;
+    private MailSchedule mailSchedule;
 
     public MailData() {
     }
@@ -26,6 +27,7 @@ public class MailData {
         this.replyTo = builder.replyTo;
         this.cc = builder.cc;
         this.bcc = builder.bcc;
+        this.mailSchedule = builder.mailSchedule;
     }
 
     public static Builder from(String from) {
@@ -64,6 +66,10 @@ public class MailData {
         return bcc;
     }
 
+    public MailSchedule getMailSchedule() {
+        return mailSchedule;
+    }
+
     public static class Builder {
 
         private List<String> to;
@@ -74,6 +80,7 @@ public class MailData {
         private String replyTo;
         private String cc;
         private String bcc;
+        private MailSchedule mailSchedule;
 
         private Builder(String from) {
             this.from = from;
@@ -111,6 +118,11 @@ public class MailData {
 
         public Builder bcc(String bcc) {
             this.bcc = bcc;
+            return this;
+        }
+
+        public Builder mailSchedule(MailSchedule mailSchedule) {
+            this.mailSchedule = mailSchedule;
             return this;
         }
 

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,6 +32,6 @@ public class KafkaScheduledMailSenderController {
 
     @PostMapping("/mailjson")
     public String sendScheduledMailJson(@RequestParam("mail") String scheduledMail) {
-        return kafkaMailSender.sendScheduledMailJson(scheduledMail);
+        return kafkaMailSender.sendMailJson(scheduledMail);
     }
 }

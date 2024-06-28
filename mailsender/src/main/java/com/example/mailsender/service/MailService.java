@@ -11,12 +11,13 @@ import java.util.List;
 
 public interface MailService {
 
-    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content, Collection<MultipartFile> files);
+    String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content, Collection<MultipartFile> files);
 
-    public String sendMailWithAttachments(String from, List<String> to, String subject, String content, HashMap<String, String> attachments);
+    String sendMailWithAttachments(String from, List<String> to, String subject, String content, HashMap<String, String> attachments);
 
-    public String sendMail(String sender, List<String> recipients, String subject, String content);
+    String sendMail(String sender, List<String> recipients, String subject, String content);
 
-    public String sendMailJson(String mailJson);
+    String sendMailJson(String mailJson);
 
+    String sendScheduledMail(String scheduledMailJson);
 }

@@ -1,9 +1,6 @@
 package com.example.kafkalistener.service;
 
-import org.springframework.stereotype.Service;
-
-@Service
-public interface MailSenderClient {
+public interface MailClient {
 
     public String SendMailData(String jsonMail);
 

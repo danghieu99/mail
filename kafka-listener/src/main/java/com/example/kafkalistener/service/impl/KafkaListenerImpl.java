@@ -15,11 +15,11 @@ import java.util.List;
 public class KafkaListenerImpl implements KafkaListener {
 
     private final KafkaConsumer<String, String> kafkaConsumer;
-    private final MailSenderClientImpl mailSenderClient;
+    private final MailClientImpl mailSenderClient;
 
     @Autowired
     public KafkaListenerImpl(KafkaConsumer<String, String> kafkaConsumer,
-                             MailSenderClientImpl mailSenderClient) {
+                             MailClientImpl mailSenderClient) {
         this.kafkaConsumer = kafkaConsumer;
         this.mailSenderClient = mailSenderClient;
     }
@@ -54,5 +54,4 @@ public class KafkaListenerImpl implements KafkaListener {
         }
         return "Subscribed to " + topics.toString();
     }
-
 }

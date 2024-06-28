@@ -1,6 +1,7 @@
 package com.example.mailsender.service.impl;
 
 import com.example.mailsender.dto.MailData;
+import com.example.mailsender.dto.MailSchedule;
 import com.example.mailsender.service.MailService;
 import com.example.mailsender.service.MinioFileClient;
 import jakarta.mail.MessagingException;
@@ -53,6 +54,13 @@ public class MailServiceImpl implements MailService {
     @Override
     public String sendMailWithAttachments(String from, List<String> to,
                                           String subject, String body, HashMap<String, String> attachments) {
+
+        if (attachments == null) {
+            return sendMail(from, to, subject, body);
+        }
+        if (attachments.isEmpty()) {
+            return sendMail(from, to, subject, body);
+        }
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -110,18 +118,22 @@ public class MailServiceImpl implements MailService {
             String from = mailData.getFrom();
             String subject = mailData.getSubject();
             String body = mailData.getBody();
+            String cc = mailData.getCc();
+            String bcc = mailData.getBcc();
+            String replyTo = mailData.getReplyTo();
+            MailSchedule mailSchedule = mailData.getMailSchedule();
+            HashMap<String, String> attachments = mailData.getAttachments();
 
-            if (mailData.getAttachments() == null) {
-                System.out.println("Sending mail with no attachment!");
-                return sendMail(from, to, subject, body);
-            } else {
-                HashMap<String, String> attachments = mailData.getAttachments();
-                System.out.println("Sending mail with attachments!");
-                return sendMailWithAttachments(from, to, subject, body, attachments);
-            }
+            return sendMailWithAttachments(from, to, subject, body, attachments);
+
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
+    }
+
+    @Override
+    public String sendScheduledMail(String scheduledMailJson) {
+        return "";
     }
 }
