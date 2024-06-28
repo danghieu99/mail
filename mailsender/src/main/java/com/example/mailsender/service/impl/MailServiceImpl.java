@@ -38,8 +38,11 @@ public class MailServiceImpl implements MailService {
     public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String content,
                                               Collection<MultipartFile> files) {
 
+        if (files == null) {
+            return sendMail(from, to, subject, content);
+        }
         if (files.isEmpty()) {
-            throw new RuntimeException("files not found");
+            return sendMail(from, to, subject, content);
         }
 
         HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);

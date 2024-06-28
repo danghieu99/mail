@@ -16,21 +16,13 @@ public class MailServiceController {
     @Autowired
     private MailService mailService;
 
-    @PostMapping("/sendmailwithattachments")
+    @PostMapping("/sendmail")
     public String sendMailWithAttachments(@RequestParam("from") String from,
                                           @RequestParam List<String> to,
                                           @RequestParam("subject") String subject,
                                           @RequestParam("body") String body,
-                                          @RequestParam("files") Collection<MultipartFile> files) {
+                                          @RequestParam(value = "files", required = false) Collection<MultipartFile> files) {
         return mailService.sendMailWithAttachmentFiles(from, to, subject, body, files);
-    }
-
-    @PostMapping("/sendmail")
-    public String sendMail(@RequestParam("from") String from,
-                           @RequestParam List<String> to,
-                           @RequestParam("subject") String subject,
-                           @RequestParam("body") String body) {
-        return mailService.sendMail(from, to, subject, body);
     }
 
     @PostMapping("/sendmailjson")
