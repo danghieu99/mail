@@ -27,6 +27,7 @@ public class KafkaListenerImpl implements KafkaListener {
     public void run() throws InterruptedException {
         List<String> topics = new ArrayList<>();
         topics.add("mailtest");
+        topics.add("scheduledmail");
         subscribe(topics);
         listen();
     }

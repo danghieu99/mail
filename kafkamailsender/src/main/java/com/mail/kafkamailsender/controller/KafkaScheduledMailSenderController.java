@@ -32,6 +32,6 @@ public class KafkaScheduledMailSenderController {
 
     @PostMapping("/mailjson")
     public String sendScheduledMailJson(@RequestParam("mail") String scheduledMail) {
-        return kafkaMailSender.sendMailJson(scheduledMail);
+        return kafkaMailSender.sendMailJson(scheduledMail, "scheduledmail");
     }
 }

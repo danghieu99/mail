@@ -19,20 +19,14 @@ public class MailServiceController {
 
     @PostMapping("/sendmailwithfiles")
     public String sendMailWithAttachmentFiles(@RequestParam("from") String from,
-                                              @RequestParam List<String> to,
+                                              @RequestParam("to") List<String> to,
                                               @RequestParam("subject") String subject,
                                               @RequestParam("body") String body,
-                                              @RequestParam(value = "file", required = false) Collection<MultipartFile> files) {
-        return mailService.sendMailWithAttachmentFiles(from, to, subject, body, files);
-    }
-
-    @PostMapping("/sendmail")
-    public String sendMail(@RequestParam("from") String from,
-                           @RequestParam List<String> to,
-                           @RequestParam("subject") String subject,
-                           @RequestParam("body") String body,
-                           @RequestParam(value = "files", required = false) HashMap<String, String> attachments) {
-        return mailService.sendMailWithAttachments(from, to, subject, body, attachments);
+                                              @RequestParam(value = "file", required = false) Collection<MultipartFile> files,
+                                              @RequestParam(value = "cc", required = false) List<String> cc,
+                                              @RequestParam(value = "bcc", required = false) List<String> bcc,
+                                              @RequestParam(value = "replyto", required = false) List<String> replyTo) {
+        return mailService.sendMailWithAttachmentFiles(from, to, subject, body, files, cc, bcc, replyTo);
     }
 
     @PostMapping("/sendmailjson")

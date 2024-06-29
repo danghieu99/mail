@@ -11,8 +11,8 @@ public class MailData {
     private String subject;
     private String body;
     private Collection<String> replyTo;
-    private String cc;
-    private String bcc;
+    private Collection<String> cc;
+    private Collection<String> bcc;
     private HashMap<String, String> attachments;
     private MailSchedule mailSchedule;
 
@@ -59,11 +59,11 @@ public class MailData {
         return replyTo;
     }
 
-    public String getCc() {
+    public Collection<String> getCc() {
         return cc;
     }
 
-    public String getBcc() {
+    public Collection<String> getBcc() {
         return bcc;
     }
 
@@ -79,8 +79,8 @@ public class MailData {
         private String body;
         private HashMap<String, String> attachments;
         private Collection<String> replyTo;
-        private String cc;
-        private String bcc;
+        private Collection<String> cc;
+        private Collection<String> bcc;
         private MailSchedule mailSchedule;
 
         private Builder(String from) {
@@ -112,12 +112,12 @@ public class MailData {
             return this;
         }
 
-        public Builder cc(String cc) {
+        public Builder cc(Collection<String> cc) {
             this.cc = cc;
             return this;
         }
 
-        public Builder bcc(String bcc) {
+        public Builder bcc(Collection<String> bcc) {
             this.bcc = bcc;
             return this;
         }

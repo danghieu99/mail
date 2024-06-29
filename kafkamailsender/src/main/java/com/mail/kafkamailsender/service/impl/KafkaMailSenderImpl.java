@@ -26,16 +26,8 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
     public String sendMessage(String message) {
 
         String topic = "mailtest";
-        String key = String.valueOf(UUID.randomUUID());
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, message);
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-                throw new RuntimeException(exception);
-            }
-        });
-        return "message sent";
+        return sendMailJson(message, topic);
     }
 
     @Override
@@ -43,19 +35,10 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
         MailData mail = MailData.from(from).to(to).subject(subject).body(body).build();
 
-        String topic = "mailtest";
         String jsonMessage = JsonUtil.mailDataToJson(mail);
-        String key = String.valueOf(UUID.randomUUID());
+        String topic = "mailtest";
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
-
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-                throw new RuntimeException(exception);
-            }
-        });
-        return "mail sent";
+        return sendMailJson(jsonMessage, topic);
     }
 
     @Override
@@ -75,17 +58,8 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
 
         String jsonMessage = JsonUtil.mailDataToJson(mailWithAttachmentsData);
         String topic = "mailtest";
-        String key = UUID.randomUUID().toString();
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, jsonMessage);
-
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-                throw new RuntimeException(exception);
-            }
-        });
-        return "mail with attachments sent";
+        return sendMailJson(jsonMessage, topic);
     }
 
     @Override
@@ -99,21 +73,20 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
         MailData scheduledMail;
         if (files == null) {
             scheduledMail = MailData.from(from).to(to).subject(subject).body(body).mailSchedule(schedule).build();
-        } else if (files.isEmpty()) {
-            scheduledMail = MailData.from(from).to(to).subject(subject).body(body).mailSchedule(schedule).build();
         } else {
             HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
             scheduledMail = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).mailSchedule(schedule).build();
         }
 
         String scheduledMailJson = JsonUtil.mailDataToJson(scheduledMail);
+        String topic = "scheduledmail";
 
-        return sendMailJson(scheduledMailJson);
+        return sendMailJson(scheduledMailJson, topic);
     }
 
     @Override
-    public String sendMailJson(String scheduledMail) {
-        String topic = "scheduledmail";
+    public String sendMailJson(String scheduledMail, String topic) {
+
         String key = UUID.randomUUID().toString();
 
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, scheduledMail);
@@ -125,6 +98,6 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
             }
         });
 
-        return "scheduled mail sent";
+        return "mail sent";
     }
 }

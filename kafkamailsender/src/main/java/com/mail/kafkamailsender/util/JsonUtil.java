@@ -10,6 +10,14 @@ public class JsonUtil {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
+    public static MailData jsonToMailData(String json) {
+        try {
+            return mapper.readValue(json, MailData.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static String mailDataToJson(MailData mailData) {
         try {
             return mapper.writeValueAsString(mailData);
