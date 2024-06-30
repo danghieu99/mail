@@ -1,4 +1,4 @@
-package com.minio.api.services;
+package com.minio.api.services.bucketservice;
 
 public interface MinioBucketService {
 

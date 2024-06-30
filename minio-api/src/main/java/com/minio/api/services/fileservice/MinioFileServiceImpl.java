@@ -1,6 +1,5 @@
-package com.minio.api.services.impl;
+package com.minio.api.services.fileservice;
 
-import com.minio.api.services.MinioFileService;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;
@@ -12,7 +11,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 @Service
 public class MinioFileServiceImpl implements MinioFileService {
