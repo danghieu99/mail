@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/kafka/send")
 public class KafkaMailSenderController {
 
-
     private MailSenderService mailSenderService;
     private MailDataService mailDataService;
 
