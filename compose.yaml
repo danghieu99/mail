@@ -20,17 +20,6 @@ services:
     ports:
       - "8081:8081"
 
-  kafkamailsender:
-    pull_policy: build
-    container_name: kafkamailsender
-    build: /kafkamailsender/
-    environment:
-      BOOTSTRAP_SERVERS_CONFIG: "118.71.99.251:9092"
-      MINIO_API_UPLOAD_ENDPOINT: "http://host.docker.internal:8080/minio/file/upload"
-      MINI0_API_GETURL_ENDPOINT: "http://host.docker.internal:8080/minio/file/geturl"
-    ports:
-      - "8082:8082"
-
   kafka-listener:
     pull_policy: build
     container_name: kafka-listener
@@ -38,7 +27,7 @@ services:
     environment:
       BOOTSTRAP_SERVERS_CONFIG: "118.71.99.251:9092"
     ports:
-      - "8083:8083"
+      - "8082:8082"
 
 
 

@@ -1,6 +1,6 @@
 package com.example.kafkalistener.service;
 
-public interface MailClient {
+public interface MailSenderClient {
 
     public String SendMailData(String jsonMail);
 

@@ -1,4 +1,4 @@
-package com.mail.kafkamailsender.config;
+package com.example.mailsender.config;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;

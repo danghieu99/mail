@@ -16,11 +16,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.5.2.RELEASE'
+    implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

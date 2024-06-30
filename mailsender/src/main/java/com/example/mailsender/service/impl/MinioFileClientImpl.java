@@ -25,7 +25,7 @@ public class MinioFileClientImpl implements MinioFileClient {
     @Override
     public String uploadFile(MultipartFile file, String fileName) throws IOException {
 
-        String url = System.getenv("MINIO_API_UPLOAD_ENDPOINT");
+        String url = System.getenv("host.docker.internal:8080/minio/file/upload");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -79,7 +79,7 @@ public class MinioFileClientImpl implements MinioFileClient {
 
     @Override
     public String fetchFileUrl(String fileName) {
-        String url = UriComponentsBuilder.fromHttpUrl(System.getenv("MINI0_API_GETURL_ENDPOINT"))
+        String url = UriComponentsBuilder.fromHttpUrl(System.getenv("host.docker.internal:8080/minio/file/geturl"))
                 .queryParam("filename", fileName)
                 .queryParam("bucketname", "newbucket")
                 .build()

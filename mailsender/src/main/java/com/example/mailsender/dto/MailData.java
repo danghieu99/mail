@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MailData {
 
-    private List<String> to;
+    private Collection<String> to;
     private String from;
     private String subject;
     private String body;
@@ -35,7 +35,7 @@ public class MailData {
         return new Builder(from);
     }
 
-    public List<String> getTo() {
+    public Collection<String> getTo() {
         return to;
     }
 
@@ -73,7 +73,7 @@ public class MailData {
 
     public static class Builder {
 
-        private List<String> to;
+        private Collection<String> to;
         private String from;
         private String subject;
         private String body;
@@ -87,7 +87,7 @@ public class MailData {
             this.from = from;
         }
 
-        public Builder to(List<String> to) {
+        public Builder to(Collection<String> to) {
             this.to = to;
             return this;
         }

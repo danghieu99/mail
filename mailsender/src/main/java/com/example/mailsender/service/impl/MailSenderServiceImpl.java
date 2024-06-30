@@ -3,14 +3,13 @@ package com.example.mailsender.service.impl;
 import com.example.mailsender.dto.MailData;
 import com.example.mailsender.dto.MailSchedule;
 import com.example.mailsender.service.MailScheduler;
-import com.example.mailsender.service.MailService;
+import com.example.mailsender.service.MailSenderService;
 import com.example.mailsender.service.MinioFileClient;
 import com.example.mailsender.util.JsonUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -22,69 +21,63 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-
-import static com.example.mailsender.util.JsonUtil.jsonToMailData;
 
 @Service
-public class MailServiceImpl implements MailService {
+public class MailSenderServiceImpl implements MailSenderService {
 
-    private final MinioFileClient minioFileClient;
-    private final JavaMailSender mailSender;
+    private final JavaMailSender javaMailSender;
     private final MailScheduler mailScheduler;
 
     @Autowired
-    public MailServiceImpl(MinioFileClient minioFileClient, JavaMailSender mailSender, MailScheduler mailScheduler) {
-        this.minioFileClient = minioFileClient;
-        this.mailSender = mailSender;
+    public MailSenderServiceImpl(JavaMailSender javaMailSender, MailScheduler mailScheduler) {
+        this.javaMailSender = javaMailSender;
         this.mailScheduler = mailScheduler;
     }
 
     @Override
-    public String sendMailWithAttachmentFiles(String from, List<String> to, String subject, String body, Collection<MultipartFile> files, List<String> cc, List<String> bcc, List<String> replyTo) {
-        HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
-        MailData mailData = MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).cc(cc).bcc(bcc).replyTo(replyTo).build();
-        return sendMail(mailData);
-    }
-
-    @Override
     public String sendMailJson(String mailJson) {
-        MailData mailData = jsonToMailData(mailJson);
+        MailData mailData = JsonUtil.jsonToMailData(mailJson);
         return sendMail(mailData);
     }
 
     @Override
     public String sendMail(MailData mailData) {
-        List<String> to = mailData.getTo();
+        Collection<String> to = mailData.getTo();
         String from = mailData.getFrom();
         String subject = mailData.getSubject();
         String body = mailData.getBody();
         Collection<String> cc = mailData.getCc();
         Collection<String> bcc = mailData.getBcc();
         Collection<String> replyTo = mailData.getReplyTo();
-        MailSchedule mailSchedule = mailData.getMailSchedule();
         HashMap<String, String> attachments = mailData.getAttachments();
+        MailSchedule mailSchedule = mailData.getMailSchedule();
 
         if ((mailSchedule) != null) {
             mailScheduler.scheduleMail(mailData);
+            return "mail scheduled!";
         }
 
         try {
-            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo(to.toArray(new String[to.size()]));
             helper.setText(body);
             helper.setSubject(subject);
-            helper.setReplyTo(Arrays.toString(replyTo.toArray(new String[replyTo.size()])));
-            helper.setCc(Arrays.toString(cc.toArray(new String[cc.size()])));
-            helper.setBcc(Arrays.toString(bcc.toArray(new String[bcc.size()])));
+            if (replyTo != null) {
+                helper.setReplyTo(Arrays.toString(replyTo.toArray(new String[replyTo.size()])));
+            }
+            if (cc != null) {
+                helper.setCc(Arrays.toString(cc.toArray(new String[cc.size()])));
+            }
+            if (bcc != null) {
+                helper.setBcc(Arrays.toString(bcc.toArray(new String[bcc.size()])));
+            }
 
             if (attachments == null) {
-                mailSender.send(message);
-            }
-            if (attachments.isEmpty()) {
-                mailSender.send(message);
+                javaMailSender.send(message);
+            } else if (attachments.isEmpty()) {
+                javaMailSender.send(message);
             } else {
                 attachments.forEach((url, filename) -> {
                     try {
@@ -98,13 +91,11 @@ public class MailServiceImpl implements MailService {
                     }
                 });
             }
-
-            mailSender.send(message);
-
+            javaMailSender.send(message);
 
         } catch (MessagingException e) {
             return e.getMessage();
         }
-        return "mail with attachment sent successfully";
+        return "mail sent";
     }
 }

@@ -1,10 +1,10 @@
-package com.mail.kafkamailsender;
+package com.baitap.api.mailsender;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KafkamailsenderApplicationTests {
+class MailSenderServiceControllerImplApplicationTests {
 
     @Test
     void contextLoads() {

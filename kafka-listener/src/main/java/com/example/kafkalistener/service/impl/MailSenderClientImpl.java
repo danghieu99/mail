@@ -1,5 +1,6 @@
 package com.example.kafkalistener.service.impl;
 
+import com.example.kafkalistener.service.MailSenderClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Service
-public class MailClientImpl implements com.example.kafkalistener.service.MailClient {
+public class MailSenderClientImpl implements MailSenderClient {
 
     private final RestClient restClient;
 
     @Autowired
-    public MailClientImpl(RestClient restClient) {
+    public MailSenderClientImpl(RestClient restClient) {
         this.restClient = restClient;
     }
 
@@ -27,7 +28,7 @@ public class MailClientImpl implements com.example.kafkalistener.service.MailCli
                 .host("host.docker.internal")
                 .scheme("http")
                 .port(8081)
-                .path("/mail/sendmailjson")
+                .path("/mail/send/mailjson")
                 .build()
                 .toUri();
 
