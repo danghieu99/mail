@@ -1,4 +1,4 @@
-package com.example.mailsender.service;
+package com.example.mailsender.service.maildata;
 
 import com.example.mailsender.dto.MailData;
 import org.springframework.web.multipart.MultipartFile;

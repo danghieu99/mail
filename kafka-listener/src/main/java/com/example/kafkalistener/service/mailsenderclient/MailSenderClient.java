@@ -1,4 +1,4 @@
-package com.example.kafkalistener.service;
+package com.example.kafkalistener.service.mailsenderclient;
 
 public interface MailSenderClient {
 

@@ -1,7 +1,8 @@
 package com.example.mailsender.controller;
 
-import com.example.mailsender.service.MailDataService;
-import com.example.mailsender.service.MailSenderService;
+import com.example.mailsender.service.kafkamailsender.KafkaMailSender;
+import com.example.mailsender.service.maildata.MailDataService;
+import com.example.mailsender.service.mailsender.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,30 +17,27 @@ import java.util.List;
 @RequestMapping("/kafka/send")
 public class KafkaMailSenderController {
 
-    private MailSenderService mailSenderService;
-    private MailDataService mailDataService;
+    private KafkaMailSender kafkaMailSender;
 
     @Autowired
-    public KafkaMailSenderController(MailSenderService mailSenderService, MailDataService mailDataService) {
-        this.mailSenderService = mailSenderService;
-        this.mailDataService = mailDataService;
+    public KafkaMailSenderController(KafkaMailSender kafkaMailSender) {
+        this.kafkaMailSender = kafkaMailSender;
     }
 
-    @PostMapping("/mail")
+    @PostMapping("/mailparams")
     public String sendMailParams(@RequestParam("from") String from,
-                                 @RequestParam List<String> to,
+                                 @RequestParam Collection<String> to,
                                  @RequestParam("subject") String subject,
                                  @RequestParam("body") String body,
                                  @RequestParam(value = "file", required = false) Collection<MultipartFile> files,
-                                 @RequestParam(value = "replyto", required = false) Collection<String> replyTo,
                                  @RequestParam(value = "cc", required = false) Collection<String> cc,
-                                 @RequestParam(value = "bcc", required = false) Collection<String> bcc) {
-
-        return mailSenderService.sendMail(mailDataService.createMailData(from, to, subject, body, files, replyTo, cc, bcc));
+                                 @RequestParam(value = "bcc", required = false) Collection<String> bcc,
+                                 @RequestParam(value = "replyto", required = false) Collection<String> replyTo) {
+        return kafkaMailSender.sendMailParams(from, to, subject, body, files, replyTo, cc, bcc);
     }
 
     @PostMapping("/mailjson")
     public String sendMailJson(@RequestParam("mailjson") String mailJson) {
-        return mailSenderService.sendMailJson(mailJson);
+        return kafkaMailSender.sendMailJson(mailJson);
     }
 }

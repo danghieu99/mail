@@ -1,7 +1,7 @@
 package com.example.mailsender.controller;
 
-import com.example.mailsender.service.MailDataService;
-import com.example.mailsender.service.MailSenderService;
+import com.example.mailsender.service.maildata.MailDataService;
+import com.example.mailsender.service.mailsender.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,24 +15,22 @@ import java.util.List;
 public class MailSenderController {
 
     private MailSenderService mailSenderService;
-    private MailDataService mailDataService;
 
     @Autowired
-    public MailSenderController(MailSenderService mailSenderService, MailDataService mailDataService) {
+    public MailSenderController(MailSenderService mailSenderService) {
         this.mailSenderService = mailSenderService;
-        this.mailDataService = mailDataService;
     }
 
     @PostMapping("/mailparams")
     public String sendMailParams(@RequestParam("from") String from,
-                                 @RequestParam("to") List<String> to,
+                                 @RequestParam("to") Collection<String> to,
                                  @RequestParam("subject") String subject,
                                  @RequestParam("body") String body,
                                  @RequestParam(value = "file", required = false) Collection<MultipartFile> files,
-                                 @RequestParam(value = "cc", required = false) List<String> cc,
-                                 @RequestParam(value = "bcc", required = false) List<String> bcc,
-                                 @RequestParam(value = "replyto", required = false) List<String> replyTo) {
-        return mailSenderService.sendMail(mailDataService.createMailData(from, to, subject, body, files, cc, bcc, replyTo));
+                                 @RequestParam(value = "cc", required = false) Collection<String> cc,
+                                 @RequestParam(value = "bcc", required = false) Collection<String> bcc,
+                                 @RequestParam(value = "replyto", required = false) Collection<String> replyTo) {
+        return mailSenderService.sendMailParams(from, to, subject, body, files, cc, bcc, replyTo);
     }
 
     @PostMapping("/mailjson")
