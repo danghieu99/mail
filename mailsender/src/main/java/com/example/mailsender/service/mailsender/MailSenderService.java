@@ -1,7 +1,6 @@
 package com.example.mailsender.service.mailsender;
 
 import com.example.mailsender.dto.MailData;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;

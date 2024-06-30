@@ -45,6 +45,4 @@ public class MailSenderServiceImpl implements MailSenderService {
         }
         return "mail sent";
     }
-
-
 }
