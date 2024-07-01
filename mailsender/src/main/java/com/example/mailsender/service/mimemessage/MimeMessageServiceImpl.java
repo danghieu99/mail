@@ -66,7 +66,6 @@ public class MimeMessageServiceImpl implements MimeMessageService {
                             byte[] attachmentBytes = fileStream.readAllBytes();
                             ByteArrayResource attachmentSource = new ByteArrayResource(attachmentBytes);
                             helper.addAttachment(filename, attachmentSource);
-
                         } catch (IOException | MessagingException e) {
                             throw new RuntimeException(e);
                         }
