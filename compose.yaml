@@ -17,6 +17,7 @@ services:
     environment:
       DEFAULT_MAIL_USERNAME: "danghieu231299@gmail.com"
       DEFAULT_MAIL_PASSWORD: "jpce tgit jvpv pstq"
+      BOOTSTRAP_SERVERS_CONFIG: "118.71.99.251:9092"
     ports:
       - "8081:8081"
 
