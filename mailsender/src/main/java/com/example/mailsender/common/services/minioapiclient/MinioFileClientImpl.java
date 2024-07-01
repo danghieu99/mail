@@ -46,14 +46,13 @@ public class MinioFileClientImpl implements MinioFileClient {
 
     @Override
     public HashMap<String, String> uploadAttachmentFiles(Collection<MultipartFile> files) {
-        List<String> fileNames = new ArrayList<>();
-
         HashMap<String, MultipartFile> uploadFiles = new HashMap<>();
         for (MultipartFile file : files) {
             String fileName = UUID.randomUUID() + file.getOriginalFilename();
-            fileNames.add(fileName);
             uploadFiles.put(fileName, file);
         }
+
+        List<String> fileNames = uploadFiles.keySet().stream().toList();
 
         try {
             uploadFiles.forEach((fileName, file) -> {
@@ -64,16 +63,14 @@ public class MinioFileClientImpl implements MinioFileClient {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        HashMap<String, String> urlAttachments = new HashMap<>();
+        HashMap<String, String> attachments = new HashMap<>();
         for (String fileName : fileNames) {
-            String attachmentUrl = fetchFileUrl(fileName);
-            urlAttachments.put(attachmentUrl, fileName);
+            attachments.put(fetchFileUrl(fileName), fileName);
         }
-
-        return urlAttachments;
+        return attachments;
     }
 
     @Override
