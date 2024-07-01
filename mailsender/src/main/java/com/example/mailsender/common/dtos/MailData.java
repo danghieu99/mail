@@ -1,4 +1,4 @@
-package com.example.mailsender.dtos;
+package com.example.mailsender.common.dtos;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
-package com.example.mailsender.services.common.mimemessage;
+package com.example.mailsender.common.services.mimemessage;
 
-import com.example.mailsender.dtos.MailData;
+import com.example.mailsender.common.dtos.MailData;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;

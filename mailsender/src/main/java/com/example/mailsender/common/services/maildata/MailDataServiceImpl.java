@@ -1,7 +1,7 @@
-package com.example.mailsender.services.common.maildata;
+package com.example.mailsender.common.services.maildata;
 
-import com.example.mailsender.dtos.MailData;
-import com.example.mailsender.services.common.minioapiclient.MinioFileClient;
+import com.example.mailsender.common.dtos.MailData;
+import com.example.mailsender.common.services.minioapiclient.MinioFileClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,6 +1,6 @@
-package com.example.mailsender.utils;
+package com.example.mailsender.common.utils;
 
-import com.example.mailsender.dtos.MailData;
+import com.example.mailsender.common.dtos.MailData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

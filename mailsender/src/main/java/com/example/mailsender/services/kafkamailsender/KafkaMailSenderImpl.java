@@ -1,8 +1,8 @@
 package com.example.mailsender.services.kafkamailsender;
 
-import com.example.mailsender.dtos.MailData;
-import com.example.mailsender.services.common.maildata.MailDataService;
-import com.example.mailsender.utils.JsonUtil;
+import com.example.mailsender.common.dtos.MailData;
+import com.example.mailsender.common.services.maildata.MailDataService;
+import com.example.mailsender.common.utils.JsonUtil;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;

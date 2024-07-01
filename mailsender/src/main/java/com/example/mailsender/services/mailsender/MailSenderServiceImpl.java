@@ -1,9 +1,9 @@
 package com.example.mailsender.services.mailsender;
 
-import com.example.mailsender.dtos.MailData;
-import com.example.mailsender.services.common.maildata.MailDataService;
-import com.example.mailsender.services.common.mimemessage.MimeMessageService;
-import com.example.mailsender.utils.JsonUtil;
+import com.example.mailsender.common.dtos.MailData;
+import com.example.mailsender.common.services.maildata.MailDataService;
+import com.example.mailsender.common.services.mimemessage.MimeMessageService;
+import com.example.mailsender.common.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
