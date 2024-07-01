@@ -1,7 +1,6 @@
-package com.example.mailsender.service.mimemessage;
+package com.example.mailsender.services.common.mimemessage;
 
-import com.example.mailsender.dto.MailData;
-import jakarta.mail.Address;
+import com.example.mailsender.dtos.MailData;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.example.mailsender.service.minioapiclient;
+package com.example.mailsender.services.common.minioapiclient;
 
 import org.springframework.web.multipart.MultipartFile;
 

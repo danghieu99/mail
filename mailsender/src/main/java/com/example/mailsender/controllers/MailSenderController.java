@@ -1,6 +1,6 @@
-package com.example.mailsender.controller;
+package com.example.mailsender.controllers;
 
-import com.example.mailsender.service.mailsender.MailSenderService;
+import com.example.mailsender.services.mailsender.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

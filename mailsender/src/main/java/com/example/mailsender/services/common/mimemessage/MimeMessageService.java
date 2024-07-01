@@ -1,6 +1,6 @@
-package com.example.mailsender.service.mimemessage;
+package com.example.mailsender.services.common.mimemessage;
 
-import com.example.mailsender.dto.MailData;
+import com.example.mailsender.dtos.MailData;
 import jakarta.mail.internet.MimeMessage;
 
 public interface MimeMessageService {

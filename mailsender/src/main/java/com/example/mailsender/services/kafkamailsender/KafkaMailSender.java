@@ -1,6 +1,6 @@
-package com.example.mailsender.service.kafkamailsender;
+package com.example.mailsender.services.kafkamailsender;
 
-import com.example.mailsender.dto.MailData;
+import com.example.mailsender.dtos.MailData;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;

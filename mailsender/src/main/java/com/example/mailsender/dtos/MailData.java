@@ -1,8 +1,7 @@
-package com.example.mailsender.dto;
+package com.example.mailsender.dtos;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class MailData {
 
