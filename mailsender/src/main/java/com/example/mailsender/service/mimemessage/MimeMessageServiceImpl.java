@@ -1,7 +1,10 @@
 package com.example.mailsender.service.mimemessage;
 
 import com.example.mailsender.dto.MailData;
+import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -45,17 +48,23 @@ public class MimeMessageServiceImpl implements MimeMessageService {
             helper.setSubject(subject);
             if (replyTo != null) {
                 if (!replyTo.isEmpty()) {
-                    helper.setReplyTo(Arrays.toString(replyTo.toArray(new String[replyTo.size()])));
+                    message.setReplyTo(replyTo.stream().map(s -> {
+                        try {
+                            return new InternetAddress(s);
+                        } catch (AddressException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).toArray(InternetAddress[]::new));
                 }
             }
             if (cc != null) {
                 if (!cc.isEmpty()) {
-                    helper.setCc(Arrays.toString(cc.toArray(new String[cc.size()])));
+                    helper.setCc(cc.toArray(new String[cc.size()]));
                 }
             }
             if (bcc != null) {
                 if (!bcc.isEmpty()) {
-                    helper.setBcc(Arrays.toString(bcc.toArray(new String[bcc.size()])));
+                    helper.setBcc(bcc.toArray(new String[bcc.size()]));
                 }
             }
             if (attachments != null) {

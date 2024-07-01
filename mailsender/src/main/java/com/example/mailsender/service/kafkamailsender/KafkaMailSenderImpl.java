@@ -2,7 +2,6 @@ package com.example.mailsender.service.kafkamailsender;
 
 import com.example.mailsender.dto.MailData;
 import com.example.mailsender.service.maildata.MailDataService;
-import com.example.mailsender.service.mimemessage.MimeMessageService;
 import com.example.mailsender.util.JsonUtil;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -56,6 +55,4 @@ public class KafkaMailSenderImpl implements KafkaMailSender {
         }
         return mailJson;
     }
-
-
 }
