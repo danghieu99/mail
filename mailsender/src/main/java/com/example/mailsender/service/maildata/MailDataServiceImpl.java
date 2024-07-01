@@ -22,7 +22,12 @@ public class MailDataServiceImpl implements MailDataService {
     @Override
     public MailData createMailData(String from, Collection<String> to, String subject, String body, Collection<MultipartFile> files,
                                    Collection<String> cc, Collection<String> bcc, Collection<String> replyTo) {
-        HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
-        return MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).cc(cc).bcc(bcc).replyTo(replyTo).build();
+        if (files != null) {
+            if (!files.isEmpty()) {
+                HashMap<String, String> attachments = minioFileClient.uploadAttachmentFiles(files);
+                return MailData.from(from).to(to).subject(subject).body(body).attachments(attachments).cc(cc).bcc(bcc).replyTo(replyTo).build();
+            }
+        }
+        return MailData.from(from).to(to).subject(subject).body(body).cc(cc).bcc(bcc).replyTo(replyTo).build();
     }
 }

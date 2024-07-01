@@ -43,32 +43,35 @@ public class MimeMessageServiceImpl implements MimeMessageService {
             helper.setTo(to.toArray(new String[to.size()]));
             helper.setText(body);
             helper.setSubject(subject);
-
             if (replyTo != null) {
-                helper.setReplyTo(Arrays.toString(replyTo.toArray(new String[replyTo.size()])));
+                if (!replyTo.isEmpty()) {
+                    helper.setReplyTo(Arrays.toString(replyTo.toArray(new String[replyTo.size()])));
+                }
             }
             if (cc != null) {
-                helper.setCc(Arrays.toString(cc.toArray(new String[cc.size()])));
+                if (!cc.isEmpty()) {
+                    helper.setCc(Arrays.toString(cc.toArray(new String[cc.size()])));
+                }
             }
             if (bcc != null) {
-                helper.setBcc(Arrays.toString(bcc.toArray(new String[bcc.size()])));
+                if (!bcc.isEmpty()) {
+                    helper.setBcc(Arrays.toString(bcc.toArray(new String[bcc.size()])));
+                }
             }
             if (attachments != null) {
-                return message;
-            }if (attachments.isEmpty()) {
-                return message;
-            } else {
-                attachments.forEach((url, filename) -> {
-                    try {
-                        InputStream fileStream = new URL(url).openStream();
-                        byte[] attachmentBytes = fileStream.readAllBytes();
-                        ByteArrayResource attachmentSource = new ByteArrayResource(attachmentBytes);
-                        helper.addAttachment(filename, attachmentSource);
+                if (!attachments.isEmpty()) {
+                    attachments.forEach((url, filename) -> {
+                        try {
+                            InputStream fileStream = new URL(url).openStream();
+                            byte[] attachmentBytes = fileStream.readAllBytes();
+                            ByteArrayResource attachmentSource = new ByteArrayResource(attachmentBytes);
+                            helper.addAttachment(filename, attachmentSource);
 
-                    } catch (IOException | MessagingException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                        } catch (IOException | MessagingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
             }
             return message;
         } catch (MessagingException e) {
