@@ -28,14 +28,4 @@ public class MailSenderConfig {
 
         return mailSender;
     }
-
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
-
-    @Bean
-    public RestClient getRestClient() {
-        return RestClient.create();
-    }
 }
