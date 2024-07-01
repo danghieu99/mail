@@ -34,7 +34,7 @@ public class KafkaMailSenderController {
     }
 
     @PostMapping("/mailjson")
-    public String sendMailJson(@RequestParam("mailjson") String mailJson) {
+    public String sendMailJson(@RequestParam("mail") String mailJson) {
         return kafkaMailSender.sendMailJson(mailJson);
     }
 }

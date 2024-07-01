@@ -1,4 +1,4 @@
-package com.example.kafkalistener.service.mailsenderclient;
+package com.example.kafkalistener.services.mailsenderclient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -21,7 +21,7 @@ public class MailSenderClientImpl implements MailSenderClient {
     }
 
 
-    public String SendMailData(String jsonMail) {
+    public String SendMailData(String mailJson) {
 
         URI uri = UriComponentsBuilder.newInstance()
                 .host("host.docker.internal")
@@ -32,7 +32,7 @@ public class MailSenderClientImpl implements MailSenderClient {
                 .toUri();
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("mail", jsonMail);
+        body.add("mailjson", mailJson);
 
         ResponseEntity<String> response = restClient.post()
                 .uri(uri)

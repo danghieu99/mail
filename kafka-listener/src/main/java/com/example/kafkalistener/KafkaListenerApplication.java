@@ -1,6 +1,6 @@
 package com.example.kafkalistener;
 
-import com.example.kafkalistener.service.kafkalistener.KafkaListenerImpl;
+import com.example.kafkalistener.services.kafkalistener.KafkaListenerImpl;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

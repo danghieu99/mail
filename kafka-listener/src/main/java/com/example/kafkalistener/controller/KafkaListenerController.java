@@ -1,6 +1,6 @@
 package com.example.kafkalistener.controller;
 
-import com.example.kafkalistener.service.kafkalistener.KafkaListener;
+import com.example.kafkalistener.services.kafkalistener.KafkaListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

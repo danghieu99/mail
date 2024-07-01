@@ -1,6 +1,6 @@
-package com.example.kafkalistener.service.kafkalistener;
+package com.example.kafkalistener.services.kafkalistener;
 
-import com.example.kafkalistener.service.mailsenderclient.MailSenderClientImpl;
+import com.example.kafkalistener.services.mailsenderclient.MailSenderClientImpl;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

@@ -1,4 +1,4 @@
-package com.example.kafkalistener.service.kafkalistener;
+package com.example.kafkalistener.services.kafkalistener;
 
 import java.util.List;
 
