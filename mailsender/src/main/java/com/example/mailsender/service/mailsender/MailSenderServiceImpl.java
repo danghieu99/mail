@@ -43,6 +43,6 @@ public class MailSenderServiceImpl implements MailSenderService {
         } catch (Exception e) {
             return e.getMessage();
         }
-        return "mail sent";
+        return JsonUtil.mailDataToJson(mailData);
     }
 }

@@ -24,7 +24,7 @@ public class MinioFileClientImpl implements MinioFileClient {
     @Override
     public String uploadFile(MultipartFile file, String fileName) throws IOException {
 
-        String url = "host.docker.internal:8080/minio/file/upload";
+        String url = "http://host.docker.internal:8080/minio/file/upload";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -78,7 +78,7 @@ public class MinioFileClientImpl implements MinioFileClient {
 
     @Override
     public String fetchFileUrl(String fileName) {
-        String url = UriComponentsBuilder.fromHttpUrl("host.docker.internal:8080/minio/file/geturl")
+        String url = UriComponentsBuilder.fromHttpUrl("http://host.docker.internal:8080/minio/file/geturl")
                 .queryParam("filename", fileName)
                 .queryParam("bucketname", "newbucket")
                 .build()

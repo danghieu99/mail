@@ -1,16 +1,13 @@
 package com.example.mailsender.controller;
 
-import com.example.mailsender.service.maildata.MailDataService;
 import com.example.mailsender.service.mailsender.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
-
 @RequestMapping("/mail/send")
 public class MailSenderController {
 
