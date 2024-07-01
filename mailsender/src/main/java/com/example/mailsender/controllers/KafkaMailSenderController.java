@@ -23,14 +23,14 @@ public class KafkaMailSenderController {
 
     @PostMapping("/mailparams")
     public String sendMailParams(@RequestParam("from") String from,
-                                 @RequestParam Collection<String> to,
+                                 @RequestParam("to") Collection<String> to,
                                  @RequestParam("subject") String subject,
                                  @RequestParam("body") String body,
                                  @RequestParam(value = "file", required = false) Collection<MultipartFile> files,
                                  @RequestParam(value = "cc", required = false) Collection<String> cc,
                                  @RequestParam(value = "bcc", required = false) Collection<String> bcc,
                                  @RequestParam(value = "replyto", required = false) Collection<String> replyTo) {
-        return kafkaMailSender.sendMailParams(from, to, subject, body, files, replyTo, cc, bcc);
+        return kafkaMailSender.sendMailParams(from, to, subject, body, files, cc, bcc, replyTo);
     }
 
     @PostMapping("/mailjson")
